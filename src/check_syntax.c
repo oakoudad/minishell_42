@@ -99,6 +99,134 @@ int	check_syntax2(char *s)
 	return (1);
 }
 
+int end_of_cmd(char *s)
+{
+	int end;
+
+	end = 0;
+	while (s[end])
+	{
+		if (s[end] == '"' || s[end] == '\'')
+			skep_quotes(s, &end);
+		if (s[end] == ' ')
+			break;
+		end++;
+	}
+	return (end-1);
+}
+
+int len_of_cmd(char *s, int to)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = to + 1;
+	while (i < to)
+	{
+		if (s[i] == '"' || s[i] == '\'')
+		{
+			j -= 2;
+			skep_quotes(s, &i);
+		}
+		if (s[i] == ' ')
+			break;
+		i++;
+	}
+	return (j);
+}
+
+void	copyto(char *src, char *dst, char c, int *d)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = *d;
+	while (src[i] != c)
+		dst[j++] = src[i++];
+	*d = j;
+}
+
+char	*get_cmd(char *s, int *d)
+{
+	int		end;
+	int	 	j;
+	int	 	i;
+	char 	*cmd;
+
+	j = 0;
+	end = end_of_cmd(s);
+	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	while (j <= end)
+	{
+		if (s[j] != '"' && s[j] != '\'')
+			cmd[i++] = s[j];
+		else
+		{
+			copyto(s + j + 1, cmd, s[j], &i);
+			skep_quotes(s, &j);
+		}
+		j++;
+	}
+	*d = end + 1;
+	return (cmd);
+}
+
+char	**get_args(char *s)
+{
+	int i;
+	int d;
+	int word;
+	char **args;
+
+	i = 0;
+	word = 0;
+	while (s[i])
+	{
+		if (s[i] == '"' || s[i] == '\'')
+			skep_quotes(s, &i);
+		else if (s[i] == ' ')
+			word++;
+		i++;
+	}
+	args = malloc(sizeof(char*) * word + 1);
+	i = 0;
+	d = 0;
+	while (i < word)
+	{
+		while (s[0] == ' ')
+			s++;
+		args[i] = get_cmd(s, &d);
+		printf("arg = %s\n", args[i]);
+		s = s + d;
+		i++;
+	}
+	args[i] = NULL;
+	return args;
+}
+
+void parsing(char	**pips)
+{
+	t_list	*l;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (pips[i])
+	{
+		printf("%s\n", *pips);
+		l = malloc(sizeof(t_list));
+		j = 0;
+		l->cmd = get_cmd(pips[i], &j);
+		l->args = get_args(pips[i] + j);
+		i++;
+	}
+}
+
 int	check_syntax(char *s)
 {
 	int		i;
@@ -113,11 +241,12 @@ int	check_syntax(char *s)
 	if (s[i] == '|' || s[j] == '|')
 		return (ft_putstr("Minishell: parse error near `|'\n"), 0);
 	if (!check_syntax2(s))
-		return 0;
+		return (0);
 	if (ft_strlen(s) > 0)
 		pips = split_pipes(s);
+	if (!pips)
+		return (0);
 	i = 0;
-	while (pips[i])
-		printf("%s\n", pips[i++]);
+	parsing(pips);
 	return (1);
 }

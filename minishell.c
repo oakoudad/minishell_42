@@ -24,6 +24,8 @@ int		main(int ac, char **av, char **env)
 		buff = readline("\033[32;1mMinishell ➜\033[0m ");
 		if (buff == NULL)
 			return (write(1, "exit", 4), 0);
+		if (buff[0] == '\0')
+			continue;
 		add_history(buff);
 		if(check_syntax(buff) == -1)
 			return (0);
