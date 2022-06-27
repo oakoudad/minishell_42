@@ -33,7 +33,7 @@ int		main(int ac, char **av, char **env)
 		if (buff[0] == '\0')
 			continue;
 		add_history(buff);
-		if(check_syntax(buff) == -1)
+		if(check_syntax(buff, &lstenv) == -1)
 			return (0);
 		free(buff);
 	}

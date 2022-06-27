@@ -10,14 +10,15 @@
 
 typedef struct list
 {
-	char		*cmd;
-	char		**args;
-	char		*token;
-	int			fd;
-	int			*index_token;
-	int			count_token;
-	int			words;
-	char		*filename;
+	char			*cmd;
+	char			**args;
+	char			*token;
+	int				fd;
+	int				*index_token;
+	int				count_token;
+	int				words;
+	char			*filename;
+	struct listenv	*env;
 	struct list	*next;
 }	t_list;
 
@@ -33,7 +34,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 int		is_space(char c);
-int		check_syntax(char *s);
+int		check_syntax(char *s, t_list_env **lst);
 int		ft_strlen(char *s);
 void	ft_putstr(char *s);
 void	check_quotes(char *s);

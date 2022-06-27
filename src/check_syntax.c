@@ -12,6 +12,33 @@
 
 #include "../minishell.h"
 
+int len_var(char *s, t_list_env **env)
+{
+	t_list_env *temp;
+	int i;
+	int len;
+	int res;
+	char *var;
+
+	i = -1;
+	len = 0;
+	res = 0;
+	temp = *env;
+	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
+		len++;
+	var = malloc(sizeof(char) * len);
+	while (++i < len)
+		var[i] = s[i];
+	while (temp)
+	{
+		if (ft_strncmp(temp->key, var) == 0)
+			res = ft_strlen(temp->value);
+		temp = temp->next;
+	}
+	free(var);
+	return (res - len - 1);
+}
+
 char	*ft_strdup(char *s1)
 {
 	int		i;
@@ -74,6 +101,29 @@ int	skep_quotes(char *s, int *d)
 	return (1);
 }
 
+int	skep_quotes2(char *s, int *d, t_list_env **env)
+{
+	char	c;
+	int		i;
+	int 	res;
+
+	c = s[*d];
+	i = *d + 1;
+	while (s[i] && s[i] != c)
+	{
+		if (s[i] == '$')
+			res = len_var(s + i + 1, env);
+		i++;
+	}
+	if (s[i] == 0)
+	{
+		ft_putstr("Minishell: syntax error quotes not closed\n");
+		return (0);
+	}
+	*d = i;
+	return (res);
+}
+
 int	check_syntax2(char *s)
 {
 	int	i;
@@ -115,19 +165,22 @@ int end_of_cmd(char *s)
 	return (end-1);
 }
 
-int len_of_cmd(char *s, int to)
+
+
+int len_of_cmd(char *s, int to, t_list_env **env)
 {
 	int i;
 	int j;
-
 	i = 0;
 	j = to + 1;
 	while (i < to)
 	{
+		if(s[i] == '$')
+			j += len_var(s + i + 1, env);
 		if (s[i] == '"' || s[i] == '\'')
 		{
 			j -= 2;
-			skep_quotes(s, &i);
+			j += skep_quotes2(s, &i, env);
 		}
 		if (s[i] == ' ')
 			break;
@@ -149,7 +202,37 @@ void	copyto(char *src, char *dst, char c, int *d)
 	*d = j;
 }
 
-char	*get_cmd(char *s, int *d)
+int copy_var(char *s, char *dest,t_list_env **env, int *d)
+{
+	t_list_env *temp;
+	int len;
+	int i;
+	int j;
+	char *var;
+
+	i = -1;
+	len = 0;
+	temp = *env;
+	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
+		len++;
+	var = malloc(sizeof(char) * len);
+	while (++i < len)
+		var[i] = s[i];
+	i = (*d);
+	j = -1;
+	while (temp)
+	{
+		if (ft_strncmp(temp->key, var) == 0)
+		{
+			while (temp->value[++j])
+				dest[i++] = temp->value[j];
+		}
+		temp = temp->next;
+	}
+	return (i);
+}
+
+char	*get_cmd(char *s, int *d, t_list_env **env)
 {
 	int		end;
 	int	 	j;
@@ -158,15 +241,21 @@ char	*get_cmd(char *s, int *d)
 
 	j = 0;
 	end = end_of_cmd(s);
-	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
-	printf("len = %d", len_of_cmd(s, end));
+	cmd = malloc(sizeof(char) * len_of_cmd(s, end, env) + 1);
+	printf("len = %d\n", len_of_cmd(s, end, env));
 	if (!cmd)
 		return (NULL);
 	i = 0;
 	while (j <= end)
 	{
 		if (s[j] != '"' && s[j] != '\'')
-			cmd[i++] = s[j];
+		{
+			if (s[j] == '$')
+				j = copy_var(s + j + 1, cmd, env, &i);
+			else
+				cmd[i++] = s[j];
+		}
+			
 		else
 		{
 			copyto(s + j + 1, cmd, s[j], &i);
@@ -197,7 +286,7 @@ int		*intjoin(t_list **l, int d)
 	return (r);
 }
 
-char	**get_args(char *s, t_list **l)
+char	**get_args(char *s, t_list **l, t_list_env **env)
 {
 	int i;
 	int d;
@@ -224,7 +313,7 @@ char	**get_args(char *s, t_list **l)
 	{
 		while (s[0] == ' ')
 			s++;
-		args[i] = get_cmd(s, &d);
+		args[i] = get_cmd(s, &d, env);
 		if (args[i][0] == '>')
 		{
 			if((*l)->count_token == 0)
@@ -320,7 +409,7 @@ char	**args_filter(t_list	**l)
 	return (args);
 }
 
-void parsing(char	**pips)
+void parsing(char	**pips, t_list_env **env)
 {
 	t_list	*l;
 	int		i;
@@ -332,11 +421,11 @@ void parsing(char	**pips)
 	{
 		l = malloc(sizeof(t_list));
 		j = 0;
-		l->cmd = get_cmd(pips[i], &j);
+		l->cmd = get_cmd(pips[i], &j, env);
 		l->fd = -5;
 		l->index_token = NULL;
 		l->count_token = 0;
-		l->args = get_args(pips[i] + j, &l);
+		l->args = get_args(pips[i] + j, &l, env);
 		l->args = args_filter(&l);
 		k = 0;
 		while (l->args[k])
@@ -346,7 +435,7 @@ void parsing(char	**pips)
 	
 }
 
-int	check_syntax(char *s)
+int	check_syntax(char *s, t_list_env **env)
 {
 	int		i;
 	int		j;
@@ -366,6 +455,6 @@ int	check_syntax(char *s)
 	if (!pips)
 		return (0);
 	i = 0;
-	parsing(pips);
+	parsing(pips, env);
 	return (1);
 }
