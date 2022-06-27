@@ -11,8 +11,11 @@ typedef struct list
 {
 	char		*cmd;
 	char		**args;
-	int			token;
+	char		*token;
 	int			fd;
+	int			*index_token;
+	int			count_token;
+	int			words;
 	char		*filename;
 	struct list	*next;
 }	t_list;

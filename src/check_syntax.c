@@ -145,6 +145,7 @@ void	copyto(char *src, char *dst, char c, int *d)
 	j = *d;
 	while (src[i] != c)
 		dst[j++] = src[i++];
+	dst[j] = '\0';
 	*d = j;
 }
 
@@ -175,8 +176,27 @@ char	*get_cmd(char *s, int *d)
 	*d = end + 1;
 	return (cmd);
 }
+int		*intjoin(t_list **l, int d)
+{
+	t_list	*elm;
+	int		i;
+	int		*r;
 
-char	**get_args(char *s)
+	elm = *l;
+	r = malloc(sizeof(int) * elm->count_token + 1);
+	i= 0;
+	while (i < elm->count_token)
+	{
+		r[i] = elm->index_token[i];
+		i++;
+	}
+	r[i] = d;
+	elm->count_token++;
+	free(elm->index_token);
+	return (r);
+}
+
+char	**get_args(char *s, t_list **l)
 {
 	int i;
 	int d;
@@ -193,6 +213,9 @@ char	**get_args(char *s)
 			word++;
 		i++;
 	}
+	(*l)->words = word;
+	if (word == 0)
+		return NULL;
 	args = malloc(sizeof(char*) * word + 1);
 	i = 0;
 	d = 0;
@@ -201,7 +224,17 @@ char	**get_args(char *s)
 		while (s[0] == ' ')
 			s++;
 		args[i] = get_cmd(s, &d);
-		printf("arg = %s\n", args[i]);
+		if (args[i][0] == '>')
+		{
+			if((*l)->count_token == 0)
+			{
+				(*l)->index_token = malloc(sizeof(int) * 1);
+				(*l)->index_token[0] = i;
+				(*l)->count_token = 1;
+			}
+			else
+				(*l)->index_token = intjoin(l, i);
+		}
 		s = s + d;
 		i++;
 	}
@@ -209,22 +242,77 @@ char	**get_args(char *s)
 	return args;
 }
 
+int		iftoken(int index, t_list **l)
+{
+	int i;
+	t_list *elm;
+
+	elm = *l;
+	i = 0;
+	while (i < elm->count_token)
+	{
+		if (index == elm->index_token[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**args_filter(t_list	**l)
+{
+	t_list	*elm;
+	int		size;
+	int		i;
+	int		j;
+	char	**args;
+
+	elm = *l;
+	size = elm->words;
+	if (elm->count_token != 0)
+		size -= 2 * elm->count_token;
+	args = malloc(sizeof(char*) * size + 1);
+	i = -1;
+	j = 0;
+	while (elm->args[++i])
+	{
+		if (iftoken(i, l)){
+			elm->token = elm->args[i];
+			elm->filename = elm->args[i + 1];
+			i++;
+		}
+		else
+			args[j++] = elm->args[i];
+	}
+	args[i] = NULL;
+	printf("token : %s\n", elm->token);
+	printf("filename : %s\n", elm->filename);
+	free(elm->args);
+	return (args);
+}
+
 void parsing(char	**pips)
 {
 	t_list	*l;
 	int		i;
 	int		j;
+	int		k;
 
 	i = 0;
 	while (pips[i])
 	{
-		printf("%s\n", *pips);
 		l = malloc(sizeof(t_list));
 		j = 0;
 		l->cmd = get_cmd(pips[i], &j);
-		l->args = get_args(pips[i] + j);
+		l->index_token = NULL;
+		l->count_token = 0;
+		l->args = get_args(pips[i] + j, &l);
+		l->args = args_filter(&l);
+		k = 0;
+		while (l->args[k])
+			printf("%s\n", l->args[k++]);
 		i++;
 	}
+	
 }
 
 int	check_syntax(char *s)
