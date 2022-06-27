@@ -7,7 +7,8 @@ SRC		=	minishell.c\
 			./src/utils.c\
 			./src/split_pipes.c\
 			./src/check_syntax.c\
-			./src/remove_spaces.c
+			./src/remove_spaces.c\
+			./src/lst_env.c
 
 HEADER	=	minishell.h
 

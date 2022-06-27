@@ -159,6 +159,7 @@ char	*get_cmd(char *s, int *d)
 	j = 0;
 	end = end_of_cmd(s);
 	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
+	printf("len = %d", len_of_cmd(s, end));
 	if (!cmd)
 		return (NULL);
 	i = 0;
@@ -258,6 +259,33 @@ int		iftoken(int index, t_list **l)
 	return (0);
 }
 
+void	fileopen(t_list	**l, char *filename, char *token)
+{
+	t_list	*elm;
+	int 	int_token;
+
+	elm = *l;
+	if (token[0] == '>' && token[1] == '>')
+		int_token = 2;
+	else
+		int_token = 1;
+	if (elm->fd == -5)
+	{
+		if (int_token == 1)
+			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
+		else
+			open(filename, O_RDWR | O_APPEND);
+	}
+	else
+	{
+		close(elm->fd);
+		if (int_token == 1)
+			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
+		else
+			open(filename, O_RDWR | O_APPEND);
+	}
+}
+
 char	**args_filter(t_list	**l)
 {
 	t_list	*elm;
@@ -276,6 +304,7 @@ char	**args_filter(t_list	**l)
 	while (elm->args[++i])
 	{
 		if (iftoken(i, l)){
+			fileopen(l,  elm->args[i + 1],  elm->args[i]);
 			elm->token = elm->args[i];
 			elm->filename = elm->args[i + 1];
 			i++;
@@ -284,6 +313,7 @@ char	**args_filter(t_list	**l)
 			args[j++] = elm->args[i];
 	}
 	args[i] = NULL;
+	printf("fd : %d\n", elm->fd);
 	printf("token : %s\n", elm->token);
 	printf("filename : %s\n", elm->filename);
 	free(elm->args);
@@ -303,6 +333,7 @@ void parsing(char	**pips)
 		l = malloc(sizeof(t_list));
 		j = 0;
 		l->cmd = get_cmd(pips[i], &j);
+		l->fd = -5;
 		l->index_token = NULL;
 		l->count_token = 0;
 		l->args = get_args(pips[i] + j, &l);

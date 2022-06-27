@@ -14,9 +14,15 @@ int		main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	(void)env;
 	char *buff;
 
+	t_list_env *lstenv;
+	split_equal(&lstenv, env);
+	// while (lstenv)
+	// {
+	// 	printf("%s=%s\n", lstenv->key, lstenv->value);
+	// 	lstenv = lstenv->next;
+	// }
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	while(1)
