@@ -161,7 +161,7 @@ int end_of_cmd(char *s)
 	{
 		if (s[end] == '"' || s[end] == '\'')
 			skep_quotes(s, &end);
-		if (s[end] == ' ')
+		if (is_space(s[end]))
 			break;
 		end++;
 	}
@@ -186,7 +186,7 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 			j -= 2;
 			j += skep_quotes2(s, &i, env);
 		}
-		if (s[i] == ' ')
+		if (is_space(s[i]))
 			break;
 		i++;
 	}
@@ -315,21 +315,23 @@ char	**get_args(char *s, t_list **l, t_list_env **env)
 	{
 		if (s[i] == '"' || s[i] == '\'')
 			skep_quotes(s, &i);
-		else if (s[i] == ' ')
+		else if (is_space(s[i]))
+		{
+			while (is_space(s[i]) && is_space(s[i + 1]))
+				i++;
 			word++;
+		}
 		i++;
 	}
 	(*l)->words = word;
 	if (word == 0)
-	{
-		return NULL;
-	}
+		return (NULL);
 	args = malloc(sizeof(char*) * word + 1);
 	i = 0;
 	d = 0;
 	while (i < word)
 	{
-		while (s[0] == ' ')
+		while (is_space(s[0]))
 			s++;
 		args[i] = get_cmd(s, &d, env);
 		if (args[i][0] == '>')
@@ -468,7 +470,7 @@ void parsing(char	**pips, t_list_env **env)
 	}
 	while(head)
 	{
-		printf("CMD = %s\n", head->cmd);
+		printf("CMD = |%s|\n", head->cmd);
 		int k = 0;
 		while(head->args && head->args[k] != NULL)
 		{

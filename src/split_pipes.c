@@ -19,9 +19,9 @@ char	*mem(char *str, int start, int end)
 
 	i = 0;
 	p = NULL;
-	while (str[start] == ' ')
+	while (is_space(str[start]))
 		start++;
-	while (str[end - 1] == ' ')
+	while (is_space(str[end-1]))
 		end--;
 	p = malloc((end - start + 1));
 	if (!p)
