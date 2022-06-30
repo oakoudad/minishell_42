@@ -29,14 +29,16 @@ int len_var(char *s, t_list_env **env)
 	var = malloc(sizeof(char) * len);
 	while (++i < len)
 		var[i] = s[i];
+	var[i] = 0;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, var) == 0)
+		if (ft_strcmp(temp->key, var) == 0)
 			res = ft_strlen(temp->value);
 		temp = temp->next;
 	}
 	free(var);
-	return (res - len - 1);
+	var = NULL;
+	return (res);
 }
 
 char	*ft_strdup(char *s1)
@@ -109,6 +111,7 @@ int	skep_quotes2(char *s, int *d, t_list_env **env)
 
 	c = s[*d];
 	i = *d + 1;
+	res = 0;
 	while (s[i] && s[i] != c)
 	{
 		if (s[i] == '$')
@@ -171,8 +174,9 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 {
 	int i;
 	int j;
+
 	i = 0;
-	j = to + 1;
+	j = 0;
 	while (i < to)
 	{
 		if(s[i] == '$')
@@ -189,19 +193,6 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 	return (j);
 }
 
-void	copyto(char *src, char *dst, char c, int *d)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = *d;
-	while (src[i] != c)
-		dst[j++] = src[i++];
-	dst[j] = '\0';
-	*d = j;
-}
-
 int copy_var(char *s, char *dest,t_list_env **env, int *d)
 {
 	t_list_env *temp;
@@ -216,20 +207,45 @@ int copy_var(char *s, char *dest,t_list_env **env, int *d)
 	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
 		len++;
 	var = malloc(sizeof(char) * len);
-	while (++i < len)
+	while (i < len)
+	{
 		var[i] = s[i];
+		i++;
+	}
+	var[i] = '\0';
 	i = (*d);
 	j = -1;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, var) == 0)
+		if (ft_strcmp(temp->key, var) == 0)
 		{
 			while (temp->value[++j])
 				dest[i++] = temp->value[j];
 		}
 		temp = temp->next;
 	}
-	return (i);
+	dest[i] = '\0';
+	*d = i;
+	free(var);
+	return (len);
+}
+
+void	copyto(char *s, char *cmd, char c, int *d, t_list_env **env)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	i = *d;
+	while (s[j] != c)
+	{
+		if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
+			j += copy_var(s + j + 1, cmd, env, &i);
+		else
+			cmd[i++] = s[j];
+		j++;
+	}
+	*d = i;
 }
 
 char	*get_cmd(char *s, int *d, t_list_env **env)
@@ -241,8 +257,8 @@ char	*get_cmd(char *s, int *d, t_list_env **env)
 
 	j = 0;
 	end = end_of_cmd(s);
+	//printf("len = %d\n", len_of_cmd(s, end, env));
 	cmd = malloc(sizeof(char) * len_of_cmd(s, end, env) + 1);
-	printf("len = %d\n", len_of_cmd(s, end, env));
 	if (!cmd)
 		return (NULL);
 	i = 0;
@@ -250,19 +266,19 @@ char	*get_cmd(char *s, int *d, t_list_env **env)
 	{
 		if (s[j] != '"' && s[j] != '\'')
 		{
-			if (s[j] == '$')
-				j = copy_var(s + j + 1, cmd, env, &i);
+			if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
+				j += copy_var(s + j + 1, cmd, env, &i);
 			else
 				cmd[i++] = s[j];
 		}
-			
 		else
 		{
-			copyto(s + j + 1, cmd, s[j], &i);
+			copyto(s + j + 1, cmd, s[j], &i, env);
 			skep_quotes(s, &j);
 		}
 		j++;
 	}
+	cmd[i] = '\0';
 	*d = end + 1;
 	return (cmd);
 }
@@ -305,7 +321,9 @@ char	**get_args(char *s, t_list **l, t_list_env **env)
 	}
 	(*l)->words = word;
 	if (word == 0)
+	{
 		return NULL;
+	}
 	args = malloc(sizeof(char*) * word + 1);
 	i = 0;
 	d = 0;
@@ -409,30 +427,56 @@ char	**args_filter(t_list	**l)
 	return (args);
 }
 
+// void free_parsing()
+// {
+// 	int k;
+
+// 	k = 0;
+// 	while (l->args && l->args[k])
+// 		free(l->args[k++]);
+// }
+
 void parsing(char	**pips, t_list_env **env)
 {
-	t_list	*l;
+	t_list	*node;
+	t_list	*head;
+	t_list	*tmp;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
+	head = NULL;
 	while (pips[i])
 	{
-		l = malloc(sizeof(t_list));
+		node = malloc(sizeof(t_list));
+		if (head == NULL)
+			head = node;
+		else
+			tmp->next = node;
 		j = 0;
-		l->cmd = get_cmd(pips[i], &j, env);
-		l->fd = -5;
-		l->index_token = NULL;
-		l->count_token = 0;
-		l->args = get_args(pips[i] + j, &l, env);
-		l->args = args_filter(&l);
-		k = 0;
-		while (l->args[k])
-			printf("%s\n", l->args[k++]);
+		node->cmd = get_cmd(pips[i], &j, env);
+		node->fd = -5;
+		node->filename = NULL;
+		node->token = NULL;
+		node->index_token = NULL;
+		node->count_token = 0;
+		node->args = get_args(pips[i] + j, &node, env);
+		if (node->args != NULL)
+			node->args = args_filter(&node);
+		tmp = node;
 		i++;
 	}
-	
+	while(head)
+	{
+		printf("CMD = %s\n", head->cmd);
+		int k = 0;
+		while(head->args && head->args[k] != NULL)
+		{
+			printf(" Arg %d = %s\n", k + 1, head->args[k]);
+			k++;
+		}
+		head = head->next;
+	}
 }
 
 int	check_syntax(char *s, t_list_env **env)

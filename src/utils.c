@@ -19,7 +19,7 @@ int ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_strncmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned int	i;
 	unsigned char	*a;

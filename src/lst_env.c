@@ -73,7 +73,7 @@ int	create_list(t_list_env **lst, char *name, char *value)
 	tmp = *lst;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, name) == 0)
+		if (ft_strcmp(tmp->key, name) == 0)
 		{
 			tmp->value = value;
 			return (0);

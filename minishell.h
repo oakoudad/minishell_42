@@ -19,7 +19,7 @@ typedef struct list
 	int				words;
 	char			*filename;
 	struct listenv	*env;
-	struct list	*next;
+	struct list		*next;
 }	t_list;
 
 typedef struct listenv
@@ -46,4 +46,4 @@ char	*remove_spaces(char *p);
 void	init_index(int *i, int *start, int *end);
 void	skep_and_full(char *s, char *p, int *d, int *j);
 void	split_equal(t_list_env **lst, char **env);
-int	ft_strncmp(const char *s1, const char *s2);
+int	ft_strcmp(const char *s1, const char *s2);
