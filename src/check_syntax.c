@@ -36,6 +36,7 @@ int len_var(char *s, t_list_env **env)
 			res = ft_strlen(temp->value);
 		temp = temp->next;
 	}
+	res -= strlen(var) + 1;
 	free(var);
 	var = NULL;
 	return (res);
@@ -115,7 +116,7 @@ int	skep_quotes2(char *s, int *d, t_list_env **env)
 	while (s[i] && s[i] != c)
 	{
 		if (s[i] == '$')
-			res = len_var(s + i + 1, env);
+			res += len_var(s + i + 1, env);
 		i++;
 	}
 	if (s[i] == 0)
@@ -176,11 +177,13 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 	int j;
 
 	i = 0;
-	j = 0;
+	j = to + 1;
 	while (i < to)
 	{
-		if(s[i] == '$')
+		if(s[i] == '$'){
 			j += len_var(s + i + 1, env);
+			printf("%d\n", len_var(s + i + 1, env));
+		}
 		if (s[i] == '"' || s[i] == '\'')
 		{
 			j -= 2;
@@ -255,13 +258,13 @@ char	*get_cmd(char *s, int *d, t_list_env **env)
 	int	 	i;
 	char 	*cmd;
 
-	j = 0;
 	end = end_of_cmd(s);
-	//printf("len = %d\n", len_of_cmd(s, end, env));
+	printf("leeen = %d\n", len_of_cmd(s, end, env));
 	cmd = malloc(sizeof(char) * len_of_cmd(s, end, env) + 1);
 	if (!cmd)
 		return (NULL);
 	i = 0;
+	j = 0;
 	while (j <= end)
 	{
 		if (s[j] != '"' && s[j] != '\'')
