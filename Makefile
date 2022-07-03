@@ -8,7 +8,12 @@ SRC		=	minishell.c\
 			./src/split_pipes.c\
 			./src/check_syntax.c\
 			./src/remove_spaces.c\
-			./src/lst_env.c
+			./src/lst_env.c\
+			./builting/echo.c\
+			./builting/export.c\
+			./builting/env.c\
+			./builting/cd.c\
+			./builting/unset.c
 
 HEADER	=	minishell.h
 

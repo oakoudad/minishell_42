@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int len_var(char *s, t_list_env **env)
+int len_var(char *s)
 {
 	t_list_env *temp;
 	int i;
@@ -23,7 +23,7 @@ int len_var(char *s, t_list_env **env)
 	i = -1;
 	len = 0;
 	res = 0;
-	temp = *env;
+	temp = info.env_lst;
 	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
 		len++;
 	var = malloc(sizeof(char) * len);
@@ -104,7 +104,7 @@ int	skep_quotes(char *s, int *d)
 	return (1);
 }
 
-int	skep_quotes2(char *s, int *d, t_list_env **env)
+int	skep_quotes2(char *s, int *d)
 {
 	char	c;
 	int		i;
@@ -116,7 +116,7 @@ int	skep_quotes2(char *s, int *d, t_list_env **env)
 	while (s[i] && s[i] != c)
 	{
 		if (s[i] == '$')
-			res += len_var(s + i + 1, env);
+			res += len_var(s + i + 1);
 		i++;
 	}
 	if (s[i] == 0)
@@ -171,7 +171,7 @@ int end_of_cmd(char *s)
 
 
 
-int len_of_cmd(char *s, int to, t_list_env **env)
+int len_of_cmd(char *s, int to)
 {
 	int i;
 	int j;
@@ -181,13 +181,13 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 	while (i < to)
 	{
 		if(s[i] == '$'){
-			j += len_var(s + i + 1, env);
-			printf("%d\n", len_var(s + i + 1, env));
+			j += len_var(s + i + 1);
+			printf("%d\n", len_var(s + i + 1));
 		}
 		if (s[i] == '"' || s[i] == '\'')
 		{
 			j -= 2;
-			j += skep_quotes2(s, &i, env);
+			j += skep_quotes2(s, &i);
 		}
 		if (is_space(s[i]))
 			break;
@@ -196,7 +196,7 @@ int len_of_cmd(char *s, int to, t_list_env **env)
 	return (j);
 }
 
-int copy_var(char *s, char *dest,t_list_env **env, int *d)
+int copy_var(char *s, char *dest, int *d)
 {
 	t_list_env *temp;
 	int len;
@@ -206,7 +206,7 @@ int copy_var(char *s, char *dest,t_list_env **env, int *d)
 
 	i = -1;
 	len = 0;
-	temp = *env;
+	temp = info.env_lst;
 	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
 		len++;
 	var = malloc(sizeof(char) * len);
@@ -233,7 +233,7 @@ int copy_var(char *s, char *dest,t_list_env **env, int *d)
 	return (len);
 }
 
-void	copyto(char *s, char *cmd, char c, int *d, t_list_env **env)
+void	copyto(char *s, char *cmd, char c, int *d)
 {
 	int		i;
 	int		j;
@@ -243,7 +243,7 @@ void	copyto(char *s, char *cmd, char c, int *d, t_list_env **env)
 	while (s[j] != c)
 	{
 		if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
-			j += copy_var(s + j + 1, cmd, env, &i);
+			j += copy_var(s + j + 1, cmd, &i);
 		else
 			cmd[i++] = s[j];
 		j++;
@@ -251,7 +251,7 @@ void	copyto(char *s, char *cmd, char c, int *d, t_list_env **env)
 	*d = i;
 }
 
-char	*get_cmd(char *s, int *d, t_list_env **env)
+char	*get_cmd(char *s, int *d)
 {
 	int		end;
 	int	 	j;
@@ -259,8 +259,7 @@ char	*get_cmd(char *s, int *d, t_list_env **env)
 	char 	*cmd;
 
 	end = end_of_cmd(s);
-	printf("leeen = %d\n", len_of_cmd(s, end, env));
-	cmd = malloc(sizeof(char) * len_of_cmd(s, end, env) + 1);
+	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
 	if (!cmd)
 		return (NULL);
 	i = 0;
@@ -270,13 +269,13 @@ char	*get_cmd(char *s, int *d, t_list_env **env)
 		if (s[j] != '"' && s[j] != '\'')
 		{
 			if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
-				j += copy_var(s + j + 1, cmd, env, &i);
+				j += copy_var(s + j + 1, cmd, &i);
 			else
 				cmd[i++] = s[j];
 		}
 		else
 		{
-			copyto(s + j + 1, cmd, s[j], &i, env);
+			copyto(s + j + 1, cmd, s[j], &i);
 			skep_quotes(s, &j);
 		}
 		j++;
@@ -305,7 +304,7 @@ int		*intjoin(t_list **l, int d)
 	return (r);
 }
 
-char	**get_args(char *s, t_list **l, t_list_env **env)
+char	**get_args(char *s, t_list **l)
 {
 	int i;
 	int d;
@@ -336,7 +335,7 @@ char	**get_args(char *s, t_list **l, t_list_env **env)
 	{
 		while (is_space(s[0]))
 			s++;
-		args[i] = get_cmd(s, &d, env);
+		args[i] = get_cmd(s, &d);
 		if (args[i][0] == '>')
 		{
 			if((*l)->count_token == 0)
@@ -425,9 +424,9 @@ char	**args_filter(t_list	**l)
 			args[j++] = elm->args[i];
 	}
 	args[i] = NULL;
-	printf("fd : %d\n", elm->fd);
-	printf("token : %s\n", elm->token);
-	printf("filename : %s\n", elm->filename);
+	// printf("fd : %d\n", elm->fd);
+	// printf("token : %s\n", elm->token);
+	// printf("filename : %s\n", elm->filename);
 	free(elm->args);
 	return (args);
 }
@@ -441,7 +440,7 @@ char	**args_filter(t_list	**l)
 // 		free(l->args[k++]);
 // }
 
-void parsing(char	**pips, t_list_env **env)
+void parsing(char	**pips)
 {
 	t_list	*node;
 	t_list	*head;
@@ -451,40 +450,41 @@ void parsing(char	**pips, t_list_env **env)
 
 	i = 0;
 	head = NULL;
-	while (pips[i])
+	while (pips[i] != NULL && i < info.count_pipes)
 	{
 		node = malloc(sizeof(t_list));
+		node->args = NULL;
 		if (head == NULL)
 			head = node;
 		else
 			tmp->next = node;
 		j = 0;
-		node->cmd = get_cmd(pips[i], &j, env);
+		node->cmd = get_cmd(pips[i], &j);
 		node->fd = -5;
 		node->filename = NULL;
 		node->token = NULL;
 		node->index_token = NULL;
 		node->count_token = 0;
-		node->args = get_args(pips[i] + j, &node, env);
+		node->args = get_args(pips[i] + j, &node);
 		if (node->args != NULL)
 			node->args = args_filter(&node);
 		tmp = node;
 		i++;
 	}
-	while(head)
-	{
-		printf("CMD = |%s|\n", head->cmd);
-		int k = 0;
-		while(head->args && head->args[k] != NULL)
-		{
-			printf(" Arg %d = %s\n", k + 1, head->args[k]);
-			k++;
-		}
-		head = head->next;
-	}
+	tmp->next = NULL;
+	if (ft_strcmp(head->cmd, "echo") == 0)
+		ft_echo(head->args);
+	if (ft_strcmp(head->cmd, "export") == 0)
+		ft_export(head->args);
+	if (ft_strcmp(head->cmd, "env") == 0)
+		ft_env(1);
+	if (ft_strcmp(head->cmd, "cd") == 0)
+		ft_cd(head->args[0]);
+	if (ft_strcmp(head->cmd, "unset") == 0)
+		ft_unset(head->args);
 }
 
-int	check_syntax(char *s, t_list_env **env)
+int	check_syntax(char *s)
 {
 	int		i;
 	int		j;
@@ -504,6 +504,6 @@ int	check_syntax(char *s, t_list_env **env)
 	if (!pips)
 		return (0);
 	i = 0;
-	parsing(pips, env);
+	parsing(pips);
 	return (1);
 }

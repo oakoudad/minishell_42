@@ -1,0 +1,102 @@
+#include "../minishell.h"
+
+void    skip_quotes_init(char *str, int *d, int *c, char *var)
+{
+    int i;
+    int y;
+
+    i = *d + 1;
+    y = *c;
+    while (str[i] && str[i] != '\'' && str[i] != '\"')
+    {
+        var[y] = str[i];
+        i++;
+        y++;
+    }
+    if (str[i] == 0)
+    {
+        printf("Invalid syntax\n");
+    }
+    *d = i;
+    *c = y;
+}
+
+char **copy_var1(char *str, int i, int j, int k, char **splited)
+{
+    while (str[i])
+    {
+        if(i == 0)
+            splited[j] = malloc(sizeof(char) * (strlen(str) + 2));
+        if (str[i] == '"' || str[i] == '\'')
+            skip_quotes_init(str, &i, &k, splited[j]);
+        else if (str[i] == ' ' && str[i + 1])
+        {
+            splited[j][k] = '\0';
+            j++;
+            k = 0;
+            splited[j] = malloc(sizeof(char) * (strlen(str) + 1));
+        }
+        else
+        {
+            splited[j][k] = str[i];
+            k++;
+        }
+        i++;
+    }
+    splited[j][k] = '\0';
+    j++;
+    splited[j] = NULL;
+    return (splited);
+}
+
+char **split(char *str)
+{
+    int i;
+    int j;
+    int k;
+
+    i = 0;
+    j = 0;
+    k = 0;
+    char **splited;
+    splited = malloc(sizeof(char *) * (strlen(str) + 2));
+    if (!splited)
+        return (NULL);
+    splited = copy_var1(str, i, j, k, splited);
+    return (splited);
+}
+
+void	check_key(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if ((str[i] >= 'a' && str[i] <= 'z')
+			|| (str[i] >= 'A' && str[i] <= 'Z')
+			|| (str[i] >= '0' && str[i] <= '9') || (str[i] == '_'))
+			i++;
+		else
+		{
+			printf("Invalid syntax\n");
+			exit(0);
+		}
+	}
+}
+
+int ft_export (char **var)
+{
+    int i;
+
+    i = -1;
+    if (!var)
+        ft_env(0);
+    else
+    {
+        while (var[++i])
+            check_key(var[i]);
+        split_equal(var);
+    }
+    return (0);
+}

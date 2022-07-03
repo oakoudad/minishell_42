@@ -121,6 +121,7 @@ char	**split_pipes(char *s)
 			count++;
 		i++;
 	}
+	info.count_pipes = count + 1;
 	p = malloc(sizeof(char *) * (count + 2));
 	if (!p || !split_pipes2(s, p, count + 1))
 		return (NULL);
