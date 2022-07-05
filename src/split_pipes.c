@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/04/21 22:01:25 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/05 21:17:18 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	**split_pipes(char *s)
 			count++;
 		i++;
 	}
-	info.count_pipes = count + 1;
+	g_info.count_pipes = count + 1;
 	p = malloc(sizeof(char *) * (count + 2));
 	if (!p || !split_pipes2(s, p, count + 1))
 		return (NULL);

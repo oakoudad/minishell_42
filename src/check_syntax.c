@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/05/28 22:39:19 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:18:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int len_var(char *s)
 	i = -1;
 	len = 0;
 	res = 0;
-	temp = info.env_lst;
+	temp = g_info.env_lst;
 	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
 		len++;
 	var = malloc(sizeof(char) * len);
@@ -206,7 +206,7 @@ int copy_var(char *s, char *dest, int *d)
 
 	i = -1;
 	len = 0;
-	temp = info.env_lst;
+	temp = g_info.env_lst;
 	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
 		len++;
 	var = malloc(sizeof(char) * len);
@@ -376,7 +376,7 @@ void	fileopen(t_list	**l, char *filename, char *token)
 	int 	int_token;
 
 	elm = *l;
-	if (token[0] == '>' && token[1] == '>')
+	if (ft_strcmp(token, ">>") == 0)
 		int_token = 2;
 	else
 		int_token = 1;
@@ -385,7 +385,11 @@ void	fileopen(t_list	**l, char *filename, char *token)
 		if (int_token == 1)
 			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
 		else
-			open(filename, O_RDWR | O_APPEND);
+		{
+			elm->fd = open(filename, O_RDWR | O_APPEND);
+			if (elm->fd == -1)
+				elm->fd = open(filename, O_CREAT | O_RDWR);
+		}
 	}
 	else
 	{
@@ -393,7 +397,11 @@ void	fileopen(t_list	**l, char *filename, char *token)
 		if (int_token == 1)
 			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
 		else
-			open(filename, O_RDWR | O_APPEND);
+		{
+			elm->fd = open(filename, O_RDWR | O_APPEND);
+			if (elm->fd == -1)
+				elm->fd = open(filename, O_CREAT | O_RDWR);
+		}
 	}
 }
 
@@ -424,21 +432,9 @@ char	**args_filter(t_list	**l)
 			args[j++] = elm->args[i];
 	}
 	args[i] = NULL;
-	// printf("fd : %d\n", elm->fd);
-	// printf("token : %s\n", elm->token);
-	// printf("filename : %s\n", elm->filename);
 	free(elm->args);
 	return (args);
 }
-
-// void free_parsing()
-// {
-// 	int k;
-
-// 	k = 0;
-// 	while (l->args && l->args[k])
-// 		free(l->args[k++]);
-// }
 
 void parsing(char	**pips)
 {
@@ -450,7 +446,7 @@ void parsing(char	**pips)
 
 	i = 0;
 	head = NULL;
-	while (pips[i] != NULL && i < info.count_pipes)
+	while (pips[i] != NULL && i < g_info.count_pipes)
 	{
 		node = malloc(sizeof(t_list));
 		node->args = NULL;
@@ -473,7 +469,7 @@ void parsing(char	**pips)
 	}
 	tmp->next = NULL;
 	if (ft_strcmp(head->cmd, "echo") == 0)
-		ft_echo(head->args);
+		ft_echo(head->args, head->fd);
 	if (ft_strcmp(head->cmd, "export") == 0)
 		ft_export(head->args);
 	if (ft_strcmp(head->cmd, "env") == 0)

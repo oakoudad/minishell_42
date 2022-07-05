@@ -54,10 +54,10 @@ void	ft_envadd_back(t_list_env *new)
 {
 	t_list_env	*t;
 	
-	t = info.env_lst;
+	t = g_info.env_lst;
 	if (!t)
 	{
-		info.env_lst = new;
+		g_info.env_lst = new;
 		return ;
 	}
 	while (t->next)
@@ -67,12 +67,12 @@ void	ft_envadd_back(t_list_env *new)
 	t->next = new;
 }
 
-int	create_list(char *name, char *value, int i)
+int		create_list(char *name, char *value, int i)
 {
 	t_list_env	*new;
 	t_list_env	*tmp;
 
-	tmp = info.env_lst;
+	tmp = g_info.env_lst;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, name) == 0)
@@ -83,6 +83,8 @@ int	create_list(char *name, char *value, int i)
 		tmp = tmp->next;
 	}
 	new = ft_lstenv(name, value);
+	if (!new)
+		return (0);
 	new->index = i;
 	if (!new)
 		return (0);
@@ -90,14 +92,16 @@ int	create_list(char *name, char *value, int i)
 	return (1);
 }
 
-void	sort_list()
+int	sort_list(void)
 {
 	int	i;
 	t_list_env	*lst;
 	char	**names;
 
-	lst = info.env_lst;
+	lst = g_info.env_lst;
 	names = malloc(sizeof(char *) * 100);
+	if (!names)
+		return (0);
 	i = 0;
 	while (lst)
 	{
@@ -123,10 +127,11 @@ void	sort_list()
 		}
 		i++;
 	}
-	info.names = names;
+	g_info.names = names;
+	return (1);
 }
 
-void	split_equal(char **env)
+int	split_equal(char **env)
 {
 	int			i;
 	char		*name;
@@ -136,10 +141,17 @@ void	split_equal(char **env)
 	while (env[i])
 	{
 		name = malloc(sizeof(char) * len_key(env[i]));
+		if (!name)
+			return (0);
 		value = malloc(sizeof(char) * (strlen(env[i]) - len_key(env[i])));
+		if (!value)
+			return (0);
 		init(name, value, env[i]);
-		create_list(name, value, i);
+		if (create_list(name, value, i) == 0)
+			return (0);
 		i++;
 	}
-	sort_list();
+	if (sort_list() == 0)
+		return (0);
+	return (1);
 }

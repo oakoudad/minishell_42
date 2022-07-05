@@ -4,13 +4,13 @@ int del_node(t_list_env *node)
     t_list_env *tmp;
     t_list_env *prev;
 
-    if (info.env_lst == node)
+    if (g_info.env_lst == node)
     {
-        info.env_lst = node->next;
+        g_info.env_lst = node->next;
         free(node);
         return (1);
     }
-    tmp = info.env_lst;
+    tmp = g_info.env_lst;
     while (tmp)
     {
         if (tmp == node)
@@ -32,10 +32,10 @@ void    ft_unset(char **str)
     t_list_env *tmp2;
 
     i = 0;
-    tmp = info.env_lst;
+    tmp = g_info.env_lst;
     while (str[i])
     {
-        tmp = info.env_lst;
+        tmp = g_info.env_lst;
         while (tmp)
         {
             if (ft_strcmp(tmp->key, str[i]) == 0)

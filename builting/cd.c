@@ -4,7 +4,7 @@ char	*get_path(char *key)
 {
 	t_list_env	*tmp;
 
-	tmp = info.env_lst;
+	tmp = g_info.env_lst;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, key) == 0)
@@ -14,7 +14,7 @@ char	*get_path(char *key)
 	return (NULL);
 }
 
-int ft_pwd()
+int ft_pwd(void)
 {
 
 	char	cwd[1000];

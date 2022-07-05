@@ -1,12 +1,14 @@
 #include "../minishell.h"
 
-void	ft_echo(char **var)
+void	ft_echo(char **var, int fd)
 {
 	int		i;
 	int		n_option;
 
 	i = -1;
 	n_option = 0;
+	if (fd == -5)
+		fd = 1;
 	if (var && var[0])
 	{
 		if (strcmp(var[0], "-n") == 0)
@@ -17,12 +19,12 @@ void	ft_echo(char **var)
 		while (var[++i])
 		{
 			if (i != 0)
-				printf(" ");
-			printf("%s", var[i]);
+				write(fd, " ", 1);
+			write(fd, var[i], ft_strlen(var[i]));
 		}
 		if (n_option == 0)
-			printf("\n");
+			write(fd, "\n", 1);
 	}
 	else
-		printf("\n");
+		write(fd, "\n", 1);
 }

@@ -1,12 +1,26 @@
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <signal.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <fcntl.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
+/*   Updated: 2022/07/05 22:01:37 by oakoudad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <signal.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 typedef struct list
 {
@@ -31,12 +45,12 @@ typedef struct listenv
 
 typedef struct lisinfo
 {
-	char	**names;
-	int		count_pipes;
+	char		**names;
+	int			count_pipes;
 	t_list_env	*env_lst;
 }	t_info;
 
-t_info info;
+t_info	g_info;
 
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(void *content);
@@ -53,13 +67,14 @@ char	*ft_strdup(char *s1);
 char	*remove_spaces(char *p);
 void	init_index(int *i, int *start, int *end);
 void	skep_and_full(char *s, char *p, int *d, int *j);
-void	split_equal(char **env);
+int		split_equal(char **env);
 int		ft_strcmp(const char *s1, const char *s2);
-void	ft_echo(char **var);
+void	ft_echo(char **var, int fd);
 int		ft_export(char **var);
 int		ft_env(int x);
 void	ft_cd(char *path);
-int		ft_pwd();
+int		ft_pwd(void);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_unset(char **str);
-void	sort_list();
+int		sort_list(void);
+#endif
