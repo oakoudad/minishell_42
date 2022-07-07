@@ -5,15 +5,21 @@ CFLAGS	= -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -L /
 
 SRC		=	minishell.c\
 			./src/utils.c\
+			./src/utils2.c\
 			./src/split_pipes.c\
 			./src/check_syntax.c\
 			./src/remove_spaces.c\
 			./src/lst_env.c\
+			./src/output.c\
 			./builting/echo.c\
 			./builting/export.c\
 			./builting/env.c\
 			./builting/cd.c\
-			./builting/unset.c
+			./builting/unset.c\
+			./builting/exit.c\
+			./parsing/parsing.c\
+			./parsing/utils.c\
+			./parsing/utils2.c
 
 HEADER	=	minishell.h
 

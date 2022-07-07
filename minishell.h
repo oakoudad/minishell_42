@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/05 22:01:37 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/07 03:31:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,18 @@ int		ft_pwd(void);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_unset(char **str);
 int		sort_list(void);
+void	ft_exit(char **args);
+void	putstr_fd(int fd, char *str);
+void	parsing(char	**pips);
+int		len_var(char *s);
+int		skep_quotes(char *s, int *d);
+int		skep_quotes2(char *s, int *d);
+int		iftoken(int index, t_list **l);
+char	*ft_strdup(char *s1);
+char	*ft_charjoin(char *s1, char c);
+int		*intjoin(t_list **l, int d);
+void	copyto(char *s, char *cmd, char c, int *d);
+int		copy_var(char *s, char *dest, int *d);
+int		end_of_cmd(char *s);
+int		len_of_cmd(char *s, int to);
 #endif
