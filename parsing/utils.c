@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:31:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/07 03:46:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,28 @@ int	skep_quotes2(char *s, int *d)
 	}
 	*d = i;
 	return (res);
+}
+
+int len_of_cmd(char *s, int to)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = to + 1;
+	while (i < to)
+	{
+		if(s[i] == '$'){
+			j += len_var(s + i + 1);
+		}
+		if (s[i] == '"' || s[i] == '\'')
+		{
+			j -= 2;
+			j += skep_quotes2(s, &i);
+		}
+		if (is_space(s[i]))
+			break;
+		i++;
+	}
+	return (j);
 }

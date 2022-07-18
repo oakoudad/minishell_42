@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:31:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/07 03:45:15 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,6 @@ void	copyto(char *s, char *cmd, char c, int *d);
 int		copy_var(char *s, char *dest, int *d);
 int		end_of_cmd(char *s);
 int		len_of_cmd(char *s, int to);
+void	fileopen(t_list	**l, char *filename, char *token);
+int		is_valid_key(char c);
 #endif

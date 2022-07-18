@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:26:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:28:14 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/07 03:55:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,12 @@ int		*intjoin(t_list **l, int d)
 	elm->count_token++;
 	free(elm->index_token);
 	return (r);
+}
+
+int is_valid_key(char c)
+{
+	if ((c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || c == '_')
+		return (1);
+	return (0);
 }

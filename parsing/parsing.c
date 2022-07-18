@@ -6,13 +6,11 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:31:31 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/07 03:33:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 char	*get_cmd(char *s, int *d)
 {
@@ -96,41 +94,6 @@ char	**get_args(char *s, t_list **l)
 	}
 	args[i] = NULL;
 	return args;
-}
-
-void	fileopen(t_list	**l, char *filename, char *token)
-{
-	t_list	*elm;
-	int 	int_token;
-
-	elm = *l;
-	if (ft_strcmp(token, ">>") == 0)
-		int_token = 2;
-	else
-		int_token = 1;
-	if (elm->fd == -5)
-	{
-		if (int_token == 1)
-			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
-		else
-		{
-			elm->fd = open(filename, O_RDWR | O_APPEND);
-			if (elm->fd == -1)
-				elm->fd = open(filename, O_CREAT | O_RDWR);
-		}
-	}
-	else
-	{
-		close(elm->fd);
-		if (int_token == 1)
-			elm->fd = open(filename, O_CREAT | O_RDWR, 0666);
-		else
-		{
-			elm->fd = open(filename, O_RDWR | O_APPEND);
-			if (elm->fd == -1)
-				elm->fd = open(filename, O_CREAT | O_RDWR);
-		}
-	}
 }
 
 char	**args_filter(t_list	**l)

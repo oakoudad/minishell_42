@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 03:30:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:31:34 by oakoudad         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   utils2.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: oakoudad <oakoudad@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/07/07 03:30:46 by oakoudad		  #+#	#+#			 */
+/*   Updated: 2022/07/07 03:48:39 by oakoudad		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../minishell.h"
@@ -21,7 +21,8 @@ void	copyto(char *s, char *cmd, char c, int *d)
 	i = *d;
 	while (s[j] != c)
 	{
-		if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
+		if (s[j] == '$' && s[j + 1] != '"'
+			&& s[j + 1] != '\'' && s[j + 1] != '\0')
 			j += copy_var(s + j + 1, cmd, &i);
 		else
 			cmd[i++] = s[j];
@@ -30,26 +31,32 @@ void	copyto(char *s, char *cmd, char c, int *d)
 	*d = i;
 }
 
-int copy_var(char *s, char *dest, int *d)
+char	*create_var(char *s, int len)
 {
-	t_list_env *temp;
-	int len;
-	int i;
-	int j;
-	char *var;
+	int		i;
+	char	*var;
 
-	i = -1;
+	i = 0;
+	var = malloc(sizeof(char) * len);
+	while (++i < len)
+		var[i] = s[i];
+	var[i] = '\0';
+	return (var);
+}
+
+int	copy_var(char *s, char *dest, int *d)
+{
+	t_list_env	*temp;
+	int			len;
+	int			i;
+	int			j;
+	char		*var;
+
 	len = 0;
 	temp = g_info.env_lst;
-	while ((s[len] >= 'a' && s[len] <= 'z') || (s[len] >= 'A' && s[len] <= 'Z') || s[len] == '_')
+	while (is_valid_key(s[len]))
 		len++;
-	var = malloc(sizeof(char) * len);
-	while (i < len)
-	{
-		var[i] = s[i];
-		i++;
-	}
-	var[i] = '\0';
+	var = create_var(s, len);
 	i = (*d);
 	j = -1;
 	while (temp)
@@ -63,13 +70,12 @@ int copy_var(char *s, char *dest, int *d)
 	}
 	dest[i] = '\0';
 	*d = i;
-	free(var);
-	return (len);
+	return (free(var), len);
 }
 
-int end_of_cmd(char *s)
+int	end_of_cmd(char *s)
 {
-	int end;
+	int	end;
 
 	end = 0;
 	while (s[end])
@@ -77,33 +83,40 @@ int end_of_cmd(char *s)
 		if (s[end] == '"' || s[end] == '\'')
 			skep_quotes(s, &end);
 		if (is_space(s[end]))
-			break;
+			break ;
 		end++;
 	}
-	return (end-1);
+	return (end - 1);
 }
 
-int len_of_cmd(char *s, int to)
+void	fileopen(t_list	**l, char *filename, char *token)
 {
-	int i;
-	int j;
+	int	int_token;
 
-	i = 0;
-	j = to + 1;
-	while (i < to)
+	int_token = 1;
+	if (ft_strcmp(token, ">>") == 0)
+		int_token = 2;
+	if ((*l)->fd == -5)
 	{
-		if(s[i] == '$'){
-			j += len_var(s + i + 1);
-			printf("%d\n", len_var(s + i + 1));
-		}
-		if (s[i] == '"' || s[i] == '\'')
+		if (int_token == 1)
+			(*l)->fd = open(filename, O_CREAT | O_RDWR, 0666);
+		else
 		{
-			j -= 2;
-			j += skep_quotes2(s, &i);
+			(*l)->fd = open(filename, O_RDWR | O_APPEND);
+			if ((*l)->fd == -1)
+				(*l)->fd = open(filename, O_CREAT | O_RDWR);
 		}
-		if (is_space(s[i]))
-			break;
-		i++;
 	}
-	return (j);
+	else
+	{
+		close((*l)->fd);
+		if (int_token == 1)
+			(*l)->fd = open(filename, O_CREAT | O_RDWR, 0666);
+		else
+		{
+			(*l)->fd = open(filename, O_RDWR | O_APPEND);
+			if ((*l)->fd == -1)
+				(*l)->fd = open(filename, O_CREAT | O_RDWR);
+		}
+	}
 }
