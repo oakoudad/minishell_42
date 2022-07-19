@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:33:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:50:30 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ char	**get_args(char *s, t_list **l)
 {
 	int i;
 	int d;
-	int word;
 	char **args;
 
 	i = 0;
-	word = 0;
+	(*l)->words = 0;
 	while (s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
@@ -63,17 +62,15 @@ char	**get_args(char *s, t_list **l)
 		{
 			while (is_space(s[i]) && is_space(s[i + 1]))
 				i++;
-			word++;
+			(*l)->words += 1;
 		}
 		i++;
 	}
-	(*l)->words = word;
-	if (word == 0)
-		return (NULL);
-	args = malloc(sizeof(char*) * word + 1);
+	(*l)->words += 1;
+	args = malloc(sizeof(char*) * (*l)->words + 1);
 	i = 0;
 	d = 0;
-	while (i < word)
+	while (i < (*l)->words)
 	{
 		while (is_space(s[0]))
 			s++;
@@ -152,30 +149,33 @@ void	parsing(char	**pips)
 		node->token = NULL;
 		node->index_token = NULL;
 		node->count_token = 0;
-		node->args = get_args(pips[i] + j, &node);
+		node->args = get_args(pips[i], &node);
 		if (node->args != NULL)
 			node->args = args_filter(&node);
 		tmp = node;
 		i++;
 	}
 	tmp->next = NULL;
+	i = -1;
 	if (ft_strcmp(head->cmd, "echo") == 0)
-		ft_echo(head->args, head->fd);
-	if (ft_strcmp(head->cmd, "export") == 0)
-		ft_export(head->args);
-	if (ft_strcmp(head->cmd, "env") == 0)
+		ft_echo(++(head->args), head->fd);
+	else if (ft_strcmp(head->cmd, "export") == 0)
+		ft_export(++(head->args));
+	else if (ft_strcmp(head->cmd, "env") == 0)
 		ft_env(1);
-	if (ft_strcmp(head->cmd, "cd") == 0)
+	else if (ft_strcmp(head->cmd, "cd") == 0)
 	{
-		if (head->args)
-			ft_cd(head->args[0]);
+		if (head->args && head->args[0] && head->args[1])
+			ft_cd(head->args[1]);
 		else
 			ft_cd("");
 	}
-	if (ft_strcmp(head->cmd, "unset") == 0)
-		ft_unset(head->args);
-	if (ft_strcmp(head->cmd, "pwd") == 0)
+	else if (ft_strcmp(head->cmd, "unset") == 0)
+		ft_unset(++(head->args));
+	else if (ft_strcmp(head->cmd, "pwd") == 0)
 		ft_pwd();
-	if (ft_strcmp(head->cmd, "exit") == 0)
-		ft_exit(head->args);
+	else if (ft_strcmp(head->cmd, "exit") == 0)
+		ft_exit(++(head->args));
+	else
+		exec_cmd(node->args);
 }

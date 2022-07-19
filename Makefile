@@ -11,6 +11,7 @@ SRC		=	minishell.c\
 			./src/remove_spaces.c\
 			./src/lst_env.c\
 			./src/output.c\
+			./src/ft_split.c\
 			./builting/echo.c\
 			./builting/export.c\
 			./builting/env.c\
@@ -19,7 +20,8 @@ SRC		=	minishell.c\
 			./builting/exit.c\
 			./parsing/parsing.c\
 			./parsing/utils.c\
-			./parsing/utils2.c
+			./parsing/utils2.c\
+			./execve/check_cmd.c
 
 HEADER	=	minishell.h
 

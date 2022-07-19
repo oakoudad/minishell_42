@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/07 03:45:15 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:47:30 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <errno.h>
 
 typedef struct list
 {
@@ -47,6 +48,7 @@ typedef struct lisinfo
 {
 	char		**names;
 	int			count_pipes;
+	int			errorstatus;
 	t_list_env	*env_lst;
 }	t_info;
 
@@ -93,4 +95,9 @@ int		end_of_cmd(char *s);
 int		len_of_cmd(char *s, int to);
 void	fileopen(t_list	**l, char *filename, char *token);
 int		is_valid_key(char c);
+char	*get_env_var(char *key);
+char	*get_cmd_from_path(char *cmd);
+char	**ft_split(char *s, char c);
+int		exec_cmd(char **args);
+char	**prepare_env();
 #endif

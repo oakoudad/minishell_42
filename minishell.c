@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/05 21:27:59 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:10:03 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 	
 	if(split_equal(env) == 0)
 		return (0);
+
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
