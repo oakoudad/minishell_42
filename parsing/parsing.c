@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/18 16:50:30 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:55:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	**args_filter(t_list	**l)
 		else
 			args[j++] = elm->args[i];
 	}
-	args[i] = NULL;
+	args[j] = NULL;
 	free(elm->args);
 	return (args);
 }

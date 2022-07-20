@@ -86,6 +86,10 @@ int		create_list(char *name, char *value, int i)
 	if (!new)
 		return (0);
 	new->index = i;
+	if (name[0] == '?' && name[1] == '\0')
+		new->status = 0;
+	else
+		new->status = 1;
 	if (!new)
 		return (0);
 	ft_envadd_back(new);
@@ -131,7 +135,7 @@ int	sort_list(void)
 	return (1);
 }
 
-int	split_equal(char **env)
+int	split_equal(char **env, int type)
 {
 	int			i;
 	char		*name;
@@ -151,6 +155,16 @@ int	split_equal(char **env)
 			return (0);
 		i++;
 	}
+	if (type == 1)
+		name = ft_strdup("?");
+	if (type == 1 && !name)
+		return (0);
+	if (type == 1)
+		value = ft_strdup("0");
+	if (type == 1 && !value)
+		return (0);
+	if (type == 1 && create_list(name, value, i) == 0)
+			return (0);
 	if (sort_list() == 0)
 		return (0);
 	return (1);

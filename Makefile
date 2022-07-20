@@ -10,6 +10,7 @@ SRC		=	minishell.c\
 			./src/check_syntax.c\
 			./src/remove_spaces.c\
 			./src/lst_env.c\
+			./src/ft_itoa.c\
 			./src/output.c\
 			./src/ft_split.c\
 			./builting/echo.c\

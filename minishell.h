@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/18 18:47:30 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:35:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct listenv
 {
 	char			*key;
 	int				index;
+	int				status;
 	char			*value;
 	struct listenv	*next;
 }	t_list_env;
@@ -69,7 +70,7 @@ char	*ft_strdup(char *s1);
 char	*remove_spaces(char *p);
 void	init_index(int *i, int *start, int *end);
 void	skep_and_full(char *s, char *p, int *d, int *j);
-int		split_equal(char **env);
+int		split_equal(char **env, int type);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_echo(char **var, int fd);
 int		ft_export(char **var);
@@ -100,4 +101,6 @@ char	*get_cmd_from_path(char *cmd);
 char	**ft_split(char *s, char c);
 int		exec_cmd(char **args);
 char	**prepare_env();
+char	*ft_itoa(int n);
+int		create_list(char *name, char *value, int i);
 #endif

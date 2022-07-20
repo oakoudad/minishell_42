@@ -75,12 +75,14 @@ void	check_key(char *str)
 	{
 		if ((str[i] >= 'a' && str[i] <= 'z')
 			|| (str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= '0' && str[i] <= '9') || (str[i] == '_'))
+			|| (str[i] == '_'))
+			i++;
+		else if ((str[i] >= '0' && str[i] <= '9') && i != 0)
 			i++;
 		else
 		{
-			printf("Invalid syntax\n");
-			exit(0);
+			printf("minishell: export: `%s': not a valid identifier\n", str);
+			return ;
 		}
 	}
 }
@@ -90,13 +92,13 @@ int ft_export (char **var)
     int i;
 
     i = -1;
-    if (!var)
+    if (!var || !var[0])
         ft_env(0);
     else
     {
         while (var[++i])
             check_key(var[i]);
-        split_equal(var);
+        split_equal(var, 0);
     }
     return (0);
 }

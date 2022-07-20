@@ -36,7 +36,7 @@ char	*create_var(char *s, int len)
 	int		i;
 	char	*var;
 
-	i = 0;
+	i = -1;
 	var = malloc(sizeof(char) * len);
 	while (++i < len)
 		var[i] = s[i];
@@ -54,8 +54,11 @@ int	copy_var(char *s, char *dest, int *d)
 
 	len = 0;
 	temp = g_info.env_lst;
-	while (is_valid_key(s[len]))
-		len++;
+	if (s[0] == '?')
+		len = 1;
+	else
+		while (is_valid_key(s[len]))
+			len++;
 	var = create_var(s, len);
 	i = (*d);
 	j = -1;

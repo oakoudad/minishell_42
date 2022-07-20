@@ -30,24 +30,37 @@ int ft_pwd(void)
 
 void	ft_cd(char *path)
 {
+	create_list("?", "0", 1000);
 	if (path[0] == '\0')
 	{
 		if (chdir(get_path("HOME")) == -1)
-			printf("no such a file\n");
+		{
+			printf("minishell: %s: No such a file or directory\n", get_path("HOME"));
+			create_list("?", "1", 1000);
+		}
 	}	
 	else if (ft_strcmp(path, "-") == 0)
 	{
 		if (chdir(get_path("OLDPWD")) == -1)
-			printf("no such a file\n");
+		{
+			printf("minishell: %s: No such a file or directory\n", get_path("OLDPWD"));
+			create_list("?", "1", 1000);
+		}
 	}
 	else if (ft_strcmp(path, "~") == 0)
 	{
 		if (chdir(get_path("HOME")) == -1)
-			printf("no such a file\n");
+		{
+			printf("minishell: %s: No such a file or directory\n", get_path("HOME"));
+			create_list("?", "1", 1000);
+		}
 	}
 	else
 	{
 		if (chdir(path) == -1)
-			printf("no such a file\n");
+		{
+			printf("minishell: %s: No such a file or directory\n", path);
+			create_list("?", "1", 1000);
+		}
 	}
 }

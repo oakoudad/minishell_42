@@ -3,6 +3,7 @@
 void	ft_echo(char **var, int fd)
 {
 	int		i;
+	int		y;
 	int		n_option;
 
 	i = -1;
@@ -11,11 +12,20 @@ void	ft_echo(char **var, int fd)
 		fd = 1;
 	if (var && var[0])
 	{
-		if (strcmp(var[0], "-n") == 0)
+		y = 0;
+		while (var[0][0] == '-' && var[0][y] != '\0')
 		{
-			n_option = 1;
-			i++;
+			if(var[0][y] != 'n')
+			{
+				n_option = 1;
+				break;
+			}
+			else
+				n_option = 0;
+			y++;
 		}
+		if (n_option == 1)
+			i = 0;
 		while (var[++i])
 		{
 			if (i != 0)

@@ -82,13 +82,16 @@ int		exec_cmd(char **args)
 	else
 		cmd = get_cmd_from_path(args[0]);
 	if (cmd == NULL)
+	{
+		create_list("?", ft_itoa(127), 1000);
 		return (printf("bash: %s: command not found\n", args[0]), 0);
+	}
 	env = prepare_env();
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			g_info.errorstatus = 0;
+			create_list("?", ft_itoa(0), 1000);
 			status = execve(cmd, args, env);
 			if (status == -1)
 			{
@@ -99,7 +102,8 @@ int		exec_cmd(char **args)
 				if (errno == EPERM)
 					g_info.errorstatus = 126;
 				else
-					g_info.errorstatus = 126;
+					g_info.errorstatus = 127;
+				create_list("?", ft_itoa(g_info.errorstatus), 1000);
 				exit(g_info.errorstatus);
 			}
 		}
