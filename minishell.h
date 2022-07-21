@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/19 14:35:13 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:41:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct list
 typedef struct listenv
 {
 	char			*key;
-	int				index;
 	int				status;
 	char			*value;
 	struct listenv	*next;
@@ -48,9 +47,11 @@ typedef struct listenv
 typedef struct lisinfo
 {
 	char		**names;
+	int			sig;
 	int			count_pipes;
 	int			errorstatus;
 	t_list_env	*env_lst;
+	t_list		*cmds;
 }	t_info;
 
 t_info	g_info;
@@ -102,5 +103,6 @@ char	**ft_split(char *s, char c);
 int		exec_cmd(char **args);
 char	**prepare_env();
 char	*ft_itoa(int n);
-int		create_list(char *name, char *value, int i);
+int		create_list(char *name, char *value);
+void	routes();
 #endif

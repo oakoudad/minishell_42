@@ -67,7 +67,7 @@ void	ft_envadd_back(t_list_env *new)
 	t->next = new;
 }
 
-int		create_list(char *name, char *value, int i)
+int		create_list(char *name, char *value)
 {
 	t_list_env	*new;
 	t_list_env	*tmp;
@@ -78,14 +78,13 @@ int		create_list(char *name, char *value, int i)
 		if (ft_strcmp(tmp->key, name) == 0)
 		{
 			tmp->value = value;
-			return (0);
+			return (1);
 		}
 		tmp = tmp->next;
 	}
 	new = ft_lstenv(name, value);
 	if (!new)
 		return (0);
-	new->index = i;
 	if (name[0] == '?' && name[1] == '\0')
 		new->status = 0;
 	else
@@ -151,7 +150,7 @@ int	split_equal(char **env, int type)
 		if (!value)
 			return (0);
 		init(name, value, env[i]);
-		if (create_list(name, value, i) == 0)
+		if (create_list(name, value) == 0)
 			return (0);
 		i++;
 	}
@@ -163,8 +162,11 @@ int	split_equal(char **env, int type)
 		value = ft_strdup("0");
 	if (type == 1 && !value)
 		return (0);
-	if (type == 1 && create_list(name, value, i) == 0)
-			return (0);
+	if (type == 1 && create_list(name, value) == 0)
+	{
+		while(1);
+		return (0);
+	}
 	if (sort_list() == 0)
 		return (0);
 	return (1);

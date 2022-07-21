@@ -77,21 +77,24 @@ int		exec_cmd(char **args)
 	char	**env;
 	int		status;
 	pid_t	pid;
+	int 	s;
+
 	if ((args[0][0] == '.' && args[0][1] == '/') || args[0][0] == '/')
 		cmd = args[0];
 	else
 		cmd = get_cmd_from_path(args[0]);
 	if (cmd == NULL)
 	{
-		create_list("?", ft_itoa(127), 1000);
+		create_list("?", ft_itoa(127));
 		return (printf("bash: %s: command not found\n", args[0]), 0);
 	}
 	env = prepare_env();
+	g_info.sig = 0;
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			create_list("?", ft_itoa(0), 1000);
+			create_list("?", ft_itoa(0));
 			status = execve(cmd, args, env);
 			if (status == -1)
 			{
@@ -100,14 +103,14 @@ int		exec_cmd(char **args)
 				write(1, ": ", 2);
 				perror("");
 				if (errno == EPERM)
-					g_info.errorstatus = 126;
+					exit(126);
 				else
-					g_info.errorstatus = 127;
-				create_list("?", ft_itoa(g_info.errorstatus), 1000);
-				exit(g_info.errorstatus);
+					exit(127);
 			}
 		}
 	}
-	waitpid(pid, 0, 0);
+	waitpid(pid, &s, 0);
+	g_info.sig = 1;
+	create_list("?", ft_itoa(WEXITSTATUS(s)));
 	return (0);
 }
