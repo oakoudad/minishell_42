@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/21 16:41:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:20:19 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		is_valid_key(char c);
 char	*get_env_var(char *key);
 char	*get_cmd_from_path(char *cmd);
 char	**ft_split(char *s, char c);
-int		exec_cmd(char **args);
+int		exec_cmd(char **args, int outfd);
 char	**prepare_env();
 char	*ft_itoa(int n);
 int		create_list(char *name, char *value);

@@ -27,7 +27,7 @@ void routes()
 		else if (ft_strcmp(head->cmd, "exit") == 0)
 			ft_exit(++(head->args));
 		else
-			exec_cmd(head->args);
+			exec_cmd(head->args, head->fd);
 		head = head->next;
 	}
 }

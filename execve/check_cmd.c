@@ -71,7 +71,7 @@ char **prepare_env()
 	return (newenv);
 }
 
-int		exec_cmd(char **args)
+int		exec_cmd(char **args, int outfd)
 {
 	char	*cmd;
 	char	**env;
@@ -94,6 +94,10 @@ int		exec_cmd(char **args)
 		pid = fork();
 		if (pid == 0)
 		{
+			if(outfd > 0){
+				dup2(outfd, STDOUT_FILENO);
+				close(outfd);
+			}
 			create_list("?", ft_itoa(0));
 			status = execve(cmd, args, env);
 			if (status == -1)
