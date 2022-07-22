@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/22 16:38:00 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:47:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	redirections_error(char **p, int count)
 				return (unexpected(p[i][j], 0));
 			if (p[i][j] != '>' && p[i][j] != '<' && p[i][j] != ' ')
 				status = 0;
+			if(status == 2 && p[i][j] != p[i][j - 1])
+				return (unexpected(p[i][j], 0));
 			j++;
 		}
 		if (status > 0 && count > i)
