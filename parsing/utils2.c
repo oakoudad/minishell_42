@@ -92,34 +92,44 @@ int	end_of_cmd(char *s)
 	return (end - 1);
 }
 
-void	fileopen(t_list	**l, char *outfile, char *token)
+void	fileopen(t_list	**l, char *file, char *token)
 {
-	int	int_token;
-
-	int_token = 1;
-	if (ft_strcmp(token, ">>") == 0)
-		int_token = 2;
 	if ((*l)->out_fd == -5)
 	{
-		if (int_token == 1)
-			(*l)->out_fd = open(outfile, O_CREAT | O_RDWR, 0666);
-		else
+		if (ft_strcmp(token, ">") == 0)
+			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
+		else if(ft_strcmp(token, ">>") == 0)
 		{
-			(*l)->out_fd = open(outfile, O_RDWR | O_APPEND);
+			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
 			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(outfile, O_CREAT | O_RDWR);
+				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
 		}
 	}
 	else
 	{
 		close((*l)->out_fd);
-		if (int_token == 1)
-			(*l)->out_fd = open(outfile, O_CREAT | O_RDWR, 0666);
-		else
+		if (ft_strcmp(token, ">") == 0)
+			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
+		else if(ft_strcmp(token, ">>") == 0)
 		{
-			(*l)->out_fd = open(outfile, O_RDWR | O_APPEND);
+			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
 			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(outfile, O_CREAT | O_RDWR);
+				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
 		}
+	}
+		printf("im here! 1\n");
+	if ((*l)->in_fd == -5)
+	{
+		if (ft_strcmp(token, "<") == 0)
+		{
+			printf("im here!\n");
+			(*l)->in_fd = open(file, O_RDONLY);
+			if ((*l)->in_fd == -1)
+				printf("minishell: %s: No such file or directory\n", file);
+		}
+	}
+	else
+	{
+		
 	}
 }

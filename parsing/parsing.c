@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/22 15:32:46 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:15:32 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_cmd(char *s, int *d)
 	return (cmd);
 }
 
-void	ignore_token(char *s, int *j)
+char	*ignore_directions_and_get_cmd(char *s)
 {
 	char 	*token;
 	int d;
@@ -57,6 +57,7 @@ void	ignore_token(char *s, int *j)
 		while (is_space(s[0]))
 			s++;
 		token = get_cmd(s, &d); // get	cmd
+		printf("%s\n", token);
 		if(ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0) // if result is token
 		{
 			free(token);
@@ -64,12 +65,22 @@ void	ignore_token(char *s, int *j)
 			while (is_space(s[0]))
 				s++;
 			token = get_cmd(s, &d);
+			printf("%s\n", token);
 			s += d;
 			free(token);
 		}
+		else if(token[0] == '>' || token[0] == '<')
+		{
+			free(token);
+			s += d;
+			while (is_space(s[0]))
+				s++;
+		}
+		else
+			break ;
 	}
-	*j = d;
-	exit(0);
+	printf("cmd = %s\n", token);
+	return (token);
 }
 
 char	**get_args(char *s, t_list **l)
@@ -169,9 +180,9 @@ void	parsing(char	**pips)
 		else
 			tmp->next = node;
 		j = 0;
-		ignore_token(pips[i], &j);
-		node->cmd = get_cmd(pips[i], &j);
+		node->cmd = ignore_directions_and_get_cmd(pips[i]);
 		node->out_fd = -5;
+		node->in_fd = -5;
 		node->outfile = NULL;
 		node->token = NULL;
 		node->index_token = NULL;
