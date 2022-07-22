@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/21 18:20:19 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:56:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ typedef struct list
 	char			*cmd;
 	char			**args;
 	char			*token;
-	int				fd;
+	int				out_fd;
+	int				in_fd;
 	int				*index_token;
 	int				count_token;
 	int				words;
-	char			*filename;
+	char			*outfile;
+	char			*infile;
 	struct list		*next;
 }	t_list;
 
@@ -95,7 +97,7 @@ void	copyto(char *s, char *cmd, char c, int *d);
 int		copy_var(char *s, char *dest, int *d);
 int		end_of_cmd(char *s);
 int		len_of_cmd(char *s, int to);
-void	fileopen(t_list	**l, char *filename, char *token);
+void	fileopen(t_list	**l, char *outfile, char *token);
 int		is_valid_key(char c);
 char	*get_env_var(char *key);
 char	*get_cmd_from_path(char *cmd);

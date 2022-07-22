@@ -8,7 +8,7 @@ void routes()
 	while (head)
 	{
 		if (ft_strcmp(head->cmd, "echo") == 0)
-			ft_echo(++(head->args), head->fd);
+			ft_echo(++(head->args), head->out_fd);
 		else if (ft_strcmp(head->cmd, "export") == 0)
 			ft_export(++(head->args));
 		else if (ft_strcmp(head->cmd, "env") == 0)
@@ -27,7 +27,7 @@ void routes()
 		else if (ft_strcmp(head->cmd, "exit") == 0)
 			ft_exit(++(head->args));
 		else
-			exec_cmd(head->args, head->fd);
+			exec_cmd(head->args, head->out_fd);
 		head = head->next;
 	}
 }

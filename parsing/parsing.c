@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/21 16:41:39 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/21 20:33:34 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ char	*get_cmd(char *s, int *d)
 	cmd[i] = '\0';
 	*d = end + 1;
 	return (cmd);
+}
+
+void	ignore_token(char *s, int *d)
+{
+	char 	*token;
+
+	token = get_cmd(s, d);
+	if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
+	{
+		
+	}
 }
 
 char	**get_args(char *s, t_list **l)
@@ -113,7 +124,7 @@ char	**args_filter(t_list	**l)
 		if (iftoken(i, l)){
 			fileopen(l,  elm->args[i + 1],  elm->args[i]);
 			elm->token = elm->args[i];
-			elm->filename = elm->args[i + 1];
+			elm->outfile = elm->args[i + 1];
 			i++;
 		}
 		else
@@ -143,9 +154,10 @@ void	parsing(char	**pips)
 		else
 			tmp->next = node;
 		j = 0;
+		ignore_token(pips[i], &j);
 		node->cmd = get_cmd(pips[i], &j);
-		node->fd = -5;
-		node->filename = NULL;
+		node->out_fd = -5;
+		node->outfile = NULL;
 		node->token = NULL;
 		node->index_token = NULL;
 		node->count_token = 0;

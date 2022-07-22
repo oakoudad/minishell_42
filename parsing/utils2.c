@@ -92,34 +92,34 @@ int	end_of_cmd(char *s)
 	return (end - 1);
 }
 
-void	fileopen(t_list	**l, char *filename, char *token)
+void	fileopen(t_list	**l, char *outfile, char *token)
 {
 	int	int_token;
 
 	int_token = 1;
 	if (ft_strcmp(token, ">>") == 0)
 		int_token = 2;
-	if ((*l)->fd == -5)
+	if ((*l)->out_fd == -5)
 	{
 		if (int_token == 1)
-			(*l)->fd = open(filename, O_CREAT | O_RDWR, 0666);
+			(*l)->out_fd = open(outfile, O_CREAT | O_RDWR, 0666);
 		else
 		{
-			(*l)->fd = open(filename, O_RDWR | O_APPEND);
-			if ((*l)->fd == -1)
-				(*l)->fd = open(filename, O_CREAT | O_RDWR);
+			(*l)->out_fd = open(outfile, O_RDWR | O_APPEND);
+			if ((*l)->out_fd == -1)
+				(*l)->out_fd = open(outfile, O_CREAT | O_RDWR);
 		}
 	}
 	else
 	{
-		close((*l)->fd);
+		close((*l)->out_fd);
 		if (int_token == 1)
-			(*l)->fd = open(filename, O_CREAT | O_RDWR, 0666);
+			(*l)->out_fd = open(outfile, O_CREAT | O_RDWR, 0666);
 		else
 		{
-			(*l)->fd = open(filename, O_RDWR | O_APPEND);
-			if ((*l)->fd == -1)
-				(*l)->fd = open(filename, O_CREAT | O_RDWR);
+			(*l)->out_fd = open(outfile, O_RDWR | O_APPEND);
+			if ((*l)->out_fd == -1)
+				(*l)->out_fd = open(outfile, O_CREAT | O_RDWR);
 		}
 	}
 }
