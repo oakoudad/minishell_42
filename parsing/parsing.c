@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/22 16:15:32 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/24 16:44:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*ignore_directions_and_get_cmd(char *s)
 		while (is_space(s[0]))
 			s++;
 		token = get_cmd(s, &d); // get	cmd
-		printf("%s\n", token);
 		if(ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0) // if result is token
 		{
 			free(token);
@@ -65,7 +64,6 @@ char	*ignore_directions_and_get_cmd(char *s)
 			while (is_space(s[0]))
 				s++;
 			token = get_cmd(s, &d);
-			printf("%s\n", token);
 			s += d;
 			free(token);
 		}
@@ -79,7 +77,6 @@ char	*ignore_directions_and_get_cmd(char *s)
 		else
 			break ;
 	}
-	printf("cmd = %s\n", token);
 	return (token);
 }
 
@@ -188,6 +185,12 @@ void	parsing(char	**pips)
 		node->index_token = NULL;
 		node->count_token = 0;
 		node->args = get_args(pips[i], &node);
+		char **ssss = node->args;
+		while(ssss[j])
+		{
+			printf("%s\n", ssss[j]);
+			j++;
+		}
 		if (node->args != NULL)
 			node->args = args_filter(&node);
 		tmp = node;

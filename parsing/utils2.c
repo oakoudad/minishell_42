@@ -85,7 +85,7 @@ int	end_of_cmd(char *s)
 	{
 		if (s[end] == '"' || s[end] == '\'')
 			skep_quotes(s, &end);
-		if (is_space(s[end]))
+		if (is_space(s[end]) || s[end] == '>' || s[end] == '<')
 			break ;
 		end++;
 	}
@@ -117,12 +117,10 @@ void	fileopen(t_list	**l, char *file, char *token)
 				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
 		}
 	}
-		printf("im here! 1\n");
 	if ((*l)->in_fd == -5)
 	{
 		if (ft_strcmp(token, "<") == 0)
 		{
-			printf("im here!\n");
 			(*l)->in_fd = open(file, O_RDONLY);
 			if ((*l)->in_fd == -1)
 				printf("minishell: %s: No such file or directory\n", file);
