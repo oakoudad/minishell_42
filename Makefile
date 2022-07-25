@@ -1,7 +1,7 @@
 NAME	= minishell
 CC		= gcc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror -I /Users/${USER}/.brew/opt/readline/include -L /Users/${USER}/.brew/opt/readline/lib -lreadline
+CFLAGS	= -Wall -Wextra -Werror -g -I /Users/${USER}/.brew/opt/readline/include -L /Users/${USER}/.brew/opt/readline/lib -lreadline
 
 SRC		=	minishell.c\
 			./src/utils.c\

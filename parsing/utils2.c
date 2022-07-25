@@ -76,6 +76,19 @@ int	copy_var(char *s, char *dest, int *d)
 	return (free(var), len);
 }
 
+int already(char *s, int to)
+{
+	int i;
+
+	i = 0;
+	if (s[0])
+	while (is_space(s[i]))
+		i++;
+	if (i < to && s[i] != '>' && s[i] != '<')
+		return (i);
+	return (0);
+}
+
 int	end_of_cmd(char *s)
 {
 	int	end;
@@ -85,6 +98,12 @@ int	end_of_cmd(char *s)
 	{
 		if (s[end] == '"' || s[end] == '\'')
 			skep_quotes(s, &end);
+		if ((s[end] == '>' || s[end] == '<') && end == 0)
+		{
+			while (s[end] == '>' || s[end] == '<')
+				end++;
+			return (end - 1);
+		}
 		if (is_space(s[end]) || s[end] == '>' || s[end] == '<')
 			break ;
 		end++;

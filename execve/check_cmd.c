@@ -71,14 +71,13 @@ char **prepare_env()
 	return (newenv);
 }
 
-int		exec_cmd(char **args, int outfd)
+int		exec_cmd(char **args, int outfd, int infd)
 {
 	char	*cmd;
 	char	**env;
 	int		status;
 	pid_t	pid;
 	int 	s;
-
 	if ((args[0][0] == '.' && args[0][1] == '/') || args[0][0] == '/')
 		cmd = args[0];
 	else
@@ -94,9 +93,15 @@ int		exec_cmd(char **args, int outfd)
 		pid = fork();
 		if (pid == 0)
 		{
-			if(outfd > 0){
+			if(outfd > 0)
+			{
 				dup2(outfd, STDOUT_FILENO);
 				close(outfd);
+			}
+			if(infd > 0)
+			{
+				dup2(infd, STDIN_FILENO);
+				close(infd);
 			}
 			create_list("?", ft_itoa(0));
 			status = execve(cmd, args, env);

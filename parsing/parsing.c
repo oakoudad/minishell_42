@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/24 16:44:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:48:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ char	**get_args(char *s, t_list **l)
 				i++;
 			(*l)->words += 1;
 		}
+		else if ((s[i] == '>' || s[i] == '<') && !is_space(s[i - 1]))
+		{
+			while ((s[i] == '>' || s[i] == '<'))
+				i++;
+			(*l)->words += 2;
+		}
 		i++;
 	}
 	(*l)->words += 1;
@@ -120,9 +126,22 @@ char	**get_args(char *s, t_list **l)
 			else
 				(*l)->index_token = intjoin(l, i);
 		}
+		if (args[i][0] == '<')
+		{
+			if((*l)->count_token == 0)
+			{
+				(*l)->index_token = malloc(sizeof(int) * 1);
+				(*l)->index_token[0] = i;
+				(*l)->count_token = 1;
+			}
+			else
+				(*l)->index_token = intjoin(l, i);
+		}
 		s = s + d;
 		i++;
 	}
+	if (args[i - 1][0] == '\0')
+		args[i - 1] = NULL;
 	args[i] = NULL;
 	return args;
 }
@@ -165,7 +184,6 @@ void	parsing(char	**pips)
 	t_list	*tmp;
 	int		i;
 	int		j;
-
 	i = 0;
 	head = NULL;
 	while (pips[i] != NULL && i < g_info.count_pipes)
@@ -185,12 +203,6 @@ void	parsing(char	**pips)
 		node->index_token = NULL;
 		node->count_token = 0;
 		node->args = get_args(pips[i], &node);
-		char **ssss = node->args;
-		while(ssss[j])
-		{
-			printf("%s\n", ssss[j]);
-			j++;
-		}
 		if (node->args != NULL)
 			node->args = args_filter(&node);
 		tmp = node;
