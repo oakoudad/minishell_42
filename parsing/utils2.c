@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void	copyto(char *s, char *cmd, char c, int *d)
+void	copyto(char *s, char *cmd, char c, int *d, int w)
 {
 	int		i;
 	int		j;
@@ -21,7 +21,7 @@ void	copyto(char *s, char *cmd, char c, int *d)
 	i = *d;
 	while (s[j] != c)
 	{
-		if (s[j] == '$' && s[j + 1] != '"'
+		if (c == '"' && w && s[j] == '$' && s[j + 1] != '"'
 			&& s[j + 1] != '\'' && s[j + 1] != '\0')
 			j += copy_var(s + j + 1, cmd, &i);
 		else
@@ -136,17 +136,62 @@ void	fileopen(t_list	**l, char *file, char *token)
 				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
 		}
 	}
-	if ((*l)->in_fd == -5)
+	
+	if (ft_strcmp(token, "<") == 0)
 	{
-		if (ft_strcmp(token, "<") == 0)
-		{
-			(*l)->in_fd = open(file, O_RDONLY);
-			if ((*l)->in_fd == -1)
-				printf("minishell: %s: No such file or directory\n", file);
-		}
+		if ((*l)->in_fd != -5)
+			close((*l)->in_fd);
+		(*l)->in_fd = open(file, O_RDONLY);
+		if ((*l)->in_fd == -1)
+			printf("minishell: %s: No such file or directory\n", file);
 	}
-	else
+	if (ft_strcmp(token, "<<") == 0)
 	{
-		
+		if ((*l)->in_fd != -5)
+		{
+			close((*l)->in_fd);
+			if ((*l)->heredog_file != NULL)
+				free((*l)->heredog_file);
+			(*l)->heredog_file = NULL;
+		}
+		(*l)->heredog_file = generate_name();
+		pid_t pid;
+		g_info.sig = 0;
+		g_info.heredog = 0;
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				(*l)->in_fd = open((*l)->heredog_file, O_CREAT | O_RDWR, 0666);
+				g_info.heredog = 1;
+				while (1)
+				{
+					char *buff = readline("> ");
+					if (buff == NULL)
+						break ;
+					if (ft_strcmp(buff, file) == 0)
+						break ;
+					int i = 0;
+					while(buff[i])
+					{
+						if (buff[i] != '$')
+							write((*l)->in_fd, &buff[i], 1);
+						else
+							get_var(&buff[i], &i, (*l)->in_fd);
+						i++;
+					}
+					if (buff[i] == '\0')
+						write((*l)->in_fd, "\n", 1);
+					free(buff);
+				}
+				close((*l)->in_fd);
+				exit(0);
+			}
+		}
+		waitpid(pid, NULL, 0);
+		g_info.heredog = 0;
+		g_info.sig = 1;
+		(*l)->in_fd = open((*l)->heredog_file, O_RDONLY, 0666);
+		unlink((*l)->heredog_file);
 	}
 }

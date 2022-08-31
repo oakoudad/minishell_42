@@ -6,13 +6,13 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/25 16:48:54 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:33:02 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_cmd(char *s, int *d)
+char	*get_cmd(char *s, int *d, int withextra)
 {
 	int		end;
 	int	 	j;
@@ -29,14 +29,14 @@ char	*get_cmd(char *s, int *d)
 	{
 		if (s[j] != '"' && s[j] != '\'')
 		{
-			if (s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
+			if (withextra && s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
 				j += copy_var(s + j + 1, cmd, &i);
 			else
 				cmd[i++] = s[j];
 		}
 		else
 		{
-			copyto(s + j + 1, cmd, s[j], &i);
+			copyto(s + j + 1, cmd, s[j], &i, withextra);
 			skep_quotes(s, &j);
 		}
 		j++;
@@ -56,23 +56,16 @@ char	*ignore_directions_and_get_cmd(char *s)
 	{
 		while (is_space(s[0]))
 			s++;
-		token = get_cmd(s, &d); // get	cmd
+		token = get_cmd(s, &d, 1);
 		if(ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0) // if result is token
 		{
 			free(token);
 			s += d;
 			while (is_space(s[0]))
 				s++;
-			token = get_cmd(s, &d);
+			token = get_cmd(s, &d, 1);
 			s += d;
 			free(token);
-		}
-		else if(token[0] == '>' || token[0] == '<')
-		{
-			free(token);
-			s += d;
-			while (is_space(s[0]))
-				s++;
 		}
 		else
 			break ;
@@ -85,6 +78,7 @@ char	**get_args(char *s, t_list **l)
 	int i;
 	int d;
 	char **args;
+	int status;
 
 	i = 0;
 	(*l)->words = 0;
@@ -110,11 +104,13 @@ char	**get_args(char *s, t_list **l)
 	args = malloc(sizeof(char*) * (*l)->words + 1);
 	i = 0;
 	d = 0;
+	status = 1;
 	while (i < (*l)->words)
 	{
 		while (is_space(s[0]))
 			s++;
-		args[i] = get_cmd(s, &d);
+		args[i] = get_cmd(s, &d, status);
+		status = 1;
 		if (args[i][0] == '>')
 		{
 			if((*l)->count_token == 0)
@@ -136,6 +132,8 @@ char	**get_args(char *s, t_list **l)
 			}
 			else
 				(*l)->index_token = intjoin(l, i);
+			if(args[i][1] == '<')
+				status = 0;
 		}
 		s = s + d;
 		i++;
@@ -199,6 +197,7 @@ void	parsing(char	**pips)
 		node->out_fd = -5;
 		node->in_fd = -5;
 		node->outfile = NULL;
+		node->heredog_file = NULL;
 		node->token = NULL;
 		node->index_token = NULL;
 		node->count_token = 0;
@@ -210,5 +209,6 @@ void	parsing(char	**pips)
 	}
 	tmp->next = NULL;
 	g_info.cmds = head;
-	routes();
+	if (head->cmd != NULL && head->cmd[0] != '\0')
+		exec_pipe(-1, head);
 }

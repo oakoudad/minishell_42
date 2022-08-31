@@ -13,6 +13,8 @@ SRC		=	minishell.c\
 			./src/ft_itoa.c\
 			./src/output.c\
 			./src/ft_split.c\
+			./src/generate_name.c\
+			./src/get_var.c\
 			./builting/echo.c\
 			./builting/export.c\
 			./builting/env.c\
@@ -23,6 +25,7 @@ SRC		=	minishell.c\
 			./parsing/utils.c\
 			./parsing/utils2.c\
 			./execve/check_cmd.c\
+			./execve/builtin.c\
 			./execve/routes.c
 
 HEADER	=	minishell.h

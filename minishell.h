@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/24 17:41:06 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:28:00 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct list
 	int				words;
 	char			*outfile;
 	char			*infile;
+	char			*heredog_file;
 	struct list		*next;
 }	t_list;
 
@@ -51,6 +52,7 @@ typedef struct lisinfo
 	char		**names;
 	int			sig;
 	int			count_pipes;
+	int			heredog;
 	int			errorstatus;
 	t_list_env	*env_lst;
 	t_list		*cmds;
@@ -93,7 +95,7 @@ int		iftoken(int index, t_list **l);
 char	*ft_strdup(char *s1);
 char	*ft_charjoin(char *s1, char c);
 int		*intjoin(t_list **l, int d);
-void	copyto(char *s, char *cmd, char c, int *d);
+void	copyto(char *s, char *cmd, char c, int *d, int w);
 int		copy_var(char *s, char *dest, int *d);
 int		end_of_cmd(char *s);
 int		len_of_cmd(char *s, int to);
@@ -102,9 +104,16 @@ int		is_valid_key(char c);
 char	*get_env_var(char *key);
 char	*get_cmd_from_path(char *cmd);
 char	**ft_split(char *s, char c);
-int		exec_cmd(char **args, int outfd, int infd);
+void	exec_cmd_sys(char *cmd, char **env, t_list *lst);
 char	**prepare_env();
 char	*ft_itoa(int n);
+int 	routes(t_list *lst);
 int		create_list(char *name, char *value);
-void	routes();
+void 	exec_pipe(int intfd, t_list *lst);
+void	exec_cmd(t_list *head, char *cmd, char **env);
+void 	exc_builtins(t_list *lst);
+void	check_key_null(char *str);
+char	*generate_name(void);
+void	get_var(char *s, int *d, int fd);
+
 #endif

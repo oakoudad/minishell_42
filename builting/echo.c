@@ -7,34 +7,52 @@ int check_args(char *str)
 
 	y = 1;
 	n_option = 0;
-	while (str[0] == '-' && str[y] != '\0')
+	if (str[0] == '-')
 	{
-		if(str[y] != 'n')
+		while (str[y])
 		{
-			n_option = 0;
-			break;
+			if(str[y] != 'n')
+			{
+				n_option = 0;
+				return (n_option);
+			}
+			else
+			{
+				n_option = 1;
+			}
+			y++;
 		}
-		else
-			n_option = 1;
-		y++;
 	}
 	return (n_option);
+}
+
+int pass_n(char **var)
+{
+	int i;
+
+	i = 0;
+	while (check_args(var[i]) == 1)
+		i++;
+	return (i);
 }
 
 void	ft_echo(char **var, int fd)
 {
 	int		i;
+	int 	y;
 	int		n_option;
 
 	i = -1;
+	y = -1;
 	n_option = 0;
 	if (fd == -5)
 		fd = 1;
 	if (var && var[0])
 	{
-		n_option = check_args(var[0]);
+		while (var[++y])
+			n_option = check_args(var[0]);
 		if (n_option == 1)
-			i = 0;
+			i = pass_n(var) - 1;
 		while (var[++i])
 		{
 			putstr_fd(fd, var[i]);
