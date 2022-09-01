@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/08/30 15:33:02 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:09:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_cmd(char *s, int *d, int withextra)
 		}
 		else
 		{
-			copyto(s + j + 1, cmd, s[j], &i, withextra);
+			copyto(s + j + 1, cmd, &i, withextra);
 			skep_quotes(s, &j);
 		}
 		j++;

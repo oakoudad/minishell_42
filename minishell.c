@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/08/31 14:53:17 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:02:00 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,21 @@ void	sighandler(int sig)
 		exit(0);
 }
 
-// void	config_pwd1()
-// {
-// 	char cwd[256];
-// 	char *pwd;
-	
-// 	getcwd(cwd, sizeof(cwd));
-// 	pwd = ft_strdup(cwd);
-// 	create_list("PWD", pwd);
-// 	create_list("OLDPWD", "");
-// 	create_list("_", "/usr/bin/env");
-// 	create_list("SHLVL", "1");
-// }
-
+void	config_pwd1(void)
+{
+	create_list("OLDPWD", "");
+	create_list("PATH", ".");
+}
 
 int	main(int ac, char **av, char **env)
 {
 	char	*buff;
+
 	(void)ac;
 	(void)av;
-	
+	config_pwd1();
 	g_info.sig = 1;
-	if(split_equal(env, 1) == 0)
+	if (split_equal(env, 1) == 0)
 		return (0);
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);

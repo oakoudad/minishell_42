@@ -12,13 +12,15 @@
 
 #include "../minishell.h"
 
-void	copyto(char *s, char *cmd, char c, int *d, int w)
+void	copyto(char *s, char *cmd, int *d, int w)
 {
 	int		i;
 	int		j;
+	char	c;
 
 	j = 0;
 	i = *d;
+	c = *(s - 1);
 	while (s[j] != c)
 	{
 		if (c == '"' && w && s[j] == '$' && s[j + 1] != '"'

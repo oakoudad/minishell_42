@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/08/30 16:28:00 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:10:58 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		iftoken(int index, t_list **l);
 char	*ft_strdup(char *s1);
 char	*ft_charjoin(char *s1, char c);
 int		*intjoin(t_list **l, int d);
-void	copyto(char *s, char *cmd, char c, int *d, int w);
+void	copyto(char *s, char *cmd, int *d, int w);
 int		copy_var(char *s, char *dest, int *d);
 int		end_of_cmd(char *s);
 int		len_of_cmd(char *s, int to);
@@ -105,13 +105,13 @@ char	*get_env_var(char *key);
 char	*get_cmd_from_path(char *cmd);
 char	**ft_split(char *s, char c);
 void	exec_cmd_sys(char *cmd, char **env, t_list *lst);
-char	**prepare_env();
+char	**prepare_env(void);
 char	*ft_itoa(int n);
-int 	routes(t_list *lst);
+int		routes(t_list *lst);
 int		create_list(char *name, char *value);
-void 	exec_pipe(int intfd, t_list *lst);
+void	exec_pipe(int intfd, t_list *lst);
 void	exec_cmd(t_list *head, char *cmd, char **env);
-void 	exc_builtins(t_list *lst);
+void	exc_builtins(t_list *lst);
 void	check_key_null(char *str);
 char	*generate_name(void);
 void	get_var(char *s, int *d, int fd);
