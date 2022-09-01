@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 18:09:47 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:54:22 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,21 @@
 char	*get_cmd(char *s, int *d, int withextra)
 {
 	int		end;
-	int	 	j;
-	int	 	i;
-	char 	*cmd;
+	char	*cmd;
 
 	end = end_of_cmd(s);
 	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
 	if (!cmd)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (j <= end)
-	{
-		if (s[j] != '"' && s[j] != '\'')
-		{
-			if (withextra && s[j] == '$' && s[j + 1] != '"' && s[j + 1] != '\'' && s[j + 1] != '\0')
-				j += copy_var(s + j + 1, cmd, &i);
-			else
-				cmd[i++] = s[j];
-		}
-		else
-		{
-			copyto(s + j + 1, cmd, &i, withextra);
-			skep_quotes(s, &j);
-		}
-		j++;
-	}
-	cmd[i] = '\0';
+	create_cmd(s, cmd, end, withextra);
 	*d = end + 1;
 	return (cmd);
 }
 
 char	*ignore_directions_and_get_cmd(char *s)
 {
-	char 	*token;
-	int d;
+	char	*token;
+	int		d;
 
 	d = 0;
 	while (1)
@@ -57,7 +37,8 @@ char	*ignore_directions_and_get_cmd(char *s)
 		while (is_space(s[0]))
 			s++;
 		token = get_cmd(s, &d, 1);
-		if(ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0) // if result is token
+		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
+			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
 		{
 			free(token);
 			s += d;
@@ -73,15 +54,11 @@ char	*ignore_directions_and_get_cmd(char *s)
 	return (token);
 }
 
-char	**get_args(char *s, t_list **l)
+void	count_args(char *s, t_list **l)
 {
-	int i;
-	int d;
-	char **args;
-	int status;
+	int	i;
 
 	i = 0;
-	(*l)->words = 0;
 	while (s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
@@ -100,8 +77,18 @@ char	**get_args(char *s, t_list **l)
 		}
 		i++;
 	}
-	(*l)->words += 1;
-	args = malloc(sizeof(char*) * (*l)->words + 1);
+}
+
+char	**get_args(char *s, t_list **l)
+{
+	int		i;
+	int		d;
+	char	**args;
+	int		status;
+
+	(*l)->words = 1;
+	count_args(s, l);
+	args = malloc(sizeof(char *) * (*l)->words + 1);
 	i = 0;
 	d = 0;
 	status = 1;
@@ -111,67 +98,13 @@ char	**get_args(char *s, t_list **l)
 			s++;
 		args[i] = get_cmd(s, &d, status);
 		status = 1;
-		if (args[i][0] == '>')
-		{
-			if((*l)->count_token == 0)
-			{
-				(*l)->index_token = malloc(sizeof(int) * 1);
-				(*l)->index_token[0] = i;
-				(*l)->count_token = 1;
-			}
-			else
-				(*l)->index_token = intjoin(l, i);
-		}
-		if (args[i][0] == '<')
-		{
-			if((*l)->count_token == 0)
-			{
-				(*l)->index_token = malloc(sizeof(int) * 1);
-				(*l)->index_token[0] = i;
-				(*l)->count_token = 1;
-			}
-			else
-				(*l)->index_token = intjoin(l, i);
-			if(args[i][1] == '<')
-				status = 0;
-		}
+		index_token(args[i][0], i, l, &status);
 		s = s + d;
 		i++;
 	}
 	if (args[i - 1][0] == '\0')
 		args[i - 1] = NULL;
 	args[i] = NULL;
-	return args;
-}
-
-char	**args_filter(t_list	**l)
-{
-	t_list	*elm;
-	int		size;
-	int		i;
-	int		j;
-	char	**args;
-
-	elm = *l;
-	size = elm->words;
-	if (elm->count_token != 0)
-		size -= 2 * elm->count_token;
-	args = malloc(sizeof(char*) * size + 1);
-	i = -1;
-	j = 0;
-	while (elm->args[++i])
-	{
-		if (iftoken(i, l)){
-			fileopen(l,  elm->args[i + 1],  elm->args[i]);
-			elm->token = elm->args[i];
-			elm->outfile = elm->args[i + 1];
-			i++;
-		}
-		else
-			args[j++] = elm->args[i];
-	}
-	args[j] = NULL;
-	free(elm->args);
 	return (args);
 }
 
@@ -181,7 +114,7 @@ void	parsing(char	**pips)
 	t_list	*head;
 	t_list	*tmp;
 	int		i;
-	int		j;
+
 	i = 0;
 	head = NULL;
 	while (pips[i] != NULL && i < g_info.count_pipes)
@@ -192,18 +125,7 @@ void	parsing(char	**pips)
 			head = node;
 		else
 			tmp->next = node;
-		j = 0;
-		node->cmd = ignore_directions_and_get_cmd(pips[i]);
-		node->out_fd = -5;
-		node->in_fd = -5;
-		node->outfile = NULL;
-		node->heredog_file = NULL;
-		node->token = NULL;
-		node->index_token = NULL;
-		node->count_token = 0;
-		node->args = get_args(pips[i], &node);
-		if (node->args != NULL)
-			node->args = args_filter(&node);
+		init_node(&node, pips[i]);
 		tmp = node;
 		i++;
 	}

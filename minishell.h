@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 18:10:58 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:54:38 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,12 @@ void	exc_builtins(t_list *lst);
 void	check_key_null(char *str);
 char	*generate_name(void);
 void	get_var(char *s, int *d, int fd);
+void	create_cmd(char *s, char *cmd, int end, int withextra);
+void	index_token(char token, int i, t_list **l, int *status);
+void	set_token(t_list	**l, t_list	*elm, int i);
+void	init_node(t_list	**node, char *pip);
+char	**args_filter(t_list	**l);
+char	*ignore_directions_and_get_cmd(char *s);
+char	**get_args(char *s, t_list **l);
 
 #endif

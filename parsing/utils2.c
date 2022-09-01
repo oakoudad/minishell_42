@@ -118,7 +118,9 @@ void	fileopen(t_list	**l, char *file, char *token)
 	if ((*l)->out_fd == -5)
 	{
 		if (ft_strcmp(token, ">") == 0)
+		{
 			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
+		}
 		else if(ft_strcmp(token, ">>") == 0)
 		{
 			(*l)->out_fd = open(file, O_RDWR | O_APPEND);

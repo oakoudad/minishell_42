@@ -22,6 +22,7 @@ SRC		=	minishell.c\
 			./builting/unset.c\
 			./builting/exit.c\
 			./parsing/parsing.c\
+			./parsing/parsing_utils.c\
 			./parsing/utils.c\
 			./parsing/utils2.c\
 			./execve/check_cmd.c\
