@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 18:54:38 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:43:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct list
 	int				words;
 	char			*outfile;
 	char			*infile;
-	char			*heredog_file;
+	char			*heredoc_file;
 	struct list		*next;
 }	t_list;
 
@@ -52,7 +52,10 @@ typedef struct lisinfo
 	char		**names;
 	int			sig;
 	int			count_pipes;
-	int			heredog;
+	int			heredoc;
+	int			heredoc_fd;
+	char		*heredoc_file;
+	int         cnt_c;
 	int			errorstatus;
 	t_list_env	*env_lst;
 	t_list		*cmds;

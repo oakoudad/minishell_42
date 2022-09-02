@@ -7,7 +7,7 @@ char	*generate_name(void)
 	int			i;
 
 	start = malloc(sizeof(char) * 40);
-	start = ft_strdup("/tmp/0xminishell00000000000000.heredog");
+	start = ft_strdup("/tmp/0xminishell00000000000000.heredoc");
 	while(access(start, F_OK) == 0)
 	{
 		i = 0;

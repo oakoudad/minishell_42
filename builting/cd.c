@@ -35,7 +35,7 @@ void	ft_cd(char *path)
 	{
 		if (chdir(get_path("HOME")) == -1)
 		{
-			printf("minishell: %s: No such a file or directory\n", get_path("HOME"));
+			printf("Minishell: cd: HOME not set\n");
 			create_list("?", "1");
 		}
 	}	
@@ -43,9 +43,11 @@ void	ft_cd(char *path)
 	{
 		if (chdir(get_path("OLDPWD")) == -1)
 		{
-			printf("minishell: %s: No such a file or directory\n", get_path("OLDPWD"));
+			printf("Minishell: cd: OLDPWD not set\n");
 			create_list("?", "1");
 		}
+		else
+			ft_pwd();
 	}
 	else if (ft_strcmp(path, "~") == 0)
 	{

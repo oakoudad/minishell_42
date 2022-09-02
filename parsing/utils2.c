@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:08:45 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 19:09:16 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:53:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,26 +154,26 @@ void	fileopen(t_list	**l, char *file, char *token)
 		if ((*l)->in_fd != -5)
 		{
 			close((*l)->in_fd);
-			if ((*l)->heredog_file != NULL)
-				free((*l)->heredog_file);
-			(*l)->heredog_file = NULL;
+			if ((*l)->heredoc_file != NULL)
+				free((*l)->heredoc_file);
+			(*l)->heredoc_file = NULL;
 		}
-		(*l)->heredog_file = generate_name();
+		(*l)->heredoc_file = generate_name();
 		pid_t pid;
 		g_info.sig = 0;
-		g_info.heredog = 0;
+		g_info.heredoc = 0;
 		{
 			pid = fork();
 			if (pid == 0)
 			{
-				(*l)->in_fd = open((*l)->heredog_file, O_CREAT | O_RDWR, 0666);
-				g_info.heredog = 1;
+				(*l)->in_fd = open((*l)->heredoc_file, O_CREAT | O_RDWR, 0666);
+				g_info.heredoc = 1;
+				g_info.heredoc_fd = (*l)->in_fd;
+				g_info.heredoc_file = (*l)->heredoc_file;
 				while (1)
 				{
 					char *buff = readline("> ");
-					if (buff == NULL)
-						break ;
-					if (ft_strcmp(buff, file) == 0)
+					if (buff == NULL || ft_strcmp(buff, file) == 0)
 						break ;
 					int i = 0;
 					while(buff[i])
@@ -193,9 +193,9 @@ void	fileopen(t_list	**l, char *file, char *token)
 			}
 		}
 		waitpid(pid, NULL, 0);
-		g_info.heredog = 0;
+		g_info.heredoc = 0;
 		g_info.sig = 1;
-		(*l)->in_fd = open((*l)->heredog_file, O_RDONLY, 0666);
-		unlink((*l)->heredog_file);
+		(*l)->in_fd = open((*l)->heredoc_file, O_RDONLY);
+		unlink((*l)->heredoc_file);
 	}
 }

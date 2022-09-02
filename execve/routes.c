@@ -41,6 +41,7 @@ void exec_pipe(int intfd, t_list *lst)
 	}
 	env = prepare_env();
 	pid_t pid = 0;
+	g_info.sig = 0;
 	if (!routes(head))
 		pid = fork();
 	if(pid == 0)
@@ -80,5 +81,6 @@ void exec_pipe(int intfd, t_list *lst)
 		return;
 	}
 	close(fd[1]);
+	g_info.sig = 1;
 	exec_pipe(fd[0], lst->next);
 }

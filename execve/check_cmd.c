@@ -25,6 +25,8 @@ char	*get_cmd_from_path(char *cmd)
 	int		i;
 
 	i = -1;
+	if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '/'))
+		return (cmd);
 	path = get_env_var("PATH");
 	vals = ft_split(path, ':');
 	while (vals[++i]){
