@@ -41,9 +41,11 @@ void exec_pipe(int intfd, t_list *lst)
 	}
 	env = prepare_env();
 	pid_t pid = 0;
-	g_info.sig = 0;
 	if (!routes(head))
+	{
+		g_info.sig = 0;
 		pid = fork();
+	}
 	if(pid == 0)
 	{
 		if(intfd != -1)
