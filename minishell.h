@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/02 16:43:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:21:35 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,6 @@ void	init_node(t_list	**node, char *pip);
 char	**args_filter(t_list	**l);
 char	*ignore_directions_and_get_cmd(char *s);
 char	**get_args(char *s, t_list **l);
+char	*create_var(char *s, int len);
 
 #endif

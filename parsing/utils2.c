@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:08:45 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/02 16:53:47 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:19:07 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,46 +46,14 @@ char	*create_var(char *s, int len)
 	return (var);
 }
 
-int	copy_var(char *s, char *dest, int *d)
+int	already(char *s, int to)
 {
-	t_list_env	*temp;
-	int			len;
-	int			i;
-	int			j;
-	char		*var;
-
-	len = 0;
-	temp = g_info.env_lst;
-	if (s[0] == '?')
-		len = 1;
-	else
-		while (is_valid_key(s[len]))
-			len++;
-	var = create_var(s, len);
-	i = (*d);
-	j = -1;
-	while (temp)
-	{
-		if (ft_strcmp(temp->key, var) == 0)
-		{
-			while (temp->value[++j])
-				dest[i++] = temp->value[j];
-		}
-		temp = temp->next;
-	}
-	dest[i] = '\0';
-	*d = i;
-	return (free(var), len);
-}
-
-int already(char *s, int to)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[0])
-	while (is_space(s[i]))
-		i++;
+		while (is_space(s[i]))
+			i++;
 	if (i < to && s[i] != '>' && s[i] != '<')
 		return (i);
 	return (0);
@@ -111,91 +79,4 @@ int	end_of_cmd(char *s)
 		end++;
 	}
 	return (end - 1);
-}
-
-void	fileopen(t_list	**l, char *file, char *token)
-{
-	if ((*l)->out_fd == -5)
-	{
-		if (ft_strcmp(token, ">") == 0)
-		{
-			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
-		}
-		else if(ft_strcmp(token, ">>") == 0)
-		{
-			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
-			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
-		}
-	}
-	else
-	{
-		close((*l)->out_fd);
-		if (ft_strcmp(token, ">") == 0)
-			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
-		else if(ft_strcmp(token, ">>") == 0)
-		{
-			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
-			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
-		}
-	}
-	
-	if (ft_strcmp(token, "<") == 0)
-	{
-		if ((*l)->in_fd != -5)
-			close((*l)->in_fd);
-		(*l)->in_fd = open(file, O_RDONLY);
-		if ((*l)->in_fd == -1)
-			printf("minishell: %s: No such file or directory\n", file);
-	}
-	if (ft_strcmp(token, "<<") == 0)
-	{
-		if ((*l)->in_fd != -5)
-		{
-			close((*l)->in_fd);
-			if ((*l)->heredoc_file != NULL)
-				free((*l)->heredoc_file);
-			(*l)->heredoc_file = NULL;
-		}
-		(*l)->heredoc_file = generate_name();
-		pid_t pid;
-		g_info.sig = 0;
-		g_info.heredoc = 0;
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				(*l)->in_fd = open((*l)->heredoc_file, O_CREAT | O_RDWR, 0666);
-				g_info.heredoc = 1;
-				g_info.heredoc_fd = (*l)->in_fd;
-				g_info.heredoc_file = (*l)->heredoc_file;
-				while (1)
-				{
-					char *buff = readline("> ");
-					if (buff == NULL || ft_strcmp(buff, file) == 0)
-						break ;
-					int i = 0;
-					while(buff[i])
-					{
-						if (buff[i] != '$')
-							write((*l)->in_fd, &buff[i], 1);
-						else
-							get_var(&buff[i], &i, (*l)->in_fd);
-						i++;
-					}
-					if (buff[i] == '\0')
-						write((*l)->in_fd, "\n", 1);
-					free(buff);
-				}
-				close((*l)->in_fd);
-				exit(0);
-			}
-		}
-		waitpid(pid, NULL, 0);
-		g_info.heredoc = 0;
-		g_info.sig = 1;
-		(*l)->in_fd = open((*l)->heredoc_file, O_RDONLY);
-		unlink((*l)->heredoc_file);
-	}
 }
