@@ -14,6 +14,32 @@ void restoreio(int fd[])
 	close(fd[1]);
 }
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n == -2147483648)
+	{	
+		write (fd, "-2147483648", 11);
+		return ;
+	}
+	else if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n *= -1;
+	}
+	if (n >= 0 && n < 10)
+		ft_putchar_fd(n + '0', fd);
+	else
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
+	}
+}
+
 void exec_pipe(int intfd, t_list *lst)
 {
 	t_list *head;
@@ -52,21 +78,25 @@ void exec_pipe(int intfd, t_list *lst)
 	{
 		if(intfd != -1)
 		{
+			write(1, "\n00\n", 4);
 			dup2(intfd, 0);
 			close(intfd);
 		}
 		if (head->in_fd > 0)
 		{
+			write(1, "\n01\n", 4);
 			dup2(head->in_fd, 0);
 			close(head->in_fd);
 		}
 		if (head->out_fd > 0)
 		{
+			write(1, "\n02\n", 4);
 			dup2(head->out_fd, 1);
 			close(head->out_fd);
 		}
 		else if(lst->next)
 		{
+			write(1, "\n03\n", 4);
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
@@ -81,15 +111,13 @@ void exec_pipe(int intfd, t_list *lst)
 	if (!lst->next)	
 	{
 		close(intfd);
+		close(fd[1]);
+		close(fd[0]);
 		waitpid(pid, NULL, 0);
 		g_info.sig = 1;
 		return;
 	}
-	else if (!routes(head))
-	{
-		waitpid(pid, NULL, 0);
-	}
 	close(fd[1]);
-	g_info.sig = 1;
+	//g_info.sig = 1;
 	exec_pipe(fd[0], lst->next);
 }
