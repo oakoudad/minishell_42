@@ -51,6 +51,10 @@ void exec_pipe(int intfd, t_list *lst)
 	head = lst;
 	if(head == NULL)
 		return;
+	fd[0] = -1;
+	fd[1] = -1;
+	io_fd[0] = -1;
+	io_fd[1] = -1;
 	saveio(io_fd);
 	if(lst->next)
 		pipe(fd);
@@ -78,28 +82,27 @@ void exec_pipe(int intfd, t_list *lst)
 	{
 		if(intfd != -1)
 		{
-			write(1, "\n00\n", 4);
 			dup2(intfd, 0);
 			close(intfd);
 		}
 		if (head->in_fd > 0)
 		{
-			write(1, "\n01\n", 4);
 			dup2(head->in_fd, 0);
 			close(head->in_fd);
 		}
 		if (head->out_fd > 0)
 		{
-			write(1, "\n02\n", 4);
 			dup2(head->out_fd, 1);
 			close(head->out_fd);
 		}
 		else if(lst->next)
 		{
-			write(1, "\n03\n", 4);
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
+		close(io_fd[1]);
+		close(io_fd[0]);
+		close(fd[0]);
 		if(routes(head) == 0)
 			execve(cmd, lst->args, env);
 		else
@@ -110,14 +113,27 @@ void exec_pipe(int intfd, t_list *lst)
 	}
 	if (!lst->next)	
 	{
-		close(intfd);
-		close(fd[1]);
+		close(io_fd[1]);
+		close(io_fd[0]);
+		restoreio(io_fd);
 		close(fd[0]);
-		waitpid(pid, NULL, 0);
+		close(fd[1]);
+		close(intfd);
+
+		int z = 0;
+		while (z < g_info.count_pipes && g_info.count_pipes)
+		{
+			wait(NULL);
+			z++;
+		}
 		g_info.sig = 1;
 		return;
 	}
+	close(io_fd[1]);
+	close(io_fd[0]);
 	close(fd[1]);
+	close(fd[1]);
+	close(intfd);
 	//g_info.sig = 1;
 	exec_pipe(fd[0], lst->next);
 }

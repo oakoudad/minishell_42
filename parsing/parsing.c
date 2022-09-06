@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 18:54:22 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/06 20:52:05 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,19 @@ void	count_args(char *s, t_list **l)
 	{
 		if (s[i] == '"' || s[i] == '\'')
 			skep_quotes(s, &i);
-		else if (is_space(s[i]))
+		if (is_space(s[i]))
 		{
 			while (is_space(s[i]) && is_space(s[i + 1]))
 				i++;
 			(*l)->words += 1;
 		}
-		else if ((s[i] == '>' || s[i] == '<') && !is_space(s[i - 1]))
+		if ((s[i] == '>' || s[i] == '<'))
 		{
+			if (s[i - 1] && !is_space(s[i - 1]))
+				(*l)->words += 1;
 			while ((s[i] == '>' || s[i] == '<'))
 				i++;
-			(*l)->words += 2;
+			(*l)->words += 1;
 		}
 		i++;
 	}
