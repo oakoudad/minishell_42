@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:26:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/19 13:14:53 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:32:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_charjoin(char *s1, char c)
 	return (str);
 }
 
-int		*intjoin(t_list **l, int d)
+int	*intjoin(t_list **l, int d)
 {
 	t_list	*elm;
 	int		i;
@@ -64,7 +64,7 @@ int		*intjoin(t_list **l, int d)
 
 	elm = *l;
 	r = malloc(sizeof(int) * elm->count_token + 1);
-	i= 0;
+	i = 0;
 	while (i < elm->count_token)
 	{
 		r[i] = elm->index_token[i];
@@ -76,7 +76,7 @@ int		*intjoin(t_list **l, int d)
 	return (r);
 }
 
-int is_valid_key(char c)
+int	is_valid_key(char c)
 {
 	if ((c >= 'a' && c <= 'z')
 		|| (c >= 'A' && c <= 'Z') || c == '_')

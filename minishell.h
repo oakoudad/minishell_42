@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 17:08:37 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:21:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ char	*ft_strjoin(char *s1, char *s2);
 void	ft_unset(char **str);
 int		sort_list(void);
 void	ft_exit(char **args);
-void	putstr_fd(int fd, char *str);
 void	parsing(char	**pips);
 int		len_var(char *s);
 int		skep_quotes(char *s, int *d);
@@ -126,5 +125,6 @@ char	**args_filter(t_list	**l);
 char	*ignore_directions_and_get_cmd(char *s);
 char	**get_args(char *s, t_list **l);
 char	*create_var(char *s, int len);
+int		redirections_error(char **p, int count);
 
 #endif

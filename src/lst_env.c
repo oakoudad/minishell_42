@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
+/*   Updated: 2022/09/07 18:17:14 by oakoudad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	init(char *name, char *value, char *env)
@@ -53,7 +65,7 @@ t_list_env	*ft_lstenv(char *key, char *value)
 void	ft_envadd_back(t_list_env *new)
 {
 	t_list_env	*t;
-	
+
 	t = g_info.env_lst;
 	if (!t)
 	{
@@ -67,7 +79,7 @@ void	ft_envadd_back(t_list_env *new)
 	t->next = new;
 }
 
-int		create_list(char *name, char *value)
+int	create_list(char *name, char *value)
 {
 	t_list_env	*new;
 	t_list_env	*tmp;
@@ -97,9 +109,9 @@ int		create_list(char *name, char *value)
 
 int	sort_list(void)
 {
-	int	i;
+	int			i;
 	t_list_env	*lst;
-	char	**names;
+	char		**names;
 
 	lst = g_info.env_lst;
 	names = malloc(sizeof(char *) * 100);
@@ -163,10 +175,7 @@ int	split_equal(char **env, int type)
 	if (type == 1 && !value)
 		return (0);
 	if (type == 1 && create_list(name, value) == 0)
-	{
-		while(1);
 		return (0);
-	}
 	if (sort_list() == 0)
 		return (0);
 	return (1);

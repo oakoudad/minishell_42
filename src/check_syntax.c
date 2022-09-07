@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/07/25 16:08:56 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:55:28 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_syntax2(char *s)
 	while (s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
-			if(!skep_quotes(s, &i))
+			if (!skep_quotes(s, &i))
 				return (0);
 		if (s[i] == '|')
 			j++;
@@ -42,7 +42,8 @@ int	check_syntax(char *s)
 	int		i;
 	int		j;
 	char	**pips = NULL;
-	i = 0;
+
+	i = 0; 
 	while (s[i] && is_space(s[i]))
 		i++;
 	j = ft_strlen(s) - 1;

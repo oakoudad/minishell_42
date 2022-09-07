@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 18:31:28 by oakoudad          #+#    #+#             */
+/*   Updated: 2022/09/07 18:32:04 by oakoudad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int is_space(char c)
+int	is_space(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);
-	return 0;
+	return (0);
 }
 
-int ft_strlen(char *s)
+int	ft_strlen(char *s)
 {
-	int i;
+	int	i;
 
 	if (!s)
 		return (0);
@@ -28,7 +40,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	a = (unsigned char *) s1;
 	b = (unsigned char *) s2;
 	i = 0;
-
 	while (a[i] != '\0' && b[i] != '\0' && a[i] == b[i])
 		i++;
 	return (a[i] - b[i]);

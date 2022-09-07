@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:10:12 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/06 20:10:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:46:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	fileopen(t_list	**l, char *file, char *token)
 			}
 		}
 		waitpid(pid, NULL, 0);
-		
 		g_info.heredoc = 0;
 		g_info.sig = 1;
 		(*l)->in_fd = open((*l)->heredoc_file, O_RDONLY);

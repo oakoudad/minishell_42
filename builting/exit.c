@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 17:15:03 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:18:31 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	ft_exit(char **args)
 	int	i;
 
 	i = -1;
-	putstr_fd(1, "exit\n");
+	ft_putstr("exit\n");
 	while (args && args[0] && args[0][++i])
 	{
 		if (!is_numeric(args[0][i]))
 		{
-			putstr_fd(1, "MiniShell: exit: ");
-			putstr_fd(1, args[0]);
-			putstr_fd(1, ": numeric argument required\n");
+			ft_putstr("MiniShell: exit: ");
+			ft_putstr(args[0]);
+			ft_putstr(": numeric argument required\n");
 			exit(255);
 		}
 	}
 	if (args && args[0] && args[1])
-		return (putstr_fd(1, "MiniShell: exit: too many arguments\n"));
+		return (ft_putstr("MiniShell: exit: too many arguments\n"));
 	if (args && args[0])
 		exit(atoi(args[0]));
 	else

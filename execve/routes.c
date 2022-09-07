@@ -72,7 +72,7 @@ void exec_pipe(int intfd, t_list *lst)
 		close(fd[1]);
 		if (lst->next)
 			exec_pipe(fd[0], lst->next);
-		return;
+		return ;
 	}
 	env = prepare_env();
 	pid_t pid = 0;
@@ -105,9 +105,9 @@ void exec_pipe(int intfd, t_list *lst)
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
-		close(fd[0]);
 		if(routes(head) == 0)
 		{
+			close(fd[0]);
 			close(io_fd[1]);
 			close(io_fd[0]);
 			execve(cmd, lst->args, env);
@@ -121,10 +121,10 @@ void exec_pipe(int intfd, t_list *lst)
 	close(fd[1]);
 	close(io_fd[0]);
 	close(io_fd[1]);
+	close(intfd);
 	if (!lst->next)
 	{
 		close(fd[0]);
-		close(intfd);
 		int z = 0;
 		while (z < g_info.count_pipes && g_info.count_pipes)
 		{
@@ -145,7 +145,7 @@ void exec_pipe(int intfd, t_list *lst)
 			z++;
 		}
 		g_info.sig = 1;
-		return;
+		return ;
 	}
 	exec_pipe(fd[0], lst->next);
 }
