@@ -83,9 +83,9 @@ void exec_pipe(int intfd, t_list *lst)
 		g_info.sig = 0;
 		pid = fork();
 	}
-	if(pid == 0)
+	if (pid == 0)
 	{
-		if(intfd != -1)
+		if (intfd != -1)
 		{
 			dup2(intfd, 0);
 			close(intfd);
@@ -105,7 +105,7 @@ void exec_pipe(int intfd, t_list *lst)
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
-		if(routes(head) == 0)
+		if (routes(head) == 0)
 		{
 			close(fd[0]);
 			close(io_fd[1]);
@@ -130,7 +130,6 @@ void exec_pipe(int intfd, t_list *lst)
 		{
 			int status;
 			wait(&status);
-			
 			if ( WIFEXITED(status))
 			{
 				int exit_status = WEXITSTATUS(status);

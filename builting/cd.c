@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 16:58:56 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:05:28 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_cd_puterror(char *path)
 
 void	ft_cd(char *path)
 {
+	(void)path;
 	create_list("?", "0");
 	if (path[0] == '\0')
 	{
@@ -63,11 +64,6 @@ void	ft_cd(char *path)
 			ft_cd_puterror("OLDPWD");
 		else
 			ft_pwd();
-	}
-	else if (ft_strcmp(path, "~") == 0)
-	{
-		if (chdir(get_path("HOME")) == -1)
-			ft_cd_puterror("~");
 	}
 	else
 	{

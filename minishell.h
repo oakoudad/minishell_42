@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 18:21:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:10:30 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ char	*ignore_directions_and_get_cmd(char *s);
 char	**get_args(char *s, t_list **l);
 char	*create_var(char *s, int len);
 int		redirections_error(char **p, int count);
+char	*get_path(char *key);
 
 #endif

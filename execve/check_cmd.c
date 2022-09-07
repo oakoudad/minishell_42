@@ -28,6 +28,8 @@ char	*get_cmd_from_path(char *cmd)
 	if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '/'))
 		return (cmd);
 	path = get_env_var("PATH");
+	if (path == NULL)
+		return (NULL);
 	vals = ft_split(path, ':');
 	while (vals[++i]){
 		checkpath = ft_strjoin(vals[i], "/");
@@ -42,7 +44,6 @@ char	*get_cmd_from_path(char *cmd)
 char **prepare_env()
 {
 	int i;
-	int y;
 	int len;
 	t_list_env *lst;
 	char **newenv;
@@ -61,9 +62,8 @@ char **prepare_env()
 	i = 0;
 	while (lst)
 	{
-		y = 0;
 		len = ft_strlen(lst->key) + ft_strlen(lst->key) + 2;
-		newenv[i] = ft_strjoin("", lst->key);
+		newenv[i] = ft_strdup(lst->key);
 		newenv[i] = ft_strjoin(newenv[i], "=");
 		newenv[i] = ft_strjoin(newenv[i], lst->value);
 		i++;
