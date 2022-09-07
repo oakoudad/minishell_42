@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 15:59:51 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:08:37 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		split_equal(char **env, int type);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_echo(char **var);
 int		ft_export(char **var);
-int		ft_env(int x);
+void	ft_env(int x);
 void	ft_cd(char *path);
 int		ft_pwd(void);
 char	*ft_strjoin(char *s1, char *s2);
