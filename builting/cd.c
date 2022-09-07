@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
+/*   Updated: 2022/09/07 16:58:56 by oakoudad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*get_path(char *key)
@@ -14,9 +26,8 @@ char	*get_path(char *key)
 	return (NULL);
 }
 
-int ft_pwd(void)
+int	ft_pwd(void)
 {
-
 	char	cwd[1000];
 
 	if (getcwd(cwd, 1000))
@@ -28,41 +39,39 @@ int ft_pwd(void)
 		return (0);
 }
 
+void	ft_cd_puterror(char *path)
+{
+	if (ft_strcmp(path, "-") == 0 || ft_strcmp(path, "HOME") == 0
+		|| ft_strcmp(path, "OLDPWD") == 0 || ft_strcmp(path, "~") == 0)
+		printf("Minishell: cd: %s not set\n", path);
+	else
+		printf("minishell: %s: No such a file or directory\n", path);
+	create_list("?", "1");
+}
+
 void	ft_cd(char *path)
 {
 	create_list("?", "0");
 	if (path[0] == '\0')
 	{
 		if (chdir(get_path("HOME")) == -1)
-		{
-			printf("Minishell: cd: HOME not set\n");
-			create_list("?", "1");
-		}
+			ft_cd_puterror("HOME");
 	}	
 	else if (ft_strcmp(path, "-") == 0)
 	{
 		if (chdir(get_path("OLDPWD")) == -1)
-		{
-			printf("Minishell: cd: OLDPWD not set\n");
-			create_list("?", "1");
-		}
+			ft_cd_puterror("OLDPWD");
 		else
 			ft_pwd();
 	}
 	else if (ft_strcmp(path, "~") == 0)
 	{
 		if (chdir(get_path("HOME")) == -1)
-		{
-			printf("minishell: %s: No such a file or directory\n", get_path("HOME"));
-			create_list("?", "1");
-		}
+			ft_cd_puterror("~");
 	}
 	else
 	{
 		if (chdir(path) == -1)
-		{
-			printf("minishell: %s: No such a file or directory\n", path);
-			create_list("?", "1");
-		}
+			ft_cd_puterror(path);
 	}
 }
