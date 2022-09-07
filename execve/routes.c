@@ -1,17 +1,17 @@
 #include "../minishell.h"
 
-void saveio(int fd[])
+void saveio(int io_fd[])
 {
-	fd[0] = dup(STDIN_FILENO);
-	fd[1] = dup(STDOUT_FILENO);
+	io_fd[0] = dup(STDIN_FILENO);
+	io_fd[1] = dup(STDOUT_FILENO);
 }
 
-void restoreio(int fd[])
+void restoreio(int io_fd[])
 {
-	dup2(fd[0], 0);
-	dup2(fd[1], 1);
-	close(fd[0]);
-	close(fd[1]);
+	dup2(io_fd[0], 0);
+	dup2(io_fd[1], 1);
+	close(io_fd[0]);
+	close(io_fd[1]);
 }
 
 void	ft_putchar_fd(char c, int fd)
@@ -40,6 +40,14 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 }
 
+void	init_fd(int fd[], int io_fd[])
+{
+	fd[0] = -1;
+	fd[1] = -1;
+	io_fd[0] = -1;
+	io_fd[1] = -1;
+}
+
 void exec_pipe(int intfd, t_list *lst)
 {
 	t_list *head;
@@ -51,10 +59,7 @@ void exec_pipe(int intfd, t_list *lst)
 	head = lst;
 	if(head == NULL)
 		return;
-	fd[0] = -1;
-	fd[1] = -1;
-	io_fd[0] = -1;
-	io_fd[1] = -1;
+	init_fd(fd, io_fd);
 	saveio(io_fd);
 	if(lst->next)
 		pipe(fd);
@@ -100,40 +105,47 @@ void exec_pipe(int intfd, t_list *lst)
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
-		close(io_fd[1]);
-		close(io_fd[0]);
 		close(fd[0]);
 		if(routes(head) == 0)
+		{
+			close(io_fd[1]);
+			close(io_fd[0]);
 			execve(cmd, lst->args, env);
+		}
 		else
 		{
 			exc_builtins(head);
 			restoreio(io_fd);
 		}
 	}
-	if (!lst->next)	
+	close(fd[1]);
+	close(io_fd[0]);
+	close(io_fd[1]);
+	if (!lst->next)
 	{
-		close(io_fd[1]);
-		close(io_fd[0]);
-		restoreio(io_fd);
 		close(fd[0]);
-		close(fd[1]);
 		close(intfd);
-
 		int z = 0;
 		while (z < g_info.count_pipes && g_info.count_pipes)
 		{
-			wait(NULL);
+			int status;
+			wait(&status);
+			
+			if ( WIFEXITED(status))
+			{
+				int exit_status = WEXITSTATUS(status);
+				g_info.errorstatus = exit_status;
+				create_list("?", ft_itoa(exit_status));
+			}
+			if ( WIFSIGNALED(status))
+			{
+				g_info.errorstatus = WTERMSIG(status) + 128;
+				create_list("?", ft_itoa(g_info.errorstatus));
+			}
 			z++;
 		}
 		g_info.sig = 1;
 		return;
 	}
-	close(io_fd[1]);
-	close(io_fd[0]);
-	close(fd[1]);
-	close(fd[1]);
-	close(intfd);
-	//g_info.sig = 1;
 	exec_pipe(fd[0], lst->next);
 }

@@ -23,7 +23,7 @@ int routes(t_list *lst)
 void exc_builtins(t_list *lst)
 {
 	if (ft_strcmp(lst->cmd, "echo") == 0)
-		ft_echo(++(lst->args), lst->out_fd);
+		ft_echo(++(lst->args));
 	else if (ft_strcmp(lst->cmd, "export") == 0)
 		ft_export(++(lst->args));
 	else if (ft_strcmp(lst->cmd, "env") == 0)
