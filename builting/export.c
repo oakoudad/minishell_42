@@ -1,69 +1,82 @@
+/* ************************************************************************** */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   export.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: oakoudad <oakoudad@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2022/09/07 17:35:20 by oakoudad		  #+#	#+#			 */
+/*   Updated: 2022/09/07 17:41:55 by oakoudad		 ###   ########.fr	   */
+/*																			*/
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void    skip_quotes_init(char *str, int *d, int *c, char *var)
+void	skip_quotes_init(char *str, int *d, int *c, char *var)
 {
-    int i;
-    int y;
+	int	i;
+	int	y;
 
-    i = *d + 1;
-    y = *c;
-    while (str[i] && str[i] != '\'' && str[i] != '\"')
-    {
-        var[y] = str[i];
-        i++;
-        y++;
-    }
-    if (str[i] == 0)
-    {
-        printf("Invalid syntax\n");
-    }
-    *d = i;
-    *c = y;
+	i = *d + 1;
+	y = *c;
+	while (str[i] && str[i] != '\'' && str[i] != '\"')
+	{
+		var[y] = str[i];
+		i++;
+		y++;
+	}
+	if (str[i] == 0)
+	{
+		printf("Invalid syntax\n");
+	}
+	*d = i;
+	*c = y;
 }
 
-char **copy_var1(char *str, int i, int j, int k, char **splited)
+char	**copy_var1(char *str, int j, int k, char **splited)
 {
-    while (str[i])
-    {
-        if(i == 0)
-            splited[j] = malloc(sizeof(char) * (strlen(str) + 2));
-        if (str[i] == '"' || str[i] == '\'')
-            skip_quotes_init(str, &i, &k, splited[j]);
-        else if (str[i] == ' ' && str[i + 1])
-        {
-            splited[j][k] = '\0';
-            j++;
-            k = 0;
-            splited[j] = malloc(sizeof(char) * (strlen(str) + 1));
-        }
-        else
-        {
-            splited[j][k] = str[i];
-            k++;
-        }
-        i++;
-    }
-    splited[j][k] = '\0';
-    j++;
-    splited[j] = NULL;
-    return (splited);
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (i == 0)
+			splited[j] = malloc(sizeof(char) * (strlen(str) + 2));
+		if (str[i] == '"' || str[i] == '\'')
+			skip_quotes_init(str, &i, &k, splited[j]);
+		else if (str[i] == ' ' && str[i + 1])
+		{
+			splited[j][k] = '\0';
+			j++;
+			k = 0;
+			splited[j] = malloc(sizeof(char) * (strlen(str) + 1));
+		}
+		else
+		{
+			splited[j][k] = str[i];
+			k++;
+		}
+	}
+	splited[j][k] = '\0';
+	splited[j + 1] = NULL;
+	return (splited);
 }
 
-char **split(char *str)
+char	**split(char *str)
 {
-    int i;
-    int j;
-    int k;
+	int		i;
+	int		j;
+	int		k;
+	char	**splited;
 
-    i = 0;
-    j = 0;
-    k = 0;
-    char **splited;
-    splited = malloc(sizeof(char *) * (strlen(str) + 2));
-    if (!splited)
-        return (NULL);
-    splited = copy_var1(str, i, j, k, splited);
-    return (splited);
+	i = 0;
+	j = 0;
+	k = 0;
+	splited = malloc(sizeof(char *) * (strlen(str) + 2));
+	if (!splited)
+		return (NULL);
+	splited = copy_var1(str, j, k, splited);
+	return (splited);
 }
 
 void	check_key(char *str)
@@ -87,18 +100,18 @@ void	check_key(char *str)
 	}
 }
 
-int ft_export (char **var)
+int	ft_export(char **var)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    if (!var || !var[0])
-        ft_env(0);
-    else
-    {
-        while (var[++i])
-            check_key(var[i]);
-        split_equal(var, 0);
-    }
-    return (0);
+	i = -1;
+	if (!var || !var[0])
+		ft_env(0);
+	else
+	{
+		while (var[++i])
+			check_key(var[i]);
+		split_equal(var, 0);
+	}
+	return (0);
 }
