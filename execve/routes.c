@@ -48,7 +48,7 @@ void	init_fd(int fd[], int io_fd[])
 	io_fd[1] = -1;
 }
 
-void exec_pipe(int intfd, t_list *lst)
+void	exec_pipe(int intfd, t_list *lst)
 {
 	t_list *head;
 	int fd[2];
@@ -57,18 +57,16 @@ void exec_pipe(int intfd, t_list *lst)
 	char	**env;
 
 	head = lst;
-	if(head == NULL)
-		return;
+	if (head == NULL)
+		return ;
 	init_fd(fd, io_fd);
 	saveio(io_fd);
-	if(lst->next)
+	if (lst->next)
 		pipe(fd);
 	if (!routes(head))
 		cmd = get_cmd_from_path(head->cmd);
-	if (!routes(head) && cmd == NULL){
-		write(2, "minishell: ", 12);
-		write(2, head->cmd, ft_strlen(head->cmd));
-		write(2, ": command not found\n", 21);
+	if (!routes(head) && cmd == NULL)
+	{
 		close(fd[1]);
 		if (lst->next)
 			exec_pipe(fd[0], lst->next);
@@ -110,6 +108,7 @@ void exec_pipe(int intfd, t_list *lst)
 			close(fd[0]);
 			close(io_fd[1]);
 			close(io_fd[0]);
+			signal(SIGQUIT, exit);
 			execve(cmd, lst->args, env);
 		}
 		else
@@ -130,15 +129,17 @@ void exec_pipe(int intfd, t_list *lst)
 		{
 			int status;
 			wait(&status);
-			if ( WIFEXITED(status))
+			if (WIFEXITED(status) && !routes(head))
 			{
 				int exit_status = WEXITSTATUS(status);
 				g_info.errorstatus = exit_status;
 				create_list("?", ft_itoa(exit_status));
 			}
-			if ( WIFSIGNALED(status))
+			if (WIFSIGNALED(status) && !routes(head))
 			{
 				g_info.errorstatus = WTERMSIG(status) + 128;
+				if (g_info.errorstatus == 131)
+					write(2, "Quit: 3\n", 8);
 				create_list("?", ft_itoa(g_info.errorstatus));
 			}
 			z++;
