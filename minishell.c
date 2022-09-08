@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 21:07:35 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 00:08:17 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,36 @@ void	sighandler(int sig)
 	if (sig == 2 && g_info.heredoc == 1 && tmp == 0)
 	{
 		close(g_info.heredoc_fd);
-		g_info.heredoc_fd = open(g_info.heredoc_file, O_RDONLY | O_WRONLY | O_TRUNC);
+		g_info.heredoc_fd = open(g_info.heredoc_file,
+				O_RDONLY | O_WRONLY | O_TRUNC);
 		close(g_info.heredoc_fd);
 		exit(0);
 	}
 }
 
-void	config_pwd1(void)
+void	config(char **e)
 {
+	int		i;
+	int		shlvl;
+	int		status;
+	char	*new_shlvl;
+
+	i = -1;
+	status = 1;
+	while (e[++i])
+	{
+		if (e[i][0] == 'S' && e[i][1] == 'H' && e[i][2] == 'L'
+			&& e[i][3] == 'V' && e[i][4] == 'L' && e[i][5] == '=')
+		{
+			status = 0;
+			shlvl = atoi(&e[i][6]) + 1;
+			new_shlvl = ft_itoa(shlvl);
+			e[i] = ft_strjoin(ft_strdup("SHLVL="), new_shlvl);
+			free(new_shlvl);
+		}
+	}
+	if (status)
+		create_list("SHLVL", "1");
 	create_list("PATH", ".");
 }
 
@@ -46,7 +68,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	config_pwd1();
+	config(env);
 	g_info.sig = 1;
 	if (split_equal(env, 1) == 0)
 		return (0);

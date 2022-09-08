@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 21:33:38 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:45:14 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 int	init(char *name, char *value, char *env)
 {
-	int	y;
+	int	i;
 	int	x;
 	int	status;
 
-	y = 0;
+	i = 0;
 	status = 0;
 	x = 0;
-	while (env[y])
+	while (env[i])
 	{
-		if (env[y] == '=')
+		if (env[i] == '=')
 		{
-			name[y] = 0;
+			name[i] = 0;
 			status = 1;
-			y++;
+			i++;
 		}
 		if (status == 0)
-			name[y] = env[y];
-		else
-			value[x++] = env[y];
-		y++;
+			name[i] = env[i];
+		else if (status == 1 && value != NULL)
+			value[x++] = env[i];
+		i++;
 	}
-	value[x] = '\0';
+	if (value != NULL)
+		value[x] = '\0';
 	return (status);
 }
 
@@ -44,7 +45,7 @@ int	len_key(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i])
 		i++;
 	return (i);
 }
@@ -158,9 +159,14 @@ int	split_equal(char **env, int type)
 		name = malloc(sizeof(char) * len_key(env[i]));
 		if (!name)
 			return (0);
-		value = malloc(sizeof(char) * (strlen(env[i]) - len_key(env[i])));
-		if (!value)
-			return (0);
+		if (strlen(env[i]) - len_key(env[i]) == 0)
+			value = NULL;
+		else
+		{
+			value = malloc(sizeof(char) * (strlen(env[i]) - len_key(env[i])));
+			if (value == NULL)
+				return (0);
+		}
 		init(name, value, env[i]);
 		if (create_list(name, value) == 0)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:04:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 17:12:24 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/08 22:04:10 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_env(void)
 	lst = g_info.env_lst;
 	while (lst)
 	{
-		if (lst->status == 1)
+		if (lst->status == 1 && lst->value)
 			printf("%s=%s\n", lst->key, lst->value);
 		lst = lst->next;
 	}
@@ -37,13 +37,15 @@ void	ft_env(int x)
 	while (g_info.names[++i] && x == 0)
 	{
 		if (!(g_info.names[i][0] == '?' && g_info.names[i][1] == '\0'))
-			printf(" declare -x %s=", g_info.names[i]);
+			printf(" declare -x %s", g_info.names[i]);
 		lst = g_info.env_lst;
 		while (!(g_info.names[i][0] == '?' && g_info.names[i][1] == 0) && lst)
 		{
 			if (ft_strcmp(lst->key, g_info.names[i]) == 0)
 			{
-				printf("%s\n", lst->value);
+				if (lst->value != NULL)
+					printf("=%s", lst->value);
+				printf("\n");
 				break ;
 			}
 			lst = lst->next;

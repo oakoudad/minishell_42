@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 21:29:52 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/08 21:37:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,6 @@ int	ft_export(char **var)
 {
 	int	i;
 
-	i = -1;
-	while (var[++i])
-		printf("%s\n", var[i]);
 	i = -1;
 	if (!var || !var[0])
 		ft_env(0);
