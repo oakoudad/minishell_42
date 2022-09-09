@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 03:09:51 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 22:59:25 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ void	config(char **e)
 			&& e[i][3] == 'V' && e[i][4] == 'L' && e[i][5] == '=')
 		{
 			status = 0;
-			shlvl = atoi(&e[i][6]) + 1;
-			new_shlvl = ft_itoa(shlvl);		e[i] = ft_strjoin(ft_strdup("SHLVL="), new_shlvl);
+			shlvl = ft_atoi(&e[i][6]) + 1;
+			new_shlvl = ft_itoa(shlvl);
+			e[i] = ft_strjoin(ft_strdup("SHLVL="), new_shlvl);
 			free(new_shlvl);
 		}
 	}

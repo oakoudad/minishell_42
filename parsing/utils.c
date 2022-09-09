@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 19:44:57 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 23:03:14 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	len_var(char *s)
 	i = -1;
 	j = 0;
 	temp = g_info.env_lst;
-	while ((s[j] >= 'a' && s[j] <= 'z')
-		|| (s[j] >= 'A' && s[j] <= 'Z') || s[j] == '_'
+	while ((s[j] >= 'a' && s[j] <= 'z') || (s[j] >= 'A' && s[j] <= 'Z')
+		|| s[j] == '_'
 		|| (s[j] >= '0' && s[j] <= '9'))
 		j++;
 	var = malloc(sizeof(char) * j);
 	while (++i < j)
 		var[i] = s[i];
 	var[i] = '\0';
-	j = - (strlen(var) + 1);
+	j = -(strlen(var) + 1);
 	while (temp)
 	{
 		if (ft_strcmp(temp->key, var) == 0)
@@ -54,8 +54,7 @@ int	len_var(char *s)
 		temp = temp->next;
 	}
 	free(var);
-	var = NULL;
-	return (j);
+	return ((var = NULL), j);
 }
 
 int	skep_quotes(char *s, int *d)

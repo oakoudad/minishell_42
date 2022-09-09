@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 21:00:15 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 23:24:37 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ int	check_syntax(char *s)
 {
 	int		i;
 	int		j;
-	char	**pips = NULL;
+	char	**pips;
 
-	i = 0; 
+	i = 0;
+	pips = NULL;
 	while (*s && is_space(s[i]))
 		s++;
 	j = ft_strlen(s) - 1;

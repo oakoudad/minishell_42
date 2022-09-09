@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 19:25:11 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 23:22:32 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	init(char *name, char *value, char *env)
 	int	x;
 	int	status;
 
-	i = 0;
+	i = -1;
 	status = 0;
 	x = 0;
-	while (env[i])
+	while (env[++i])
 	{
 		if (env[i] == '=' && status == 0)
 		{
@@ -33,53 +33,12 @@ int	init(char *name, char *value, char *env)
 			name[i] = env[i];
 		if (status == 1 && value != NULL)
 			value[x++] = env[i];
-		i++;
 	}
 	if (value != NULL)
 		value[x] = '\0';
 	if (!status)
 		name[i] = '\0';
 	return (status);
-}
-
-int	len_key(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '=' && str[i])
-		i++;
-	return (i);
-}
-
-t_list_env	*ft_lstenv(char *key, char *value)
-{
-	t_list_env	*list;
-
-	list = malloc(sizeof(t_list));
-	if (!list)
-		return (NULL);
-	list->value = value;
-	list->key = key;
-	list->next = NULL;
-	return (list);
-}
-
-void	ft_envadd_back(t_list_env *new)
-{
-	t_list_env	*t;
-
-	t = g_info.env_lst;
-	if (!t)
-	{
-		g_info.env_lst = new;
-		return ;
-	}
-	while (t->next)
-	{
-		t = t->next;
-	}
-	t->next = new;
 }
 
 int	create_list(char *name, char *value)
@@ -128,24 +87,25 @@ int	sort_list(void)
 		i++;
 	}
 	names[i] = NULL;
-	i = 0;
-	int j;
-	char *tmp;
-	while (names[i + 1])
-	{
-		j = i + 1;
-		while (names[j])
-		{
-			if(strcmp(names[i], names[j]) > 0){
-				tmp = names[j];
-				names[j] = names[i];
-				names[i] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
+	prepare_name(names);
 	g_info.names = names;
+	return (1);
+}
+
+int	set_status(char *name, char *value, int type)
+{
+	if (type == 1)
+		name = ft_strdup("?");
+	if (type == 1 && !name)
+		return (0);
+	if (type == 1)
+		value = ft_strdup("0");
+	if (type == 1 && !value)
+		return (0);
+	if (type == 1 && create_list(name, value) == 0)
+		return (0);
+	if (sort_list() == 0)
+		return (0);
 	return (1);
 }
 
@@ -155,8 +115,8 @@ int	split_equal(char **env, int type)
 	char		*name;
 	char		*value;
 
-	i = 0;
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
 		name = malloc(sizeof(char) * len_key(env[i]));
 		if (!name)
@@ -172,19 +132,6 @@ int	split_equal(char **env, int type)
 		init(name, value, env[i]);
 		if (create_list(name, value) == 0)
 			return (0);
-		i++;
 	}
-	if (type == 1)
-		name = ft_strdup("?");
-	if (type == 1 && !name)
-		return (0);
-	if (type == 1)
-		value = ft_strdup("0");
-	if (type == 1 && !value)
-		return (0);
-	if (type == 1 && create_list(name, value) == 0)
-		return (0);
-	if (sort_list() == 0)
-		return (0);
-	return (1);
+	return (set_status(name, value, type));
 }
