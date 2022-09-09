@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 21:47:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 22:47:50 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,75 +40,54 @@ int	wait_and_error(int fd, t_list	*head)
 	return (1);
 }
 
-void	dup_fd(int intfd, int fd[], t_list *lst, t_list *head)
+void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 {
-	if (intfd != -1)
+	if (!routes(head))
 	{
-		dup2(intfd, 0);
-		close(intfd);
+		g_info.sig = 0;
+		var.pid = fork();
 	}
-	if (head->in_fd > 0)
+	if (var.pid == 0)
 	{
-		dup2(head->in_fd, 0);
-		close(head->in_fd);
-	}
-	if (head->out_fd > 0)
-	{
-		dup2(head->out_fd, 1);
-		close(head->out_fd);
-	}
-	else if (lst->next)
-	{
-		dup2(fd[1], 1);
-		close(fd[1]);
+		dup_fd(intfd, var.fd, lst, head);
+		if (routes(head) == 0)
+		{
+			closefd(var.fd[0], var.io_fd[1], var.io_fd[0], -1);
+			signal(SIGQUIT, exit);
+			execve(var.cmd, lst->args, var.env);
+		}
+		else
+		{
+			exc_builtins(head);
+			restoreio(var.io_fd);
+		}
 	}
 }
 
 void	exec_pipe(int intfd, t_list *lst, t_list *head, char	**env)
 {
-	int		fd[2];
-	int		io_fd[2];
-	char	*cmd;
-	pid_t	pid;
+	t_var	var;
 
-	pid = 0;
+	var.env = env;
+	var.pid = 0;
 	if (head == NULL)
 		return ;
-	saveio(fd, io_fd);
+	saveio(var.fd, var.io_fd);
 	if (lst->next)
-		pipe(fd);
+		pipe(var.fd);
 	if (!routes(head))
-		cmd = get_cmd_from_path(head->cmd);
-	if (!routes(head) && cmd == NULL)
+		var.cmd = get_cmd_from_path(head->cmd);
+	if (!routes(head) && var.cmd == NULL)
 	{
-		cmd_not_found(fd, lst, env);
+		cmd_not_found(var.fd, lst, env);
 		return ;
 	}
 	g_info.sig = 1;
-	if (!routes(head))
-	{
-		g_info.sig = 0;
-		pid = fork();
-	}
-	if (pid == 0)
-	{
-		dup_fd(intfd, fd, lst, head);
-		if (routes(head) == 0)
-		{
-			closefd(fd[0], io_fd[1], io_fd[0], -1);
-			signal(SIGQUIT, exit);
-			execve(cmd, lst->args, env);
-		}
-		else
-		{
-			exc_builtins(head);
-			restoreio(io_fd);
-		}
-	}
-	closefd(fd[1], io_fd[1], io_fd[0], intfd);
-	if (!lst->next && wait_and_error(fd[0], head))
+	exec_cmd(lst, head, var, intfd);
+	closefd(var.fd[1], var.io_fd[1], var.io_fd[0], intfd);
+	if (!lst->next && wait_and_error(var.fd[0], head))
 		return ;
-	exec_pipe(fd[0], lst->next, lst->next, env);
+	exec_pipe(var.fd[0], lst->next, lst->next, env);
 }
 
 void	exec(int intfd, t_list *lst)

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 21:48:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 22:47:04 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,20 @@ typedef struct lisinfo
 	int			heredoc;
 	int			heredoc_fd;
 	char		*heredoc_file;
-	int         cnt_c;
+	int			cnt_c;
 	int			errorstatus;
 	t_list_env	*env_lst;
 	t_list		*cmds;
 }	t_info;
+
+typedef struct execvar
+{
+	char	*cmd;
+	pid_t	pid;
+	int		fd[2];
+	int		io_fd[2];
+	char	**env;
+}	t_var;
 
 t_info	g_info;
 
@@ -115,7 +124,6 @@ char	*ft_itoa(int n);
 int		routes(t_list *lst);
 int		create_list(char *name, char *value);
 void	exec(int intfd, t_list *lst);
-void	exec_cmd(t_list *head, char *cmd, char **env);
 void	exc_builtins(t_list *lst);
 void	check_key_null(char *str);
 char	*generate_name(void);
@@ -137,5 +145,6 @@ void	closefd(int a, int b, int c, int d);
 void	saveio(int fd[], int io_fd[]);
 void	restoreio(int io_fd[]);
 void	cmd_not_found(int fd[], t_list *lst, char **env);
+void	dup_fd(int intfd, int fd[], t_list *lst, t_list *head);
 
 #endif

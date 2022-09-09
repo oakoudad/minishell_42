@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:16:14 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 21:28:25 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 22:43:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,28 @@ void	restoreio(int io_fd[])
 	dup2(io_fd[1], 1);
 	close(io_fd[0]);
 	close(io_fd[1]);
+}
+
+void	dup_fd(int intfd, int fd[], t_list *lst, t_list *head)
+{
+	if (intfd != -1)
+	{
+		dup2(intfd, 0);
+		close(intfd);
+	}
+	if (head->in_fd > 0)
+	{
+		dup2(head->in_fd, 0);
+		close(head->in_fd);
+	}
+	if (head->out_fd > 0)
+	{
+		dup2(head->out_fd, 1);
+		close(head->out_fd);
+	}
+	else if (lst->next)
+	{
+		dup2(fd[1], 1);
+		close(fd[1]);
+	}
 }
