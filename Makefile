@@ -31,7 +31,8 @@ SRC		=	minishell.c\
 			./parsing/utils2.c\
 			./execve/check_cmd.c\
 			./execve/builtin.c\
-			./execve/routes.c
+			./execve/utils.c\
+			./execve/exec.c
 
 HEADER	=	minishell.h
 

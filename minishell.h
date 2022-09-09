@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 19:11:41 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 21:48:10 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	**prepare_env(void);
 char	*ft_itoa(int n);
 int		routes(t_list *lst);
 int		create_list(char *name, char *value);
-void	exec_pipe(int intfd, t_list *lst);
+void	exec(int intfd, t_list *lst);
 void	exec_cmd(t_list *head, char *cmd, char **env);
 void	exc_builtins(t_list *lst);
 void	check_key_null(char *str);
@@ -133,5 +133,9 @@ char	*get_path(char *key);
 void	printf_error(char *cmd, char *message, char *status);
 int		is_file(const char *path);
 char	*get_home(void);
+void	closefd(int a, int b, int c, int d);
+void	saveio(int fd[], int io_fd[]);
+void	restoreio(int io_fd[]);
+void	cmd_not_found(int fd[], t_list *lst, char **env);
 
 #endif

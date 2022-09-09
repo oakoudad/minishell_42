@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/09 20:49:26 by oakoudad          #+#    #+#             */
+/*   Updated: 2022/09/09 20:49:51 by oakoudad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int routes(t_list *lst)
+int	routes(t_list *lst)
 {
 	if (ft_strcmp(lst->cmd, "echo") == 0)
 		return (1);
@@ -20,7 +32,7 @@ int routes(t_list *lst)
 		return (0);
 }
 
-void exc_builtins(t_list *lst)
+void	exc_builtins(t_list *lst)
 {
 	if (ft_strcmp(lst->cmd, "echo") == 0)
 		ft_echo(++(lst->args));
