@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:31:28 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 18:32:04 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:06:58 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!str)
 		return (NULL);
 	if (*s1 == '\0')
-		s1 = ft_strdup("");
+		s1 = ft_strdup2("");
 	i = 0;
 	while (s1[i])
 	{

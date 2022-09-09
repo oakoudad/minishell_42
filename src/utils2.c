@@ -6,11 +6,36 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:26:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 19:11:54 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:05:20 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_strdup2(char *s1)
+{
+	int		i;
+	int		len;
+	char	*str;
+
+	i = 0;
+	len = ft_strlen(s1);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	if (len == 0)
+	{
+		str[0] = '\0';
+		return (str);
+	}
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
 
 char	*ft_strdup(char *s1)
 {

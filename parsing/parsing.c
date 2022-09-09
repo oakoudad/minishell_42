@@ -6,29 +6,18 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 21:01:19 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:11:23 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*get_home(void)
-{
-	char	*home;
-	char	*tmp;
-
-	home = get_path("HOME");
-	if (home == NULL || *home == 0)
-		return ("");
-	tmp = ft_strdup(home);
-	return (tmp);
-}
 
 char	*get_cmd(char *s, int *d, int withextra)
 {
 	int		end;
 	char	*cmd;
 	char	*tmpcmd;
+	char	*home;
 
 	end = end_of_cmd(s);
 	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
@@ -37,10 +26,11 @@ char	*get_cmd(char *s, int *d, int withextra)
 	create_cmd(s, cmd, end, withextra);
 	*d = end + 1;
 	if (((*cmd == '~' && *(cmd + 1) == '/')
-		|| (*cmd == '~' && *(cmd + 1) == 0))
+			|| (*cmd == '~' && *(cmd + 1) == 0))
 		&& *s != '"' && *s != '\'')
 	{
-		tmpcmd = ft_strjoin(get_home(), cmd + 1);
+		home = get_home();
+		tmpcmd = ft_strjoin(home, cmd + 1);
 		free(cmd);
 		return (tmpcmd);
 	}
@@ -137,7 +127,6 @@ void	parsing(char	**pips)
 	t_list	*head;
 	t_list	*tmp;
 	int		i;
-
 
 	i = 0;
 	head = NULL;

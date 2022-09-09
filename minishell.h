@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 01:34:18 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:11:41 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	**split_pipes(char *s);
 int		skep_quotes(char *s, int *d);
 char	*ft_charjoin(char *s1, char s2);
 char	*ft_strdup(char *s1);
+char	*ft_strdup2(char *s1);
 char	*remove_spaces(char *p);
 void	init_index(int *i, int *start, int *end);
 void	skep_and_full(char *s, char *p, int *d, int *j);
@@ -130,6 +131,7 @@ char	*create_var(char *s, int len);
 int		redirections_error(char **p, int count);
 char	*get_path(char *key);
 void	printf_error(char *cmd, char *message, char *status);
-int	is_file(const char *path);
+int		is_file(const char *path);
+char	*get_home(void);
 
 #endif
