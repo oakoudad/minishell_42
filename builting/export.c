@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 21:37:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:51:46 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,15 @@ void	check_key(char *str)
 	{
 		if ((str[i] >= 'a' && str[i] <= 'z')
 			|| (str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] == '_'))
+			|| (str[i] == '_')
+			|| (str[i] >= '0' && str[i] <= '9' && i > 0))
 			i++;
 		else if ((str[i] >= '0' && str[i] <= '9') && i != 0)
 			i++;
 		else
 		{
 			printf("minishell: export: `%s': not a valid identifier\n", str);
+			create_list("?", "1");
 			return ;
 		}
 	}

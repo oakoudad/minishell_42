@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/01 19:43:21 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:44:57 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	len_var(char *s)
 	j = 0;
 	temp = g_info.env_lst;
 	while ((s[j] >= 'a' && s[j] <= 'z')
-		|| (s[j] >= 'A' && s[j] <= 'Z') || s[j] == '_')
+		|| (s[j] >= 'A' && s[j] <= 'Z') || s[j] == '_'
+		|| (s[j] >= '0' && s[j] <= '9'))
 		j++;
 	var = malloc(sizeof(char) * j);
 	while (++i < j)
