@@ -11,6 +11,7 @@ SRC		=	minishell.c\
 			./src/remove_spaces.c\
 			./src/lst_env.c\
 			./src/ft_itoa.c\
+			./src/if_file.c\
 			./src/ft_split.c\
 			./src/generate_name.c\
 			./src/get_var.c\

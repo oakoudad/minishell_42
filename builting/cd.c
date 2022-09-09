@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 20:05:28 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 01:38:09 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,22 @@ void	ft_cd_puterror(char *path)
 	create_list("?", "1");
 }
 
+int	path_error(char *path)
+{
+	if (is_file(path))
+	{
+		printf_error(path, ": Not a directory\n", "1");
+		return (0);
+	}
+	if (!is_file(path) && access(path, F_OK) == 0
+		&& access(path, X_OK) != 0)
+	{
+		printf_error(path, ": Permission denied\n", "1");
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_cd(char *path)
 {
 	(void)path;
@@ -57,17 +73,17 @@ void	ft_cd(char *path)
 	{
 		if (chdir(get_path("HOME")) == -1)
 			ft_cd_puterror("HOME");
-	}	
-	else if (ft_strcmp(path, "-") == 0)
+		return ;
+	}
+	if (ft_strcmp(path, "-") == 0)
 	{
 		if (chdir(get_path("OLDPWD")) == -1)
 			ft_cd_puterror("OLDPWD");
 		else
 			ft_pwd();
+		return ;
 	}
-	else
-	{
+	if (path_error(path))
 		if (chdir(path) == -1)
 			ft_cd_puterror(path);
-	}
 }

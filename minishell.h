@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 20:10:30 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 01:34:18 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <dirent.h>
+# include <sys/stat.h>
 
 typedef struct list
 {
@@ -127,5 +129,7 @@ char	**get_args(char *s, t_list **l);
 char	*create_var(char *s, int len);
 int		redirections_error(char **p, int count);
 char	*get_path(char *key);
+void	printf_error(char *cmd, char *message, char *status);
+int	is_file(const char *path);
 
 #endif

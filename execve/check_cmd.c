@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 20:58:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 00:29:49 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,17 @@ void	printf_error(char *cmd, char *message, char *status)
 
 int	cmd_error(char *cmd)
 {
+	if (access(cmd, X_OK) != 0)
+	{
+		if (access(cmd, F_OK) == 0)
+			printf_error(cmd, ": Permission denied\n", "126");
+		else
+			printf_error(cmd, ": Not a directory\n", "126");
+		return (0);
+	}
 	if (access(cmd, F_OK) != 0)
 	{
 		printf_error(cmd, ": No such file or directory\n", "127");
-		return (0);
-	}
-	if (access(cmd, X_OK) != 0)
-	{
-		printf_error(cmd, ": Permission denied\n", "126");
 		return (0);
 	}
 	return (1);
