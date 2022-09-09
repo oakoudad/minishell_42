@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:04:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 22:04:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:16:37 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_env(int x)
 			if (ft_strcmp(lst->key, g_info.names[i]) == 0)
 			{
 				if (lst->value != NULL)
-					printf("=%s", lst->value);
+					printf("=\"%s\"", lst->value);
 				printf("\n");
 				break ;
 			}

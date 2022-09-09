@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/08 22:45:14 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 19:25:11 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@ int	init(char *name, char *value, char *env)
 	x = 0;
 	while (env[i])
 	{
-		if (env[i] == '=')
+		if (env[i] == '=' && status == 0)
 		{
-			name[i] = 0;
+			name[i] = '\0';
 			status = 1;
 			i++;
 		}
 		if (status == 0)
 			name[i] = env[i];
-		else if (status == 1 && value != NULL)
+		if (status == 1 && value != NULL)
 			value[x++] = env[i];
 		i++;
 	}
 	if (value != NULL)
 		value[x] = '\0';
+	if (!status)
+		name[i] = '\0';
 	return (status);
 }
 
