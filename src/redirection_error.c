@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:21:04 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 18:30:09 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 23:34:23 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,22 @@ int	unexpected(char token, char token2)
 	write(1, &token, 1);
 	write(1, &token2, 1);
 	write(1, "'\n", 2);
+	create_list("?", "258");
 	return (0);
+}
+
+void	init_var(int *j, int *status)
+{
+	*j = -1;
+	*status = 0;
+}
+
+void	calc_redirections(char **p, int *status, int i, int j)
+{
+	if (p[i][j] == '"' || p[i][j] == '\'')
+		skep_quotes(p[i], &j);
+	if (chech_red(p[i][j]))
+		*status += 1;
 }
 
 int	redirections_error(char **p, int count)
@@ -37,20 +52,16 @@ int	redirections_error(char **p, int count)
 	i = -1;
 	while (p[++i])
 	{
-		init_index(&j, &j, &status);
-		while (p[i][j])
+		init_var(&j, &status);
+		while (p[i][++j])
 		{
-			if (p[i][j] == '"' || p[i][j] == '\'')
-				skep_quotes(p[i], &j);
-			if (chech_red(p[i][j]))
-				status++;
+			calc_redirections(p, &status, i, j);
 			if (status == 2 && chech_red(p[i][j]) && !chech_red(p[i][j - 1]))
 				return (unexpected(p[i][j], 0));
 			if (status == 3)
 				return (unexpected(p[i][j], 0));
 			if (p[i][j] != '>' && p[i][j] != '<' && !is_space(p[i][j]))
 				status = 0;
-			j++;
 		}
 		if (status > 0 && count > i)
 			return (unexpected('|', 0));

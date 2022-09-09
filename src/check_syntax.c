@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 23:24:37 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/09 23:37:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int	check_syntax(char *s)
 	while (j >= 0 && is_space(s[j]))
 		j--;
 	if (s[i] == '|' || s[j] == '|')
-		return (ft_putstr("Minishell: parse error near `|'\n"), 0);
+	{
+		create_list("?", "258");
+		return (unexpected('|', '\0'), 0);
+	}
 	if (!check_syntax2(s))
 		return (0);
 	if (ft_strlen(s) > 0)
