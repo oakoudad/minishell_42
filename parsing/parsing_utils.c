@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 00:43:09 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:52:39 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	init_node(t_list	**node, char *pip)
 	(*node)->token = NULL;
 	(*node)->index_token = NULL;
 	(*node)->count_token = 0;
-	(*node)->args = get_args(pip, node);
+	(*node)->allargs = get_args(pip, node);
 	if ((*node)->args != NULL)
 		(*node)->args = args_filter(node);
 }
@@ -104,7 +104,7 @@ char	**args_filter(t_list	**l)
 	args = malloc(sizeof(char *) * i + 1);
 	i = -1;
 	j = 0;
-	while (elm->args[++i])
+	while (elm->allargs[++i])
 	{
 		if (iftoken(i, l))
 		{
@@ -112,9 +112,8 @@ char	**args_filter(t_list	**l)
 			i++;
 		}
 		else
-			args[j++] = elm->args[i];
+			args[j++] = elm->allargs[i];
 	}
 	args[j] = NULL;
-	free(elm->args);
 	return (args);
 }

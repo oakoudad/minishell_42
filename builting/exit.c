@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:57:05 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:32:21 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ void	ft_exit(char **args)
 	create_list("?", "1");
 	if (args && args[0] && args[1])
 		return (ft_putstr("MiniShell: exit: too many arguments\n"));
+	t_list_env	*env;
+	env = g_info.env_lst;
+	while (env)
+	{
+		printf("%s='%s'\n", env->key, env->value);
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = env->next;
+	}
+	while (1);
 	if (args && args[0])
 		exit(ft_atoi(args[0]));
 	else

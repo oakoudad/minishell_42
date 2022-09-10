@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:56:54 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:54:37 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 typedef struct list
 {
 	char			*cmd;
+	char			**allargs;
 	char			**args;
 	char			*token;
 	int				out_fd;
@@ -158,5 +159,6 @@ int			search_var(char *var, char **env);
 int			var_cmp(char *var, char *env);
 int			search_var(char *var, char **env);
 void		free_env(char *var);
+void		free_args(t_list *head);
 
 #endif

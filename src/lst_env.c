@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:58:17 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:46:42 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	create_list(char *name, char *value)
 	{
 		if (ft_strcmp(tmp->key, name) == 0)
 		{
-			tmp->value = value;
+			free(tmp->value);
+			tmp->value = ft_strdup(value);
 			return (1);
 		}
 		tmp = tmp->next;
@@ -93,11 +94,6 @@ int	sort_list(void)
 
 int	set_status(char *name, char *value, int type)
 {
-	int alocatname;
-	int alocatvalue;
-
-	alocatname = 0;
-	alocatvalue = 0;
 	if (type == 1)
 		name = "?";
 	if (type == 1 && !name)
@@ -136,6 +132,8 @@ int	split_equal(char **env, int type)
 		init(name, value, env[i]);
 		if (create_list(name, value) == 0)
 			return (0);
+		free(name);
+		free(value);
 	}
 	return (set_status(name, value, type));
 }

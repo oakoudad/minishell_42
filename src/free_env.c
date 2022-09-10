@@ -6,15 +6,15 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:46:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 20:51:57 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:03:32 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int var_cmp(char *var, char *env)
+int	var_cmp(char *var, char *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!var || !env)
@@ -54,4 +54,18 @@ void	free_env(char *var)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	free_args(t_list *head)
+{
+	int		i;
+
+	i = 0;
+	while (head->allargs[i])
+	{
+		free(head->allargs[i]);
+		i++;
+	}
+	free(head->allargs);
+	free(head->args);
 }

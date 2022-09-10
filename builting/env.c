@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:04:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 19:16:37 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 23:45:10 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_env(void)
 {
 	t_list_env	*lst;
-
+	
 	lst = g_info.env_lst;
 	while (lst)
 	{
@@ -32,7 +32,7 @@ void	ft_env(int x)
 
 	lst = g_info.env_lst;
 	if (lst && x)
-		print_env();
+		return (print_env());
 	i = -1;
 	while (g_info.names[++i] && x == 0)
 	{
