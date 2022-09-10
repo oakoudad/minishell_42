@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 20:51:49 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:58:17 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	init(char *name, char *value, char *env)
 
 int	create_list(char *name, char *value)
 {
-	t_list_env	*new;
 	t_list_env	*tmp;
 
 	tmp = g_info.env_lst;
@@ -56,17 +55,16 @@ int	create_list(char *name, char *value)
 		}
 		tmp = tmp->next;
 	}
-	free_env(name);
-	new = ft_lstenv(name, value);
-	if (!new)
+	tmp = ft_lstenv(name, value);
+	if (!tmp)
 		return (0);
 	if (name[0] == '?' && name[1] == '\0')
-		new->status = 0;
+		tmp->status = 0;
 	else
-		new->status = 1;
-	if (!new)
+		tmp->status = 1;
+	if (!tmp)
 		return (0);
-	ft_envadd_back(new);
+	ft_envadd_back(tmp);
 	return (1);
 }
 
@@ -95,12 +93,17 @@ int	sort_list(void)
 
 int	set_status(char *name, char *value, int type)
 {
+	int alocatname;
+	int alocatvalue;
+
+	alocatname = 0;
+	alocatvalue = 0;
 	if (type == 1)
-		name = ft_strdup("?");
+		name = "?";
 	if (type == 1 && !name)
 		return (0);
 	if (type == 1)
-		value = ft_strdup("0");
+		value = "0";
 	if (type == 1 && !value)
 		return (0);
 	if (type == 1 && create_list(name, value) == 0)

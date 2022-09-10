@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 20:46:35 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:56:51 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	config(char **e)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*buff;
+	char		*buff;
+	t_list_env	*env_lst;
 
 	(void)ac;
 	(void)av;
@@ -74,6 +75,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		env_lst = g_info.env_lst;
 		buff = readline("\033[32;1mMinishell ➜ \033[0m");
 		if (buff == NULL)
 			return (ft_putstr("exit\n"), 0);

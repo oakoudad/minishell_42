@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 20:52:02 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:56:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct listenv
 {
 	char			*key;
 	int				status;
+	int				allocated;
 	char			*value;
 	struct listenv	*next;
 }	t_list_env;

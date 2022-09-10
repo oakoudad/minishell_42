@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 20:45:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 21:06:17 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	check_syntax(char *s)
 	while (j >= 0 && is_space(s[j]))
 		j--;
 	if (s[i] == '|' || s[j] == '|')
-	{
-		create_list("?", "258");
 		return (unexpected('|', '\0'), 0);
-	}
 	if (!check_syntax2(s))
 		return (0);
 	if (ft_strlen(s) > 0)
