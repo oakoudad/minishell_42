@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:16:14 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 22:43:47 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 00:23:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	dup_fd(int intfd, int fd[], t_list *lst, t_list *head)
 		dup2(head->in_fd, 0);
 		close(head->in_fd);
 	}
-	if (head->out_fd > 0)
+	if (head->out_fd >= 0)
 	{
 		dup2(head->out_fd, 1);
 		close(head->out_fd);

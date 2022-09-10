@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 23:37:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 00:42:41 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct list
 	char			**args;
 	char			*token;
 	int				out_fd;
+	int				error;
 	int				in_fd;
 	int				*index_token;
 	int				count_token;
@@ -152,4 +153,5 @@ int			len_key(char *str);
 void		ft_envadd_back(t_list_env *new);
 t_list_env	*ft_lstenv(char *key, char *value);
 int			unexpected(char token, char token2);
+
 #endif

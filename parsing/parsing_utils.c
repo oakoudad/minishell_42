@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/06 20:15:11 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 00:43:09 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	init_node(t_list	**node, char *pip)
 	(*node)->cmd = ignore_directions_and_get_cmd(pip);
 	(*node)->out_fd = -5;
 	(*node)->in_fd = -5;
+	(*node)->error = 0;
 	(*node)->outfile = NULL;
 	(*node)->heredoc_file = NULL;
 	(*node)->token = NULL;

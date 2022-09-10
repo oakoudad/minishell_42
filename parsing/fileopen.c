@@ -6,11 +6,70 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:10:12 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 17:46:13 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 00:51:42 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	path_check(char *path, t_list	**l, int status)
+{
+	char	*name;
+
+	name = generate_name();
+	if (!is_file(path))
+	{
+		printf_error(path, ": is a directory\n", "1");
+		if (status)
+			(*l)->out_fd = open(name, O_CREAT | O_RDWR, 0666);
+		else
+			(*l)->in_fd = open(name, O_CREAT | O_RDWR, 0666);
+		unlink(name);
+		(*l)->error = 1;
+		return (0);
+	}
+	if (is_file(path) && access(path, F_OK) == 0
+		&& access(path, X_OK) != 0)
+	{
+		printf_error(path, ": Permission denied\n", "1");
+		if (status)
+			(*l)->out_fd = open(name, O_CREAT | O_RDWR, 0666);
+		else
+			(*l)->in_fd = open(name, O_CREAT | O_RDWR, 0666);
+		unlink(name);
+		(*l)->error = 1;
+		return (0);
+	}
+	return (1);
+}
+
+int	out_file(t_list	**l, char *file, char *token)
+{
+	if (ft_strcmp(token, ">") == 0)
+	{
+		(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
+		if ((*l)->out_fd == -1)
+			return (path_check(file, l, 1));
+	}
+	else if (ft_strcmp(token, ">>") == 0)
+	{
+		(*l)->out_fd = open(file, O_RDWR | O_APPEND);
+		if ((*l)->out_fd == -1)
+			(*l)->out_fd = open(file, O_CREAT | O_RDWR);
+		if ((*l)->out_fd == -1)
+			return (path_check(file, l, 1));
+	}
+	return (1);
+}
+
+void	in_file(t_list	**l, char *file)
+{
+	if ((*l)->in_fd != -5)
+		close((*l)->in_fd);
+	(*l)->in_fd = open(file, O_RDONLY);
+	if ((*l)->in_fd == -1)
+		path_check(file, l, 0);
+}
 
 void	fileopen(t_list	**l, char *file, char *token)
 {
@@ -19,38 +78,14 @@ void	fileopen(t_list	**l, char *file, char *token)
 	int		i;
 
 	if ((*l)->out_fd == -5)
-	{
-		if (ft_strcmp(token, ">") == 0)
-		{
-			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
-		}
-		else if (ft_strcmp(token, ">>") == 0)
-		{
-			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
-			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
-		}
-	}
+		out_file(l, file, token);
 	else
 	{
 		close((*l)->out_fd);
-		if (ft_strcmp(token, ">") == 0)
-			(*l)->out_fd = open(file, O_CREAT | O_RDWR, 0666);
-		else if (ft_strcmp(token, ">>") == 0)
-		{
-			(*l)->out_fd = open(file, O_RDWR | O_APPEND);
-			if ((*l)->out_fd == -1)
-				(*l)->out_fd = open(file, O_CREAT | O_RDWR);
-		}
+		out_file(l, file, token);
 	}
 	if (ft_strcmp(token, "<") == 0)
-	{
-		if ((*l)->in_fd != -5)
-			close((*l)->in_fd);
-		(*l)->in_fd = open(file, O_RDONLY);
-		if ((*l)->in_fd == -1)
-			printf("minishell: %s: No such file or directory\n", file);
-	}
+		in_file(l, file);
 	if (ft_strcmp(token, "<<") == 0)
 	{
 		if ((*l)->in_fd != -5)

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 22:59:31 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 20:14:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_exit(char **args)
 			exit(255);
 		}
 	}
+	create_list("?", "1");
 	if (args && args[0] && args[1])
 		return (ft_putstr("MiniShell: exit: too many arguments\n"));
 	if (args && args[0])

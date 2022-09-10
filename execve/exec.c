@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 22:47:50 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 00:45:29 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	wait_and_error(int fd, t_list	*head)
 		if (WIFEXITED(status) && !routes(head))
 		{
 			g_info.errorstatus = WEXITSTATUS(status);
-			create_list("?", ft_itoa(g_info.errorstatus));
+			if (head->error == 0)
+				create_list("?", ft_itoa(g_info.errorstatus));
 		}
 		if (WIFSIGNALED(status) && !routes(head))
 		{
