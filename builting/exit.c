@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:32:21 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:10:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@ int	is_numeric(char c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
+}
+
+void	free_allenv(void)
+{
+	t_list_env	*env;
+
+	env = g_info.env_lst;
+	while (env)
+	{
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = env->next;
+	}
 }
 
 void	ft_exit(char **args)
@@ -38,17 +52,7 @@ void	ft_exit(char **args)
 	create_list("?", "1");
 	if (args && args[0] && args[1])
 		return (ft_putstr("MiniShell: exit: too many arguments\n"));
-	t_list_env	*env;
-	env = g_info.env_lst;
-	while (env)
-	{
-		printf("%s='%s'\n", env->key, env->value);
-		free(env->key);
-		free(env->value);
-		free(env);
-		env = env->next;
-	}
-	while (1);
+	free_allenv();
 	if (args && args[0])
 		exit(ft_atoi(args[0]));
 	else

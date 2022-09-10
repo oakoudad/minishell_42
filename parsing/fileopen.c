@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 18:10:12 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 00:51:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:21:34 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	path_check(char *path, t_list	**l, int status)
 		(*l)->error = 1;
 		return (0);
 	}
-	if (is_file(path) && access(path, F_OK) == 0
-		&& access(path, X_OK) != 0)
+	if (is_file(path) && access(path, F_OK) == 0 && access(path, X_OK) != 0)
 	{
 		printf_error(path, ": Permission denied\n", "1");
 		if (status)

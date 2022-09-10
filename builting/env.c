@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:04:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:45:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:07:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_env(void)
 {
 	t_list_env	*lst;
-	
+
 	lst = g_info.env_lst;
 	while (lst)
 	{

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 22:27:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:12:28 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,6 @@ int	cmd_error(char *cmd)
 		return (0);
 	}
 	return (1);
-}
-
-void free_splited(char **vals, int i)
-{
-	while (vals[++i])
-		free(vals[i]);
 }
 
 char	*get_cmd_from_path(char *cmd)

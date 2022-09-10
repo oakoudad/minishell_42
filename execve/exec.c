@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:55:12 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:23:58 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	exec_pipe(int intfd, t_list *lst, t_list *head, char	**env)
 	exec_cmd(lst, head, var, intfd);
 	if (!routes(head))
 		free(var.cmd);
-	free_args(head);
+	//free_args(head);
 	closefd(var.fd[1], var.io_fd[1], var.io_fd[0], intfd);
 	if (!lst->next && wait_and_error(var.fd[0], head))
 		return ;

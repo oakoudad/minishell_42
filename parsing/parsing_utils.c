@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:52:39 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:26:59 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	create_cmd(char *s, char *cmd, int end, int withextra)
 
 void	set_token(t_list	**l, t_list	*elm, int i)
 {
-	fileopen(l, elm->args[i + 1], elm->args[i]);
-	elm->token = elm->args[i];
-	elm->outfile = elm->args[i + 1];
+	fileopen(l, elm->allargs[i + 1], elm->allargs[i]);
+	elm->token = elm->allargs[i];
+	elm->outfile = elm->allargs[i + 1];
 }
 
 void	index_token(char token, int i, t_list **l, int *status)
@@ -86,7 +86,7 @@ void	init_node(t_list	**node, char *pip)
 	(*node)->index_token = NULL;
 	(*node)->count_token = 0;
 	(*node)->allargs = get_args(pip, node);
-	if ((*node)->args != NULL)
+	if ((*node)->allargs != NULL)
 		(*node)->args = args_filter(node);
 }
 
