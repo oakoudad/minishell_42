@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:56:51 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 22:00:30 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int	main(int ac, char **av, char **env)
 		if (buff == NULL)
 			return (ft_putstr("exit\n"), 0);
 		if (buff[0] == '\0')
+		{
+			free(buff);
 			continue ;
+		}
 		add_history(buff);
 		if (check_syntax(buff) == -1)
 			return (0);

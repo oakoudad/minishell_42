@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:57:11 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 22:27:42 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int	cmd_error(char *cmd)
 	return (1);
 }
 
+void free_splited(char **vals, int i)
+{
+	while (vals[++i])
+		free(vals[i]);
+}
+
 char	*get_cmd_from_path(char *cmd)
 {
 	char	*path;
@@ -77,7 +83,7 @@ char	*get_cmd_from_path(char *cmd)
 		checkpath = ft_strjoin(vals[i], "/");
 		checkpath = ft_strjoin(checkpath, cmd);
 		if (access(checkpath, X_OK) == 0)
-			return (checkpath);
+			return (free_splited(vals, i), checkpath);
 		free(checkpath);
 	}
 	return (printf_error(cmd, ": command not found\n", "127"), NULL);
