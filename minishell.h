@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 00:42:41 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 20:52:02 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,9 @@ int			len_key(char *str);
 void		ft_envadd_back(t_list_env *new);
 t_list_env	*ft_lstenv(char *key, char *value);
 int			unexpected(char token, char token2);
+int			search_var(char *var, char **env);
+int			var_cmp(char *var, char *env);
+int			search_var(char *var, char **env);
+void		free_env(char *var);
 
 #endif

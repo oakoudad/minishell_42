@@ -17,6 +17,7 @@ SRC		=	minishell.c\
 			./src/generate_name.c\
 			./src/get_var.c\
 			./src/get_home.c\
+			./src/free_env.c\
 			./src/redirection_error.c\
 			./builting/echo.c\
 			./builting/export.c\

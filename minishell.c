@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 22:59:25 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/10 20:46:35 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,24 @@ void	config(char **e)
 {
 	int		i;
 	int		shlvl;
-	int		status;
 	char	*new_shlvl;
 
 	i = -1;
-	status = 1;
 	while (e[++i])
 	{
 		if (e[i][0] == 'S' && e[i][1] == 'H' && e[i][2] == 'L'
 			&& e[i][3] == 'V' && e[i][4] == 'L' && e[i][5] == '=')
 		{
-			status = 0;
 			shlvl = ft_atoi(&e[i][6]) + 1;
 			new_shlvl = ft_itoa(shlvl);
 			e[i] = ft_strjoin(ft_strdup("SHLVL="), new_shlvl);
 			free(new_shlvl);
 		}
 	}
-	if (status)
+	if (!search_var("SHLVL", e))
 		create_list("SHLVL", "1");
-	create_list("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	if (!search_var("PATH", e))
+		create_list("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 }
 
 int	main(int ac, char **av, char **env)
