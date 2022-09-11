@@ -36,12 +36,10 @@ void	copy_var_2(int *d, char *var, char *dest)
 
 int	copy_var(char *s, char *dest, int *d)
 {
-	t_list_env	*temp;
 	int			len;
 	char		*var;
 
 	len = 0;
-	temp = g_info.env_lst;
 	if (s[0] == '?')
 		len = 1;
 	else

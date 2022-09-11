@@ -64,12 +64,10 @@ char	**copy_var1(char *str, int j, int k, char **splited)
 
 char	**split(char *str)
 {
-	int		i;
 	int		j;
 	int		k;
 	char	**splited;
 
-	i = 0;
 	j = 0;
 	k = 0;
 	splited = malloc(sizeof(char *) * (strlen(str) + 2));

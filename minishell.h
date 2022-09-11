@@ -17,12 +17,15 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
+# include "/usr/include/readline/readline.h"
+# include "/usr/include/readline/history.h"
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <dirent.h>
+# include <wait.h>
 # include <sys/stat.h>
 
 typedef struct list
@@ -159,5 +162,6 @@ void		free_env(char *var);
 void		free_args(t_list *head);
 void		free_splited(char **vals, int i);
 void		heredoc(t_list **l, char *file);
+void		change_status(int	status);
 
 #endif

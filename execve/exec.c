@@ -26,14 +26,14 @@ int	wait_and_error(int fd, t_list	*head)
 		{
 			g_info.errorstatus = WEXITSTATUS(status);
 			if (head->error == 0)
-				create_list("?", ft_itoa(g_info.errorstatus));
+				change_status(g_info.errorstatus);
 		}
 		if (WIFSIGNALED(status) && !routes(head))
 		{
 			g_info.errorstatus = WTERMSIG(status) + 128;
 			if (g_info.errorstatus == 131)
 				write(2, "Quit: 3\n", 8);
-			create_list("?", ft_itoa(g_info.errorstatus));
+			change_status(g_info.errorstatus);
 		}
 		z++;
 	}

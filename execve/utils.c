@@ -12,6 +12,15 @@
 
 #include "../minishell.h"
 
+void	change_status(int	status)
+{
+	char	*err;
+
+	err = ft_itoa(status);
+	create_list("?", err);
+	free(err);
+}
+
 void	closefd(int a, int b, int c, int d)
 {
 	if (a > -1)
