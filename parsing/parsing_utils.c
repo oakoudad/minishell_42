@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:26:59 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:13:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	create_cmd(char *s, char *cmd, int end, int withextra)
 		else
 		{
 			copyto(s + j + 1, cmd, &i, withextra);
-			skep_quotes(s, &j);
+			skep_quotes(s, &j, 1);
 		}
 		j++;
 	}
@@ -85,6 +85,7 @@ void	init_node(t_list	**node, char *pip)
 	(*node)->token = NULL;
 	(*node)->index_token = NULL;
 	(*node)->count_token = 0;
+	(*node)->args = NULL;
 	(*node)->allargs = get_args(pip, node);
 	if ((*node)->allargs != NULL)
 		(*node)->args = args_filter(node);
@@ -102,6 +103,7 @@ char	**args_filter(t_list	**l)
 	if (elm->count_token != 0)
 		i -= 2 * elm->count_token;
 	args = malloc(sizeof(char *) * i + 1);
+	
 	i = -1;
 	j = 0;
 	while (elm->allargs[++i])

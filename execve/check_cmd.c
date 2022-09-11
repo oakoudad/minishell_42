@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 02:55:07 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 20:46:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_cmd_from_path(char *cmd)
 	if ((cmd[0] == '.' && cmd[1] == '/') || (cmd[0] == '/'))
 	{
 		if (cmd_error(cmd))
-			return (cmd);
+			return (ft_strdup(cmd));
 		return (NULL);
 	}
 	path = get_env_var("PATH");
@@ -80,6 +80,7 @@ char	*get_cmd_from_path(char *cmd)
 			return (free_splited(vals, i), checkpath);
 		free(checkpath);
 	}
+	free(vals);
 	return (printf_error(cmd, ": command not found\n", "127"), NULL);
 }
 

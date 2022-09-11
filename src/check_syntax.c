@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 03:02:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:03:49 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_syntax2(char *s)
 	while (s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
-			if (!skep_quotes(s, &i))
+			if (!skep_quotes(s, &i, 1))
 				return (0);
 		if (s[i] == '|')
 			j++;

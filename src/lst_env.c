@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 02:13:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:22:22 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	sort_list(void)
 	char		**names;
 
 	lst = g_info.env_lst;
+	if (g_info.names !=	NULL){
+		free(g_info.names);}
 	names = malloc(sizeof(char *) * 1000);
 	if (!names)
 		return (0);

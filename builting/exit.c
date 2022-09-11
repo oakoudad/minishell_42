@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:10:54 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:17:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ void	free_allenv(void)
 		free(env);
 		env = env->next;
 	}
+	free(g_info.names);
+	free_cmd_line(g_info.cmds);
 }
 
 void	ft_exit(char **args)
 {
 	int	i;
+	int	res;
 
 	i = -1;
+	res = -1;
 	ft_putstr("exit\n");
 	while (args && args[0] && args[0][++i])
 	{
@@ -52,9 +56,11 @@ void	ft_exit(char **args)
 	create_list("?", "1");
 	if (args && args[0] && args[1])
 		return (ft_putstr("MiniShell: exit: too many arguments\n"));
-	free_allenv();
 	if (args && args[0])
-		exit(ft_atoi(args[0]));
+		res = ft_atoi(args[0]);
+	free_allenv();
+	if (res > 0)
+		exit(res);
 	else
 		exit(0);
 }

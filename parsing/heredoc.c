@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 00:37:38 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:47:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:08:16 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	heredoc(t_list **l, char *file)
 	char	*buff;
 
 	buff = NULL;
+	if ((*l)->heredoc_file != NULL)
+	{
+		free((*l)->heredoc_file);
+		(*l)->heredoc_file = NULL;
+	}
 	(*l)->heredoc_file = generate_name();
 	init_heredoc(0, 0);
 	pid = fork();

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:21:04 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:56:44 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:03:35 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_var(int *j, int *status)
 void	calc_redirections(char **p, int *status, int i, int j)
 {
 	if (p[i][j] == '"' || p[i][j] == '\'')
-		skep_quotes(p[i], &j);
+		skep_quotes(p[i], &j, 0);
 	if (chech_red(p[i][j]))
 		*status += 1;
 }

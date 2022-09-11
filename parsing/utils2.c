@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:08:45 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/02 18:19:07 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:06:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	end_of_cmd(char *s)
 	while (s[end])
 	{
 		if (s[end] == '"' || s[end] == '\'')
-			skep_quotes(s, &end);
+			skep_quotes(s, &end, 1);
 		if ((s[end] == '>' || s[end] == '<') && end == 0)
 		{
 			while (s[end] == '>' || s[end] == '<')

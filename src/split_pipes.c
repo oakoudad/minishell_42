@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 18:24:37 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:03:29 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	split_pipes2(char *s, char **p, int count)
 		while (s[end])
 		{
 			if (s[end] == '"' || s[end] == '\'')
-				skep_quotes(s, &end);
+				skep_quotes(s, &end, 1);
 			if (s[end] == '|')
 				break ;
 			++end;
@@ -78,7 +78,7 @@ char	**split_pipes(char *s)
 	while (s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
-			skep_quotes(s, &i);
+			skep_quotes(s, &i, 1);
 		if (s[i] == '|')
 			count++;
 		i++;

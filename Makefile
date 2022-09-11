@@ -1,8 +1,7 @@
 NAME	= minishell
-CC		= gcc-9
+CC		= gcc
 RM		= rm -f
-# CFLAGS	= -Wall -Wextra -Werror -g -I /Users/${USER}/.brew/opt/readline/include -L /Users/${USER}/.brew/opt/readline/lib -lreadline
-CFLAGS	=  -lreadline
+CFLAGS	= -Wall -Wextra -Werror -g -I /Users/${USER}/.brew/opt/readline/include -L /Users/${USER}/.brew/opt/readline/lib -lreadline
 SRC		=	minishell.c\
 			./src/utils.c\
 			./src/list.c\
@@ -33,6 +32,7 @@ SRC		=	minishell.c\
 			./parsing/utils.c\
 			./parsing/utils2.c\
 			./parsing/heredoc.c\
+			./parsing/free.c\
 			./execve/check_cmd.c\
 			./execve/builtin.c\
 			./execve/utils.c\
@@ -42,7 +42,7 @@ HEADER	=	minishell.h
 
 all: $(NAME)
 $(NAME): $(SRC) $(HEADER)
-	$(CC) $(SRC) -o $(NAME) $(CFLAGS)
+	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 
 clean:
 

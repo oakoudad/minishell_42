@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:57:27 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:06:35 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	len_var(char *s)
 	return ((var = NULL), j);
 }
 
-int	skep_quotes(char *s, int *d)
+int	skep_quotes(char *s, int *d, int status)
 {
 	char	c;
 	int		i;
@@ -66,7 +66,7 @@ int	skep_quotes(char *s, int *d)
 	i = *d + 1;
 	while (s[i] && s[i] != c)
 		i++;
-	if (s[i] == 0)
+	if (s[i] == 0 && status)
 	{
 		ft_putstr("Minishell: syntax error quotes not closed\n");
 		create_list("?", "1");

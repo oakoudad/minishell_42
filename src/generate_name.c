@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:13:29 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/07 18:13:52 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 21:08:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*generate_name(void)
 	long long	n;
 	int			i;
 
-	start = malloc(sizeof(char) * 40);
 	start = ft_strdup("/tmp/0xminishell00000000000000.heredoc");
 	while (access(start, F_OK) == 0)
 	{

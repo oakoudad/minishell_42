@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 02:54:58 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 22:13:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,12 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
-# include "/usr/include/readline/readline.h"
-# include "/usr/include/readline/history.h"
+ # include <readline/readline.h>
+ # include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <dirent.h>
-# include <wait.h>
 # include <sys/stat.h>
 
 typedef struct list
@@ -79,6 +76,7 @@ typedef struct execvar
 }	t_var;
 
 t_info	g_info;
+
 int			ft_lstsize(t_list_env *lst);
 int			is_space(char c);
 int			check_syntax(char *s);
@@ -86,7 +84,6 @@ int			ft_strlen(char *s);
 void		ft_putstr(char *s);
 void		check_quotes(char *s);
 char		**split_pipes(char *s);
-int			skep_quotes(char *s, int *d);
 char		*ft_charjoin(char *s1, char s2);
 char		*ft_strdup(char *s1);
 char		*ft_strdup2(char *s1);
@@ -106,7 +103,7 @@ int			sort_list(void);
 void		ft_exit(char **args);
 void		parsing(char	**pips);
 int			len_var(char *s);
-int			skep_quotes(char *s, int *d);
+int			skep_quotes(char *s, int *d, int status);
 int			skep_quotes2(char *s, int *d);
 int			iftoken(int index, t_list **l);
 char		*ft_strdup(char *s1);
@@ -159,9 +156,9 @@ int			search_var(char *var, char **env);
 int			var_cmp(char *var, char *env);
 int			search_var(char *var, char **env);
 void		free_env(char *var);
-void		free_args(t_list *head);
 void		free_splited(char **vals, int i);
 void		heredoc(t_list **l, char *file);
 void		change_status(int	status);
+void		free_cmd_line(t_list *head);
 
 #endif
