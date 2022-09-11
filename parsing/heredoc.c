@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 00:37:38 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 21:08:16 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:39:22 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	heredoc(t_list **l, char *file)
 		(*l)->in_fd = open((*l)->heredoc_file, O_CREAT | O_RDWR, 0666);
 		g_info.heredoc = 1;
 		g_info.heredoc_fd = (*l)->in_fd;
-		g_info.heredoc_file = (*l)->heredoc_file;
 		while (g_info.heredoc_fd)
 			heredoc_promes(l, buff, file);
 		close((*l)->in_fd);

@@ -6,13 +6,13 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:16:14 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:16:13 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:40:29 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	change_status(int	status)
+void	change_status(int status)
 {
 	char	*err;
 

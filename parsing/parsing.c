@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:43:19 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:39:02 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ void	parsing(char	**pips)
 	t_list	*tmp;
 	int		i;
 
-	i = 0;
+	i = -1;
 	head = NULL;
-	while (pips[i] != NULL && i < g_info.count_pipes)
+	while (pips[++i] != NULL && i < g_info.count_pipes)
 	{
 		node = malloc(sizeof(t_list));
 		node->args = NULL;
@@ -139,7 +139,6 @@ void	parsing(char	**pips)
 		init_node(&node, pips[i]);
 		tmp = node;
 		free(pips[i]);
-		i++;
 	}
 	free(pips);
 	tmp->next = NULL;
@@ -148,4 +147,3 @@ void	parsing(char	**pips)
 		exec(-1, head);
 	free_cmd_line(head);
 }
-

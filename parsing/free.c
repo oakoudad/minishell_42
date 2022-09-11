@@ -6,15 +6,15 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 21:46:49 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 22:48:11 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:40:01 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
 void	free_cmd_line(t_list	*head)
 {
-	int i;
+	int	i;
 
 	while (head)
 	{

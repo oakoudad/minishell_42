@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:00:08 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:17:08 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:51:18 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ void	free_allenv(void)
 	free_cmd_line(g_info.cmds);
 }
 
-void	ft_exit(char **args)
+void	exit_check_args(char **args)
 {
 	int	i;
-	int	res;
 
-	i = -1;
-	res = -1;
-	ft_putstr("exit\n");
-	while (args && args[0] && args[0][++i])
+	i = 0;
+	if (args && args[0] && args[0][i] == '-')
+		i++;
+	while (args && args[0] && args[0][i])
 	{
 		if (!is_numeric(args[0][i]))
 		{
@@ -52,15 +51,22 @@ void	ft_exit(char **args)
 			ft_putstr(": numeric argument required\n");
 			exit(255);
 		}
+		i++;
 	}
+}
+
+void	ft_exit(char **args)
+{
+	unsigned char	i;
+
+	ft_putstr("exit\n");
+	exit_check_args(args);
 	create_list("?", "1");
 	if (args && args[0] && args[1])
 		return (ft_putstr("MiniShell: exit: too many arguments\n"));
+	i = 0;
 	if (args && args[0])
-		res = ft_atoi(args[0]);
+		i = ft_atoi(args[0]);
 	free_allenv();
-	if (res > 0)
-		exit(res);
-	else
-		exit(0);
+	exit(i);
 }

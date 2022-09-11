@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 20:46:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:42:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	cmd_error(char *cmd)
 char	*get_cmd_from_path(char *cmd)
 {
 	char	*path;
-	char	*checkpath;
 	char	**vals;
 	int		i;
 
@@ -74,11 +73,11 @@ char	*get_cmd_from_path(char *cmd)
 	i = -1;
 	while (vals[++i])
 	{
-		checkpath = ft_strjoin(vals[i], "/");
-		checkpath = ft_strjoin(checkpath, cmd);
-		if (access(checkpath, X_OK) == 0)
-			return (free_splited(vals, i), checkpath);
-		free(checkpath);
+		vals[i] = ft_strjoin(vals[i], "/");
+		vals[i] = ft_strjoin(vals[i], cmd);
+		if (access(vals[i], X_OK) == 0)
+			return (free_splited(vals, i), vals[i]);
+		free(vals[i]);
 	}
 	free(vals);
 	return (printf_error(cmd, ": command not found\n", "127"), NULL);
