@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:06:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:15:31 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 01:05:39 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,13 @@ void	ft_envadd_back(t_list_env *new)
 	t_list_env	*t;
 
 	t = g_info.env_lst;
-	if (!t)
+	if (t == NULL)
 	{
 		g_info.env_lst = new;
 		return ;
 	}
 	while (t->next)
-	{
 		t = t->next;
-	}
 	t->next = new;
 }
 

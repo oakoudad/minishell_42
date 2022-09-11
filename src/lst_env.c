@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 23:46:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:13:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int	create_list(char *name, char *value)
 		tmp->status = 0;
 	else
 		tmp->status = 1;
-	if (!tmp)
-		return (0);
 	ft_envadd_back(tmp);
 	return (1);
 }
@@ -76,7 +74,7 @@ int	sort_list(void)
 	char		**names;
 
 	lst = g_info.env_lst;
-	names = malloc(sizeof(char *) * 100);
+	names = malloc(sizeof(char *) * 1000);
 	if (!names)
 		return (0);
 	i = 0;
@@ -92,21 +90,12 @@ int	sort_list(void)
 	return (1);
 }
 
-int	set_status(char *name, char *value, int type)
+int	set_status(int type)
 {
-	if (type == 1)
-		name = "?";
-	if (type == 1 && !name)
-		return (0);
-	if (type == 1)
-		value = "0";
-	if (type == 1 && !value)
-		return (0);
-	if (type == 1 && create_list(name, value) == 0)
-		return (0);
+	create_list("?", "0");
 	if (sort_list() == 0)
 		return (0);
-	return (1);
+	return (type);
 }
 
 int	split_equal(char **env, int type)
@@ -118,14 +107,14 @@ int	split_equal(char **env, int type)
 	i = -1;
 	while (env[++i])
 	{
-		name = malloc(sizeof(char) * len_key(env[i]));
+		name = malloc(sizeof(char) * len_key(env[i]) + 1);
 		if (!name)
 			return (0);
 		if (strlen(env[i]) - len_key(env[i]) == 0)
 			value = NULL;
 		else
 		{
-			value = malloc(sizeof(char) * (strlen(env[i]) - len_key(env[i])));
+			value = malloc(1 + (strlen(env[i]) - len_key(env[i])));
 			if (value == NULL)
 				return (0);
 		}
@@ -135,5 +124,5 @@ int	split_equal(char **env, int type)
 		free(name);
 		free(value);
 	}
-	return (set_status(name, value, type));
+	return (set_status(type));
 }

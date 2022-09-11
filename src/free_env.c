@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:46:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:11:46 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:55:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	free_args(t_list *head)
 		free(head->allargs[i]);
 		i++;
 	}
-	free(head->allargs);
-	free(head->args);
+	//free(head->allargs);
+	//free(head->args);
 }
 
 void	free_splited(char **vals, int i)

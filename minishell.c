@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:06:44 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:04:46 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	config(char **e)
 	char	*new_shlvl;
 
 	i = -1;
+	g_info.env_lst = NULL;
 	while (e[++i])
 	{
 		if (e[i][0] == 'S' && e[i][1] == 'H' && e[i][2] == 'L'
@@ -58,7 +59,6 @@ void	config(char **e)
 		create_list("SHLVL", "1");
 	if (!search_var("PATH", e))
 		create_list("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	create_list("?", "0");
 }
 
 int	main(int ac, char **av, char **env)
@@ -69,7 +69,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	config(env);
 	g_info.sig = 1;
-	if (split_equal(env, 1) == 0)
+	char **st = env;
+	if (split_equal(st, 1) == 0)
 		return (0);
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);

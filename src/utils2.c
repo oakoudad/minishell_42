@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:26:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 19:46:52 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:00:32 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ char	*ft_strdup(char *s1)
 	i = 0;
 	len = ft_strlen(s1);
 	if (len == 0)
-		return ("");
+	{
+		str = malloc(sizeof(char) * 1);
+		str[0] = 0;
+		return (str);
+	}
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);

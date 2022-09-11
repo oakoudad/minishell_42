@@ -31,6 +31,7 @@ SRC		=	minishell.c\
 			./parsing/parsing_utils.c\
 			./parsing/utils.c\
 			./parsing/utils2.c\
+			./parsing/heredoc.c\
 			./execve/check_cmd.c\
 			./execve/builtin.c\
 			./execve/utils.c\

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:12:13 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 00:46:56 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,6 @@ int			search_var(char *var, char **env);
 void		free_env(char *var);
 void		free_args(t_list *head);
 void		free_splited(char **vals, int i);
+void		heredoc(t_list **l, char *file);
 
 #endif
