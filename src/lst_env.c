@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:22:22 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:30:40 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ int	create_list(char *name, char *value)
 	{
 		if (ft_strcmp(tmp->key, name) == 0)
 		{
-			free(tmp->value);
-			tmp->value = ft_strdup(value);
+			if (tmp->value != NULL)
+				free(tmp->value);
+			if (value)
+				tmp->value = ft_strdup(value);
 			return (1);
 		}
 		tmp = tmp->next;

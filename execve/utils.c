@@ -6,17 +6,16 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:16:14 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:03:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:16:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	change_status(int	status, t_list *head)
+void	change_status(int	status)
 {
 	char	*err;
 
-	printf("%s -> %d\n", head->cmd, status);
 	err = ft_itoa(status);
 	create_list("?", err);
 	free(err);

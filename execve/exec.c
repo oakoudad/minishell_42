@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:14:12 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:16:24 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	wait_and_error(int fd, t_list	*head)
 		{
 			g_info.errorstatus = WEXITSTATUS(status);
 			if (head->error == 0)
-				change_status(g_info.errorstatus, head);
+				change_status(g_info.errorstatus);
 		}
 		if (WIFSIGNALED(status) && !routes(head) && z == 0)
 		{
 			g_info.errorstatus = WTERMSIG(status) + 128;
 			if (g_info.errorstatus == 131)
 				write(2, "Quit: 3\n", 8);
-			change_status(g_info.errorstatus, head);
+			change_status(g_info.errorstatus);
 		}
 		z++;
 	}
