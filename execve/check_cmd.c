@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:12:28 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:55:07 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,19 @@ char	**prepare_env(void)
 	char		**newenv;
 
 	lst = g_info.env_lst;
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
+	i = ft_lstsize(lst);
 	newenv = malloc(sizeof(char *) * i + 1);
 	if (!newenv)
 		return (NULL);
 	lst = g_info.env_lst;
-	i = -1;
+	i = 0;
 	while (lst)
 	{
-		newenv[++i] = ft_strdup(lst->key);
+		newenv[i] = ft_strdup(lst->key);
 		newenv[i] = ft_strjoin(newenv[i], "=");
 		newenv[i] = ft_strjoin(newenv[i], lst->value);
 		lst = lst->next;
+		i++;
 	}
 	newenv[i] = NULL;
 	return (newenv);

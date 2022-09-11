@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:48:08 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:54:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 	}
 }
 
-void	exec_pipe(int intfd, t_list *lst, t_list *head, char	**env)
+void	exec_pipe(int intfd, t_list *lst, t_list *head, char **env)
 {
 	t_var	var;
 
@@ -107,6 +107,7 @@ void	exec(int intfd, t_list *lst)
 		free(env[i]);
 		i++;
 	}
+	free(env);
 }
 
 void	cmd_not_found(int fd[], t_list *lst, char **env)

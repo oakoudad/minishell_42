@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 02:04:46 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:59:11 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	config(char **e)
 
 	i = -1;
 	g_info.env_lst = NULL;
+	g_info.sig = 1;
 	while (e[++i])
 	{
 		if (e[i][0] == 'S' && e[i][1] == 'H' && e[i][2] == 'L'
@@ -68,9 +69,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	config(env);
-	g_info.sig = 1;
-	char **st = env;
-	if (split_equal(st, 1) == 0)
+	if (split_equal(env, 1) == 0)
 		return (0);
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
@@ -88,5 +87,6 @@ int	main(int ac, char **av, char **env)
 		if (check_syntax(buff) == -1)
 			return (0);
 		free(buff);
+		buff = NULL;
 	}
 }

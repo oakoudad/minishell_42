@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:57:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 03:10:02 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,10 @@ void	parsing(char	**pips)
 	g_info.cmds = head;
 	if (head->cmd != NULL && head->cmd[0] != '\0')
 		exec(-1, head);
+	while (head)
+	{
+		free(head);
+		head = head->next;
+	}
 }
+

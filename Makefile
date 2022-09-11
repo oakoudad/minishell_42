@@ -5,6 +5,7 @@ CFLAGS	= -Wall -Wextra -Werror -g -I /Users/${USER}/.brew/opt/readline/include -
 
 SRC		=	minishell.c\
 			./src/utils.c\
+			./src/list.c\
 			./src/utils2.c\
 			./src/split_pipes.c\
 			./src/check_syntax.c\

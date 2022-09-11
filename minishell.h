@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:46:56 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 02:54:58 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ typedef struct execvar
 }	t_var;
 
 t_info	g_info;
-
-void		ft_lstadd_back(t_list **lst, t_list *new);
-t_list		*ft_lstnew(void *content);
-int			ft_lstsize(t_list *lst);
+int			ft_lstsize(t_list_env *lst);
 int			is_space(char c);
 int			check_syntax(char *s);
 int			ft_strlen(char *s);
