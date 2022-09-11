@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:16:29 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:56:07 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
- # include <readline/readline.h>
- # include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
@@ -158,7 +158,7 @@ int			search_var(char *var, char **env);
 void		free_env(char *var);
 void		free_splited(char **vals, int i);
 void		heredoc(t_list **l, char *file);
-void		change_status(int	status);
+void		change_status(int status);
 void		free_cmd_line(t_list *head);
 
 #endif

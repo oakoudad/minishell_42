@@ -6,11 +6,18 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:31 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:09:40 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:54:51 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_node_vars(t_list_env *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
+}
 
 int	del_node(t_list_env *node)
 {
@@ -20,9 +27,7 @@ int	del_node(t_list_env *node)
 	if (g_info.env_lst == node)
 	{
 		g_info.env_lst = node->next;
-		free(node->key);
-		free(node->value);
-		free(node);
+		free_node_vars(node);
 		return (1);
 	}
 	tmp = g_info.env_lst;
@@ -31,9 +36,7 @@ int	del_node(t_list_env *node)
 		if (tmp == node)
 		{
 			prev->next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
+			free_node_vars(tmp);
 			return (1);
 		}
 		prev = tmp;
