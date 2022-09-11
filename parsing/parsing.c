@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 22:14:01 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:43:19 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ char	**get_args(char *s, t_list **l)
 		s = s + d;
 		i++;
 	}
-	if (args[i - 1][0] == '\0')
-		args[i - 1] = NULL;
 	args[i] = NULL;
 	return (args);
 }

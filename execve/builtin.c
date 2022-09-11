@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:49:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 21:43:17 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:37:57 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	exc_builtins(t_list *lst)
 		if (lst->args && lst->args[0] && lst->args[1])
 			ft_cd(lst->args[1]);
 		else
-			ft_cd("");
+			ft_cd(NULL);
 	}
 	else if (ft_strcmp(lst->cmd, "unset") == 0)
 		ft_unset(lst->args + 1);

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 21:27:34 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 00:14:12 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	wait_and_error(int fd, t_list	*head)
 	while (z < g_info.count_pipes && g_info.count_pipes)
 	{
 		wait(&status);
-		if (WIFEXITED(status) && !routes(head))
+		if (WIFEXITED(status) && !routes(head) && z == 0)
 		{
 			g_info.errorstatus = WEXITSTATUS(status);
 			if (head->error == 0)
-				change_status(g_info.errorstatus);
+				change_status(g_info.errorstatus, head);
 		}
-		if (WIFSIGNALED(status) && !routes(head))
+		if (WIFSIGNALED(status) && !routes(head) && z == 0)
 		{
 			g_info.errorstatus = WTERMSIG(status) + 128;
 			if (g_info.errorstatus == 131)
 				write(2, "Quit: 3\n", 8);
-			change_status(g_info.errorstatus);
+			change_status(g_info.errorstatus, head);
 		}
 		z++;
 	}
@@ -112,6 +112,7 @@ void	exec(int intfd, t_list *lst)
 void	cmd_not_found(int fd[], t_list *lst, char **env)
 {
 	close(fd[1]);
+	g_info.sig = 1;
 	if (lst->next)
 		exec_pipe(fd[0], lst->next, lst->next, env);
 }
