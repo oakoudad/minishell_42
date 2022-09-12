@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 01:52:28 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 02:02:23 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,6 @@ char	*get_path(char *key)
 		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-int	ft_pwd(void)
-{
-	char	cwd[1000];
-
-	if (getcwd(cwd, 1000))
-	{
-		printf("%s\n", cwd);
-		return (1);
-	}
-	else
-		return (0);
 }
 
 void	ft_cd_puterror(char *path)
