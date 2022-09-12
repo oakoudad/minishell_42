@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 21:51:23 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:00:52 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	config(char **e, int ac, char **av)
 	g_info.sig = 1;
 	while (e[++i])
 	{
-		if (e[i][0] == 'S' && e[i][1] == 'H' && e[i][2] == 'L'
-			&& e[i][3] == 'V' && e[i][4] == 'L' && e[i][5] == '=')
+		if (var_cmp("SHLVL", e[i]))
 		{
 			shlvl = ft_atoi(&e[i][6]) + 1;
+			if (shlvl < 0)
+				shlvl = 0;
 			new_shlvl = ft_itoa(shlvl);
 			e[i] = ft_strjoin(ft_strdup("SHLVL="), new_shlvl);
 			free(new_shlvl);
