@@ -47,8 +47,6 @@ SRC = 		minishell.c\
 		./execve/utils.c\
 		./execve/exec.c
 
-
-
 OBJ = $(SRC:.c=.o)
 
 %.o : %.c
