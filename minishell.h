@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 01:56:33 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 02:31:06 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,5 @@ void		free_splited(char **vals, int i);
 void		heredoc(t_list **l, char *file);
 void		change_status(int status);
 void		free_cmd_line(t_list *head);
-
+char		*get_pwd(void);
 #endif
