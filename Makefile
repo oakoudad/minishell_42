@@ -8,7 +8,7 @@ INCLUDE_READLINE = $(addprefix $(READLINE),/include)
 
 LIB_READLINE = $(addprefix $(READLINE),/lib)
 
-CC = cc -g -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror
 
 SRC = 		minishell.c\
 		./src/utils.c\
@@ -49,13 +49,20 @@ SRC = 		minishell.c\
 
 OBJ = $(SRC:.c=.o)
 
+COLOUR_GREEN=\033[0;32m
+COLOUR_YELLOW=\033[0;33m
+COLOUR_BLUE=\033[0;34m
+COLOUR_END=\033[0m
+
 %.o : %.c
-	$(CC) -I $(INCLUDE_READLINE) -c $< -o $@
+	@echo "Create $(COLOUR_BLUE)$@$(COLOUR_END) from $(COLOUR_YELLOW)$<$(COLOUR_END)"
+	@$(CC) -I $(INCLUDE_READLINE) -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(INC)  $(OBJ)
-	$(CC)  -I $(INCLUDE_READLINE) -L $(LIB_READLINE) -lreadline $(OBJ) -o $(NAME)
+	@$(CC)  -I $(INCLUDE_READLINE) -L $(LIB_READLINE) -lreadline $(OBJ) -o $(NAME)
+	@echo "$(COLOUR_GREEN)Executable created (./${NAME})$(COLOUR_END)"
 
 clean:
 	rm -rf $(OBJ)
