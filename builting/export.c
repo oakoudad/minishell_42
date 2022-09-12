@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 20:46:32 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:49:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ void	check_key(char *str)
 			i++;
 		else
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", str);
+			write(2, "minishell: export: `", 21);
+			write(2, str, ft_strlen(str));
+			write(2, "': not a valid identifier\n", 27);
 			create_list("?", "1");
 			return ;
 		}
@@ -105,6 +107,7 @@ int	ft_export(char **var)
 	int	i;
 
 	i = -1;
+	create_list("?", "0");
 	if (!var || !var[0])
 		ft_env(0);
 	else

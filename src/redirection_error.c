@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:21:04 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 22:03:35 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:58:39 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	chech_red(char c)
 
 int	unexpected(char token, char token2)
 {
-	write(1, "syntax error near unexpected token '", 37);
-	write(1, &token, 1);
-	write(1, &token2, 1);
-	write(1, "'\n", 2);
+	write(2, "syntax error near unexpected token '", 37);
+	write(2, &token, 1);
+	write(2, &token2, 1);
+	write(2, "'\n", 2);
 	create_list("?", "258");
 	return (0);
 }

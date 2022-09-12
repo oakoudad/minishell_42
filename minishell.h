@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:56:07 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:56:33 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_lstsize(t_list_env *lst);
 int			is_space(char c);
 int			check_syntax(char *s);
 int			ft_strlen(char *s);
-void		ft_putstr(char *s);
+void		ft_putstr_fd(int fd, char *s);
 void		check_quotes(char *s);
 char		**split_pipes(char *s);
 char		*ft_charjoin(char *s1, char s2);

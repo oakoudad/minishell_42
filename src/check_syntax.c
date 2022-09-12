@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 22:03:49 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:57:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	check_syntax2(char *s)
 		if (s[i] == '|')
 			j++;
 		if (s[i] == ';')
-			return (ft_putstr("Minishell: ';' is not supported\n"), 0);
+			return (ft_putstr_fd(2, "Minishell: ';' is not supported\n"), 0);
 		if (j == 2)
-			return (ft_putstr("Minishell: syntax error near `||'\n"), 0);
+			return (ft_putstr_fd(2, "Minishell: syntax error near `||'\n"), 0);
 		if (!is_space(s[i]) && s[i] != '|')
 			j = 0;
 		i++;

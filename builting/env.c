@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:04:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 00:07:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:46:21 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_env(int x)
 	int			i;
 
 	lst = g_info.env_lst;
+	create_list("?", "0");
 	if (lst && x)
 		return (print_env());
 	i = -1;

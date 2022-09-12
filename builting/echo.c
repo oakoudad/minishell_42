@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:51:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/10 21:57:03 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:57:26 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ void	ft_echo(char **var)
 			i = pass_n(var) - 1;
 		while (var[++i])
 		{
-			ft_putstr(var[i]);
+			ft_putstr_fd(1, var[i]);
 			if (var[i + 1] != NULL)
-				ft_putstr(" ");
+				ft_putstr_fd(1, " ");
 		}
 		if (n_option == 0)
-			ft_putstr("\n");
+			ft_putstr_fd(1, "\n");
 	}
 	else
-		ft_putstr("\n");
+		ft_putstr_fd(1, "\n");
 	create_list("?", "0");
 }

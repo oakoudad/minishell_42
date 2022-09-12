@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:39:15 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 01:52:28 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ void	ft_cd_puterror(char *path)
 {
 	if (ft_strcmp(path, "-") == 0 || ft_strcmp(path, "HOME") == 0
 		|| ft_strcmp(path, "OLDPWD") == 0 || ft_strcmp(path, "~") == 0)
-		printf("Minishell: cd: %s not set\n", path);
+	{
+		write(2, "Minishell: cd: ", 16);
+		write(2, path, ft_strlen(path));
+		write(2, " not set\n", 10);
+	}
 	else
-		printf("minishell: %s: No such a file or directory\n", path);
+	{
+		write(2, "Minishell: ", 12);
+		write(2, path, ft_strlen(path));
+		write(2, ": No such a file or directory\n", 31);
+	}
 	create_list("?", "1");
 }
 
