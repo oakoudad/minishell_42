@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:37:30 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:57:13 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,17 @@ int	sort_list(void)
 
 int	set_status(int type)
 {
+	char	**oldpwd;
+
+	if (type == 1)
+	{
+		oldpwd = malloc(sizeof(char *) * 2);
+		oldpwd[0] = ft_strdup("OLDPWD");
+		oldpwd[1] = NULL;
+		ft_unset(oldpwd);
+		free(oldpwd[0]);
+		free(oldpwd);
+	}
 	create_list("?", "0");
 	if (sort_list() == 0)
 		return (0);

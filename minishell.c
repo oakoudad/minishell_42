@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 02:15:14 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:51:23 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	sighandler(int sig)
 	}
 }
 
-void	config(char **e)
+void	config(char **e, int ac, char **av)
 {
 	int		i;
 	int		shlvl;
 	char	*new_shlvl;
 
+	(void)ac;
+	(void)av;
 	i = -1;
 	g_info.env_lst = NULL;
 	g_info.sig = 1;
@@ -66,9 +68,7 @@ int	main(int ac, char **av, char **env)
 {
 	char		*buff;
 
-	(void)ac;
-	(void)av;
-	config(env);
+	config(env, ac, av);
 	if (split_equal(env, 1) == 0)
 		return (0);
 	signal(SIGINT, sighandler);
