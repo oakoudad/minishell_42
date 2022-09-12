@@ -6,11 +6,19 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:37:43 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:18:07 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	isvarformat(char c)
+{
+	if (c == '_' || c == '?' || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
 
 void	create_cmd(char *s, char *cmd, int end, int withextra)
 {
@@ -23,8 +31,7 @@ void	create_cmd(char *s, char *cmd, int end, int withextra)
 	{
 		if (s[j] != '"' && s[j] != '\'')
 		{
-			if (withextra && s[j] == '$' && s[j + 1] != '"'
-				&& s[j + 1] != '\'' && s[j + 1] != '\0')
+			if (withextra && s[j] == '$' && isvarformat(s[j + 1]))
 				j += copy_var(s + j + 1, cmd, &i);
 			else
 				cmd[i++] = s[j];
