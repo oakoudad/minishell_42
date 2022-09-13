@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 15:51:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 01:57:26 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/13 21:27:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pass_n(char **var)
 	int	i;
 
 	i = 0;
-	while (check_args(var[i]) == 1)
+	while (var[i] && check_args(var[i]) == 1)
 		i++;
 	return (i);
 }
