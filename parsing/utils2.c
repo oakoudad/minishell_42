@@ -6,11 +6,19 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:08:45 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 23:05:24 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/13 23:28:41 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	isvarformat(char c)
+{
+	if (c == '_' || c == '?' || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
 
 void	copyto(char *s, char *cmd, int *d, int w)
 {
