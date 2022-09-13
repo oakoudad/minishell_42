@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:42:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/13 22:23:29 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,18 @@ char	**prepare_env(void)
 	if (!newenv)
 		return (NULL);
 	lst = g_info.env_lst;
-	i = 0;
-	while (lst)
+	i = -1;
+	while (++i >= 0 && lst)
 	{
+		if (lst->value == NULL)
+		{
+			lst = lst->next;
+			continue ;
+		}
 		newenv[i] = ft_strdup(lst->key);
 		newenv[i] = ft_strjoin(newenv[i], "=");
 		newenv[i] = ft_strjoin(newenv[i], lst->value);
 		lst = lst->next;
-		i++;
 	}
 	newenv[i] = NULL;
 	return (newenv);

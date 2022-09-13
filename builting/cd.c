@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 02:39:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/13 23:20:28 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,22 @@ int	mychdir(char *path)
 {
 	int		r;
 	char	*curr_pwd;
+	char	*old_pwd;
 
-	curr_pwd = get_pwd();
+	old_pwd = NULL;
+	curr_pwd = NULL;
+	old_pwd = get_pwd();
 	r = chdir(path);
 	if (r != -1)
-		create_list("OLDPWD", curr_pwd);
-	free(curr_pwd);
+		create_list("OLDPWD", old_pwd);
+	curr_pwd = get_pwd();
+	if (curr_pwd)
+	{
+		create_list("PWD", curr_pwd);
+		free(curr_pwd);
+	}
+	if (old_pwd)
+		free(old_pwd);
 	return (r);
 }
 

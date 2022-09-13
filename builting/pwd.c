@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 02:02:16 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 02:30:57 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/13 23:18:50 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_pwd(void)
 
 	if (getcwd(cwd, 1000))
 		return (ft_strdup(cwd));
+	else if (get_env_var("PWD"))
+		return (ft_strdup(get_env_var("PWD")));
 	return (NULL);
 }
 
@@ -28,6 +30,11 @@ int	ft_pwd(void)
 	if (getcwd(cwd, 1000))
 	{
 		printf("%s\n", cwd);
+		return (1);
+	}
+	else if (get_env_var("PWD"))
+	{
+		printf("%s\n", get_env_var("PWD"));
 		return (1);
 	}
 	else
