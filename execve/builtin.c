@@ -6,13 +6,13 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:49:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 23:37:57 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 20:39:41 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	routes(t_list *lst)
+int	isbuilting(t_list *lst)
 {
 	if (ft_strcmp(lst->cmd, "echo") == 0)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:03:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 20:40:25 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	wait_and_error(int fd, t_list	*head)
 	while (z < g_info.count_pipes && g_info.count_pipes)
 	{
 		wait(&status);
-		if (WIFEXITED(status) && !routes(head) && z == 0)
+		if (WIFEXITED(status) && !isbuilting(head) && z == 0)
 		{
 			g_info.errorstatus = WEXITSTATUS(status);
 			if (head->error == 0)
 				change_status(g_info.errorstatus);
 		}
-		if (WIFSIGNALED(status) && !routes(head) && z == 0)
+		if (WIFSIGNALED(status) && !isbuilting(head) && z == 0)
 		{
 			g_info.errorstatus = WTERMSIG(status) + 128;
 			if (g_info.errorstatus == 131)
@@ -43,7 +43,7 @@ int	wait_and_error(int fd, t_list	*head)
 
 void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 {
-	if (!routes(head))
+	if (!isbuilting(head))
 	{
 		g_info.sig = 0;
 		var.pid = fork();
@@ -51,7 +51,7 @@ void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 	if (var.pid == 0)
 	{
 		dup_fd(intfd, var.fd, lst, head);
-		if (routes(head) == 0)
+		if (isbuilting(head) == 0)
 		{
 			closefd(var.fd[0], var.io_fd[1], var.io_fd[0], -1);
 			signal(SIGQUIT, exit);
@@ -69,23 +69,22 @@ void	exec_pipe(int intfd, t_list *lst, t_list *head, char **env)
 {
 	t_var	var;
 
-	var.env = env;
+	var.env = NULL;
+	if (ft_strcmp("cat", lst->cmd) != 0)
+		var.env = env;
 	var.pid = 0;
 	if (head == NULL)
 		return ;
 	saveio(var.fd, var.io_fd);
 	if (lst->next)
 		pipe(var.fd);
-	if (!routes(head))
+	if (!isbuilting(head))
 		var.cmd = get_cmd_from_path(head->cmd);
-	if (!routes(head) && var.cmd == NULL)
-	{
-		cmd_not_found(var.fd, lst, env);
-		return ;
-	}
+	if (!isbuilting(head) && var.cmd == NULL)
+		return (cmd_not_found(var.fd, lst, env));
 	g_info.sig = 1;
 	exec_cmd(lst, head, var, intfd);
-	if (!routes(head))
+	if (!isbuilting(head))
 		free(var.cmd);
 	closefd(var.fd[1], var.io_fd[1], var.io_fd[0], intfd);
 	if (!lst->next && wait_and_error(var.fd[0], head))
@@ -98,7 +97,7 @@ void	exec(int intfd, t_list *lst)
 	char	**env;
 	int		i;
 
-	if (g_info.count_pipes == 1 && routes(lst))
+	if (g_info.count_pipes == 1 && isbuilting(lst))
 		env = NULL;
 	else
 		env = prepare_env();

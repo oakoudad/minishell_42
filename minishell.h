@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:04:55 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 20:39:41 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char		**ft_split(char *s, char c);
 void		exec_cmd_sys(char *cmd, char **env, t_list *lst);
 char		**prepare_env(void);
 char		*ft_itoa(int n);
-int			routes(t_list *lst);
+int			isbuilting(t_list *lst);
 int			create_list(char *name, char *value);
 void		exec(int intfd, t_list *lst);
 void		exc_builtins(t_list *lst);
