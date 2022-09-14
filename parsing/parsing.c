@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:14:13 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 20:21:35 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_cmd(char *s, int *d, int withextra)
 	char	*home;
 
 	end = end_of_cmd(s);
-	cmd = malloc(sizeof(char) * len_of_cmd(s, end) + 1);
+	cmd = ft_calloc(sizeof(char) * len_of_cmd(s, end) + 1);
 	if (!cmd)
 		return (NULL);
 	create_cmd(s, cmd, end, withextra);
@@ -101,7 +101,7 @@ char	**get_args(char *s, t_list **l)
 
 	(*l)->words = 1;
 	count_args(s, l);
-	args = malloc(sizeof(char *) * (*l)->words + 1);
+	args = ft_calloc(sizeof(char *) * (*l)->words + 1);
 	i = 0;
 	d = 0;
 	status = 1;
@@ -130,7 +130,7 @@ void	parsing(char	**pips)
 	head = NULL;
 	while (pips[++i] != NULL && i < g_info.count_pipes)
 	{
-		node = malloc(sizeof(t_list));
+		node = ft_calloc(sizeof(t_list));
 		node->args = NULL;
 		if (head == NULL)
 			head = node;

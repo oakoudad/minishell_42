@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 01:44:34 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	len_var(char *s)
 		|| s[j] == '_'
 		|| (s[j] >= '0' && s[j] <= '9'))
 		j++;
-	var = malloc(sizeof(char) * j);
+	var = ft_calloc(sizeof(char) * j);
 	while (++i < j)
 		var[i] = s[i];
 	var[i] = '\0';

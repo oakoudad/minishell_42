@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:36:06 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*mem(char *str, int start, int end)
 		start++;
 	while (is_space(str[end - 1]))
 		end--;
-	p = malloc((end - start + 1));
+	p = ft_calloc((end - start + 1));
 	if (!p)
 		return (NULL);
 	while (start < end)
@@ -98,7 +98,7 @@ char	**split_pipes(char *s)
 		i++;
 	}
 	g_info.count_pipes = count + 1;
-	p = malloc(sizeof(char *) * (count + 2));
+	p = ft_calloc(sizeof(char *) * (count + 2));
 	if (!p || !split_pipes2(s, p, count + 1))
 		return (NULL);
 	p[count + 1] = NULL;

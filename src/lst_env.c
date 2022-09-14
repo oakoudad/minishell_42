@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:04:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	sort_list(void)
 	lst = g_info.env_lst;
 	if (g_info.names != NULL)
 		free(g_info.names);
-	names = malloc(sizeof(char *) * 1000);
+	names = ft_calloc(sizeof(char *) * 1000);
 	if (!names)
 		return (0);
 	i = 0;
@@ -100,7 +100,7 @@ int	set_status(int type)
 
 	if (type == 1)
 	{
-		oldpwd = malloc(sizeof(char *) * 2);
+		oldpwd = ft_calloc(sizeof(char *) * 2);
 		oldpwd[0] = ft_strdup("OLDPWD");
 		oldpwd[1] = NULL;
 		ft_unset(oldpwd);
@@ -122,14 +122,14 @@ int	split_equal(char **env, int type)
 	i = -1;
 	while (env[++i])
 	{
-		name = malloc(sizeof(char) * len_key(env[i]) + 3);
+		name = ft_calloc(sizeof(char) * len_key(env[i]) + 3);
 		if (!name)
 			return (0);
 		if (ft_strlen(env[i]) - len_key(env[i]) == 0)
 			value = NULL;
 		else
 		{
-			value = malloc(3 + (ft_strlen(env[i]) - len_key(env[i])));
+			value = ft_calloc(3 + (ft_strlen(env[i]) - len_key(env[i])));
 			if (value == NULL)
 				return (0);
 		}

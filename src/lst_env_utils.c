@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:06:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 01:27:05 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_list_env	*ft_lstenv(char *key, char *value)
 {
 	t_list_env	*list;
 
-	list = malloc(sizeof(t_list));
+	list = ft_calloc(sizeof(t_list));
 	if (!list)
 		return (NULL);
 	if (value)

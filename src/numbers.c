@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:11:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/09 23:00:10 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_itoa(int n)
 	char	*str;
 
 	cp = n;
-	str = malloc(sizeof(char) * ft_count(n, &c) + 1);
+	str = ft_calloc(sizeof(char) * ft_count(n, &c) + 1);
 	if (!str)
 		return (NULL);
 	if (n == 0)

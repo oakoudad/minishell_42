@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:30:44 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:30:20 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int ac, char **av, char **env)
 		buff = readline("\033[32;1mMinishell ➜ \033[0m");
 		if (buff == NULL)
 			return (ft_putstr_fd(1, "exit\n"), 0);
-		if (buff[0] == '\0')
+		if (buff[0] == EOF)
 		{
 			free(buff);
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:26:50 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 01:18:01 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup2(char *s1)
 
 	i = 0;
 	len = ft_strlen(s1);
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_calloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	if (len == 0)
@@ -47,11 +47,11 @@ char	*ft_strdup(char *s1)
 	len = ft_strlen(s1);
 	if (len == 0)
 	{
-		str = malloc(sizeof(char) * 1);
+		str = ft_calloc(sizeof(char) * 1);
 		str[0] = 0;
 		return (str);
 	}
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_calloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	while (s1[i])
@@ -72,7 +72,7 @@ char	*ft_charjoin(char *s1, char c)
 		s1 = ft_strdup("");
 	if (!c || !s1)
 		return (NULL);
-	str = malloc(sizeof(char) * ft_strlen(s1) + 2);
+	str = ft_calloc(sizeof(char) * ft_strlen(s1) + 2);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -94,7 +94,7 @@ int	*intjoin(t_list **l, int d)
 	int		*r;
 
 	elm = *l;
-	r = malloc(sizeof(int) * elm->count_token + 1);
+	r = ft_calloc(sizeof(int) * elm->count_token + 1);
 	i = 0;
 	while (i < elm->count_token)
 	{

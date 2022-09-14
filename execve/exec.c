@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 20:40:25 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:13:04 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 	{
 		g_info.sig = 0;
 		var.pid = fork();
+		if (var.pid == -1)
+			exit(0);
 	}
 	if (var.pid == 0)
 	{

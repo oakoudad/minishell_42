@@ -24,6 +24,7 @@ SRC = 		minishell.c\
 		./src/ft_split.c\
 		./src/generate_name.c\
 		./src/get_var.c\
+		./src/ft_calloc.c\
 		./src/get_home.c\
 		./src/free_env.c\
 		./src/redirection_error.c\

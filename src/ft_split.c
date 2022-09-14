@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:09:54 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/11 20:47:09 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:32:27 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_word(char const *s, char c)
 	return (cp);
 }
 
-int	ft_count_and_alloc(char *s, char c)
+int	ft_count_alloc(char *s, char c)
 {
 	int	i;
 	int	cp;
@@ -69,10 +69,10 @@ int	ft_split_2(char const *s, char c, char **str, int i)
 		if (s[i] != c && s[i])
 		{
 			k = 0;
-			str[j] = (char *)malloc(ft_count_and_alloc((char *)&s[i], c) + 1);
+			str[j] = (char *)ft_calloc(ft_count_alloc((char *)&s[i], c) + 1);
 			if (!str[j])
 				return (j);
-			while (k < ft_count_and_alloc((char *)&s[i], c))
+			while (k < ft_count_alloc((char *)&s[i], c))
 			{
 				str[j][k] = s[i + k];
 				k++;
@@ -92,7 +92,7 @@ char	**ft_split(char *s, char c)
 
 	if (!s)
 		return (NULL);
-	str = (char **)malloc(sizeof(char *) * count_word(s, c) + 1);
+	str = (char **)ft_calloc(sizeof(char *) * count_word(s, c) + 1);
 	if (!str)
 		return (NULL);
 	j = ft_split_2(s, c, str, 0);

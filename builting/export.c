@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:23:00 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**copy_var1(char *str, int j, int k, char **splited)
 	while (str[++i])
 	{
 		if (i == 0)
-			splited[j] = malloc(sizeof(char) * (ft_strlen(str) + 2));
+			splited[j] = ft_calloc(sizeof(char) * (ft_strlen(str) + 2));
 		if (str[i] == '"' || str[i] == '\'')
 			skip_quotes_init(str, &i, &k, splited[j]);
 		else if (str[i] == ' ' && str[i + 1])
@@ -49,7 +49,7 @@ char	**copy_var1(char *str, int j, int k, char **splited)
 			splited[j][k] = '\0';
 			j++;
 			k = 0;
-			splited[j] = malloc(sizeof(char) * (ft_strlen(str) + 1));
+			splited[j] = ft_calloc(sizeof(char) * (ft_strlen(str) + 1));
 		}
 		else
 		{
@@ -70,7 +70,7 @@ char	**split(char *str)
 
 	j = 0;
 	k = 0;
-	splited = malloc(sizeof(char *) * (ft_strlen(str) + 2));
+	splited = ft_calloc(sizeof(char *) * (ft_strlen(str) + 2));
 	if (!splited)
 		return (NULL);
 	splited = copy_var1(str, j, k, splited);
@@ -118,7 +118,7 @@ int	ft_export(char **var)
 		{
 			if (check_key(var[i]))
 			{
-				t = malloc(sizeof(char *) * 2);
+				t = ft_calloc(sizeof(char *) * 2);
 				t[0] = var[i];
 				t[1] = NULL;
 				split_equal(t, 0);

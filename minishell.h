@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 20:39:41 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:29:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,6 @@ void		free_cmd_line(t_list *head);
 char		*get_pwd(void);
 int			isvarformat(char c);
 void		myfree(void *p);
+void		*ft_calloc(size_t size);
 
 #endif

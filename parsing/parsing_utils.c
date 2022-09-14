@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 20:30:14 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	index_token(char token, int i, t_list **l, int *status)
 	{
 		if ((*l)->count_token == 0)
 		{
-			(*l)->index_token = malloc(sizeof(int) * 1);
+			(*l)->index_token = ft_calloc(sizeof(int) * 1);
 			(*l)->index_token[0] = i;
 			(*l)->count_token = 1;
 		}
@@ -62,7 +62,7 @@ void	index_token(char token, int i, t_list **l, int *status)
 	{
 		if ((*l)->count_token == 0)
 		{
-			(*l)->index_token = malloc(sizeof(int) * 1);
+			(*l)->index_token = ft_calloc(sizeof(int) * 1);
 			(*l)->index_token[0] = i;
 			(*l)->count_token = 1;
 		}
@@ -101,7 +101,7 @@ char	**args_filter(t_list	**l)
 	i = elm->words;
 	if (elm->count_token != 0)
 		i -= 2 * elm->count_token;
-	args = malloc(sizeof(char *) * i + 1);
+	args = ft_calloc(sizeof(char *) * i + 1);
 	i = -1;
 	j = 0;
 	while (elm->allargs[++i])
