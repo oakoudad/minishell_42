@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:44:42 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 01:56:09 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:23:00 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**split(char *str)
 	return (splited);
 }
 
-void	check_key(char *str)
+int	check_key(char *str)
 {
 	int	i;
 
@@ -97,14 +97,16 @@ void	check_key(char *str)
 			write(2, str, ft_strlen(str));
 			write(2, "': not a valid identifier\n", 27);
 			create_list("?", "1");
-			return ;
+			return (0);
 		}
 	}
+	return (1);
 }
 
 int	ft_export(char **var)
 {
-	int	i;
+	int		i;
+	char	**t;
 
 	i = -1;
 	create_list("?", "0");
@@ -113,8 +115,17 @@ int	ft_export(char **var)
 	else
 	{
 		while (var[++i])
-			check_key(var[i]);
-		split_equal(var, 0);
+		{
+			if (check_key(var[i]))
+			{
+				t = malloc(sizeof(char *) * 2);
+				t[0] = var[i];
+				t[1] = NULL;
+				split_equal(t, 0);
+				free(t);
+			}
+		}
 	}
 	return (0);
 }
+//cat << "echo" >

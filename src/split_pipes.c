@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 21:10:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 00:24:08 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:36:06 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ int	split_pipes2(char *s, char **p, int count)
 	return ((p[i] = 0), 1);
 }
 
+char	**free_redirections_error(char **p)
+{
+	int	i;
+
+	i = 0;
+	while (p[i])
+	{
+		free(p[i]);
+		i++;
+	}
+	free(p);
+	return (NULL);
+}
+
 char	**split_pipes(char *s)
 {
 	int		i;
@@ -90,6 +104,6 @@ char	**split_pipes(char *s)
 	p[count + 1] = NULL;
 	i = 0;
 	if (!redirections_error(p, count))
-		return (NULL);
+		return (free_redirections_error(p));
 	return (p);
 }
