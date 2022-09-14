@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/13 22:09:28 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:04:42 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	create_list(char *name, char *value)
 	{
 		if (ft_strcmp(tmp->key, name) == 0)
 		{
-			if (tmp->value != NULL)
-				free(tmp->value);
-			if (value)
-				tmp->value = ft_strdup(value);
+			if (value == NULL)
+				return (1);
+			myfree(tmp->value);
+			tmp->value = ft_strdup(value);
 			return (1);
 		}
 		tmp = tmp->next;
@@ -61,7 +61,7 @@ int	create_list(char *name, char *value)
 	tmp = ft_lstenv(name, value);
 	if (!tmp)
 		return (0);
-	if (name[0] == '?' && name[1] == '\0')
+	if (tmp->key[0] == '?' && tmp->key[1] == '\0')
 		tmp->status = 0;
 	else
 		tmp->status = 1;
@@ -122,14 +122,14 @@ int	split_equal(char **env, int type)
 	i = -1;
 	while (env[++i])
 	{
-		name = malloc(sizeof(char) * len_key(env[i]) + 1);
+		name = malloc(sizeof(char) * len_key(env[i]) + 3);
 		if (!name)
 			return (0);
-		if (strlen(env[i]) - len_key(env[i]) == 0)
+		if (ft_strlen(env[i]) - len_key(env[i]) == 0)
 			value = NULL;
 		else
 		{
-			value = malloc(1 + (strlen(env[i]) - len_key(env[i])));
+			value = malloc(3 + (ft_strlen(env[i]) - len_key(env[i])));
 			if (value == NULL)
 				return (0);
 		}

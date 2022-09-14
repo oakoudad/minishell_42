@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 01:57:42 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 01:44:34 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	len_var(char *s)
 	while (++i < j)
 		var[i] = s[i];
 	var[i] = '\0';
-	j = -(strlen(var) + 1);
+	j = -(ft_strlen(var) + 1);
 	while (temp)
 	{
 		if (ft_strcmp(temp->key, var) == 0)

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/13 22:13:18 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:03:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,21 @@ void	exec(int intfd, t_list *lst)
 	char	**env;
 	int		i;
 
-	env = prepare_env();
+	if (g_info.count_pipes == 1 && routes(lst))
+		env = NULL;
+	else
+		env = prepare_env();
 	exec_pipe(intfd, lst, lst, env);
 	i = 0;
-	while (env && env[i])
+	if (env)
 	{
-		free(env[i]);
-		i++;
+		while (env[i])
+		{
+			free(env[i]);
+			i++;
+		}
+		free(env);
 	}
-	free(env);
 }
 
 void	cmd_not_found(int fd[], t_list *lst, char **env)

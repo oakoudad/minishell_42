@@ -6,11 +6,17 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 21:46:49 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/12 00:40:01 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:04:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	myfree(void *p)
+{
+	if (p)
+		free(p);
+}
 
 void	free_cmd_line(t_list	*head)
 {

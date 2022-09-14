@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/13 23:29:05 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 02:04:55 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ void		change_status(int status);
 void		free_cmd_line(t_list *head);
 char		*get_pwd(void);
 int			isvarformat(char c);
+void		myfree(void *p);
 
 #endif

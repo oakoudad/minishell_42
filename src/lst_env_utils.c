@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:06:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/13 22:11:16 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/14 01:27:05 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_list_env	*ft_lstenv(char *key, char *value)
 	if (value)
 		list->value = ft_strdup(value);
 	else
-		list->value = value;
+		list->value = NULL;
 	list->key = ft_strdup(key);
 	list->next = NULL;
 	return (list);
