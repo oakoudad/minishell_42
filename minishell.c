@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:30:20 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 21:57:31 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sighandler(int sig)
 		g_info.heredoc_fd = open(g_info.heredoc_file,
 				O_RDONLY | O_WRONLY | O_TRUNC);
 		close(g_info.heredoc_fd);
-		exit(0);
+		exit(1);
 	}
 }
 
@@ -76,6 +76,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		rl_catch_signals = 0;
 		buff = readline("\033[32;1mMinishell ➜ \033[0m");
 		if (buff == NULL)
 			return (ft_putstr_fd(1, "exit\n"), 0);

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 00:37:38 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 20:26:35 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 21:59:26 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ void	init_heredoc(int a, int b)
 	g_info.heredoc = b;
 }
 
+void	heredoc_wait(int pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		change_status(WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		change_status(WTERMSIG(status));
+}
+
 void	heredoc(t_list **l, char *file)
 {
 	pid_t	pid;
@@ -60,12 +71,12 @@ void	heredoc(t_list **l, char *file)
 		(*l)->in_fd = open((*l)->heredoc_file, O_CREAT | O_RDWR, 0666);
 		g_info.heredoc = 1;
 		g_info.heredoc_fd = (*l)->in_fd;
+		rl_catch_signals = 1;
 		while (g_info.heredoc_fd)
 			heredoc_promes(l, buff, file);
 		close((*l)->in_fd);
-		g_info.heredoc = 0;
 		exit(0);
 	}
-	waitpid(pid, NULL, 0);
+	heredoc_wait(pid);
 	init_heredoc(1, 0);
 }
