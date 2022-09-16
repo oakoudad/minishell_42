@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 00:37:38 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 23:45:47 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 03:40:11 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	heredoc_promes(t_list **l, char *buff, char *file)
 {
 	int	i;
 
+	rl_catch_signals = 1;
 	buff = readline("> ");
 	if (buff == NULL || ft_strcmp(buff, file) == 0)
 	{
@@ -25,10 +26,10 @@ void	heredoc_promes(t_list **l, char *buff, char *file)
 	i = 0;
 	while (buff[i])
 	{
-		if (buff[i] != '$')
-			write((*l)->in_fd, &buff[i], 1);
-		else
+		if (buff[i] == '$' && isvarformat(buff[i + 1]))
 			get_var(&buff[i], &i, (*l)->in_fd);
+		else
+			write((*l)->in_fd, &buff[i], 1);
 		i++;
 	}
 	if (buff[i] == '\0')
@@ -72,7 +73,6 @@ void	heredoc(t_list **l, char *file)
 		(*l)->in_fd = open((*l)->heredoc_file, O_CREAT | O_RDWR, 0666);
 		g_info.heredoc = 1;
 		g_info.heredoc_fd = (*l)->in_fd;
-		rl_catch_signals = 1;
 		while (g_info.heredoc_fd)
 			heredoc_promes(l, buff, file);
 		close((*l)->in_fd);

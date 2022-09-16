@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 19:08:45 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 22:52:36 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 03:36:39 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	copyto(char *s, char *cmd, int *d, int w)
 	c = *(s - 1);
 	while (s[j] != c)
 	{
-		if (c == '"' && w && s[j] == '$' && s[j + 1] != '"'
-			&& s[j + 1] != '\'' && s[j + 1] != '\0')
+		if (c == '"' && w && s[j] == '$' && isvarformat(s[j + 1]))
 			j += copy_var(s + j + 1, cmd, &i);
 		else
 			cmd[i++] = s[j];

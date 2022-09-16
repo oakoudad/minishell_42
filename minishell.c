@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:11:56 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 21:57:31 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 02:07:03 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	sighandler(int sig)
 		g_info.sig = 1;
 	if (sig == 2 && g_info.heredoc == 1 && tmp == 0)
 	{
+		write(1, "\n", 1);
 		close(g_info.heredoc_fd);
 		g_info.heredoc_fd = open(g_info.heredoc_file,
 				O_RDONLY | O_WRONLY | O_TRUNC);

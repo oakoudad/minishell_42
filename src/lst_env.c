@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 22:13:43 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 04:10:01 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	set_status(int type)
 		oldpwd = ft_calloc(sizeof(char *) * 2);
 		oldpwd[0] = ft_strdup("OLDPWD");
 		oldpwd[1] = NULL;
-		ft_unset(oldpwd);
+		built_in_unset(oldpwd);
 		free(oldpwd[0]);
 		free(oldpwd);
 	}

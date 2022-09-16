@@ -28,13 +28,14 @@ SRC = 		minishell.c\
 		./src/get_home.c\
 		./src/free_env.c\
 		./src/redirection_error.c\
-		./builting/echo.c\
-		./builting/export.c\
-		./builting/env.c\
-		./builting/cd.c\
-		./builting/unset.c\
-		./builting/exit.c\
-		./builting/pwd.c\
+		./src/export_error.c\
+		./built_in/echo.c\
+		./built_in/export.c\
+		./built_in/env.c\
+		./built_in/cd.c\
+		./built_in/unset.c\
+		./built_in/exit.c\
+		./built_in/pwd.c\
 		./parsing/parsing.c\
 		./parsing/copy_var.c\
 		./parsing/fileopen.c\
@@ -44,7 +45,7 @@ SRC = 		minishell.c\
 		./parsing/heredoc.c\
 		./parsing/free.c\
 		./execve/check_cmd.c\
-		./execve/builtin.c\
+		./execve/built_in.c\
 		./execve/utils.c\
 		./execve/exec.c\
 		./execve/exec_pips_utils.c

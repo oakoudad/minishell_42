@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/16 01:47:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 04:12:08 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ void		init_index(int *i, int *start, int *end);
 void		skep_and_full(char *s, char *p, int *d, int *j);
 int			split_equal(char **env, int type);
 int			ft_strcmp(const char *s1, const char *s2);
-void		ft_echo(char **var);
-int			ft_export(char **var);
-void		ft_env(int x);
-void		ft_cd(char *path);
-int			ft_pwd(void);
+void		built_in_echo(char **var);
+int			built_in_export(char **var);
+void		built_in_env(int x);
+void		built_in_cd(char *path);
+int			built_in_pwd(void);
 char		*ft_strjoin(char *s1, char *s2);
-void		ft_unset(char **str);
+void		built_in_unset(char **str);
 int			sort_list(void);
-void		ft_exit(char **args);
+void		built_in_exit(char **args);
 void		parsing(char	**pips);
 int			len_var(char *s);
 int			skip_quotes(char *s, int *d, int status);
@@ -121,10 +121,10 @@ char		**ft_split(char *s, char c);
 void		exec_cmd_sys(char *cmd, char **env, t_list *lst);
 char		**prepare_env(void);
 char		*ft_itoa(int n);
-int			isbuilting(t_list *lst);
+int			is_built_in(t_list *lst);
 int			create_list(char *name, char *value);
 void		exec(int intfd, t_list *lst);
-void		exc_builtins(t_list *lst);
+void		exc_built_ins(t_list *lst);
 void		check_key_null(char *str);
 char		*generate_name(void);
 void		get_var(char *s, int *d, int fd);
@@ -166,5 +166,6 @@ void		myfree(void *p);
 void		*ft_calloc(size_t size);
 void		exec_pipe(int intfd, t_list *lst, t_list *head, char **env);
 int			if_no_cmd(t_list *head, char **env, t_var	var);
+int			export_error(char *str);
 
 #endif
