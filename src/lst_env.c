@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:13:43 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,11 @@ int	split_equal(char **env, int type)
 	i = -1;
 	while (env[++i])
 	{
-		name = ft_calloc(sizeof(char) * len_key(env[i]) + 3);
-		if (!name)
-			return (0);
+		name = ft_calloc(sizeof(char) * len_key(env[i]) + 2);
 		if (ft_strlen(env[i]) - len_key(env[i]) == 0)
 			value = NULL;
 		else
-		{
-			value = ft_calloc(3 + (ft_strlen(env[i]) - len_key(env[i])));
-			if (value == NULL)
-				return (0);
-		}
+			value = ft_calloc(2 + (ft_strlen(env[i]) - len_key(env[i])));
 		init(name, value, env[i]);
 		if (create_list(name, value) == 0)
 			return (0);

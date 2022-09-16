@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 18:18:32 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:52:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	create_cmd(char *s, char *cmd, int end, int withextra)
 		else
 		{
 			copyto(s + j + 1, cmd, &i, withextra);
-			skep_quotes(s, &j, 1);
+			skip_quotes(s, &j, 1);
 		}
 		j++;
 	}

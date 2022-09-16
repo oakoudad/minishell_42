@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:31:28 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 00:12:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (a[i] - b[i]);
 }
 
+// > mehdi
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
@@ -76,5 +78,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 void	ft_putstr_fd(int fd, char *s)
 {
+	if (fd == 2)
+		create_list("?", "258");
 	write(fd, s, ft_strlen(s));
 }

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 03:24:23 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:52:36 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	len_var(char *s)
 	return ((var = NULL), j);
 }
 
-int	skep_quotes(char *s, int *d, int status)
+int	skip_quotes(char *s, int *d, int status)
 {
 	char	c;
 	int		i;
@@ -76,7 +76,7 @@ int	skep_quotes(char *s, int *d, int status)
 	return (1);
 }
 
-int	skep_quotes2(char *s, int *d)
+int	skip_quotes2(char *s, int *d)
 {
 	char	c;
 	int		i;
@@ -117,7 +117,7 @@ int	len_of_cmd(char *s, int to)
 		if (s[i] == '"' || s[i] == '\'')
 		{
 			j -= 2;
-			j += skep_quotes2(s, &i);
+			j += skip_quotes2(s, &i);
 		}
 		if (is_space(s[i]))
 			break ;

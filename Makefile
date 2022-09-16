@@ -46,7 +46,8 @@ SRC = 		minishell.c\
 		./execve/check_cmd.c\
 		./execve/builtin.c\
 		./execve/utils.c\
-		./execve/exec.c
+		./execve/exec.c\
+		./execve/exec_pips_utils.c
 
 OBJ = $(SRC:.c=.o)
 

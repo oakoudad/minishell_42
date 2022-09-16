@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:13:04 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 01:46:07 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	exec_pipe(int intfd, t_list *lst, t_list *head, char **env)
 	if (ft_strcmp("cat", lst->cmd) != 0)
 		var.env = env;
 	var.pid = 0;
-	if (head == NULL)
+	if (head == NULL || if_no_cmd(head, env, var))
 		return ;
 	saveio(var.fd, var.io_fd);
 	if (lst->next)

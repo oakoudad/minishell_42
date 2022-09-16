@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 21:57:24 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/16 01:47:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int			sort_list(void);
 void		ft_exit(char **args);
 void		parsing(char	**pips);
 int			len_var(char *s);
-int			skep_quotes(char *s, int *d, int status);
-int			skep_quotes2(char *s, int *d);
+int			skip_quotes(char *s, int *d, int status);
+int			skip_quotes2(char *s, int *d);
 int			iftoken(int index, t_list **l);
 char		*ft_strdup(char *s1);
 char		*ft_charjoin(char *s1, char c);
@@ -164,5 +164,7 @@ char		*get_pwd(void);
 int			isvarformat(char c);
 void		myfree(void *p);
 void		*ft_calloc(size_t size);
+void		exec_pipe(int intfd, t_list *lst, t_list *head, char **env);
+int			if_no_cmd(t_list *head, char **env, t_var	var);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 00:37:38 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/15 21:59:26 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/15 23:45:47 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	heredoc_promes(t_list **l, char *buff, char *file)
 
 	buff = readline("> ");
 	if (buff == NULL || ft_strcmp(buff, file) == 0)
+	{
 		g_info.heredoc_fd = 0;
-	if (g_info.heredoc_fd == 0)
 		return ;
+	}
 	i = 0;
 	while (buff[i])
 	{
