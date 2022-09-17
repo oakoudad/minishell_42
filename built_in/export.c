@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelmoham <eelmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:21:09 by eelmoham          #+#    #+#             */
-/*   Updated: 2022/09/16 04:32:03 by eelmoham         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:03:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	check_key(char *str)
 	int	i;
 
 	i = 0;
-	if (str && str[0] == '=')
+	if (str && (str[0] == '=' || str[0] == '\0'))
 		return (export_error(str));
-	while (str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=' && str[i] != '+')
 	{
 		if ((str[i] >= 'a' && str[i] <= 'z')
 			|| (str[i] >= 'A' && str[i] <= 'Z')
@@ -94,6 +94,8 @@ int	check_key(char *str)
 		else
 			return (export_error(str));
 	}
+	if (str[i] == '+' && (str[i + 1] != '=' || i == 0))
+		return (export_error(str));
 	return (1);
 }
 

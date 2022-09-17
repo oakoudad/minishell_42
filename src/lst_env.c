@@ -6,13 +6,29 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:15:44 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/16 04:10:01 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:45:32 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	init(char *name, char *value, char *env)
+int	end_name(char *env, char *name, int *i, int *status)
+{
+	int	join;
+
+	join = 0;
+	if (env[*i] == '+')
+	{
+		(*i) = (*i) + 1;
+		join = 1;
+	}
+	name[*i] = '\0';
+	*status = 1;
+	(*i) = (*i) + 1;
+	return (join);
+}
+
+int	init(char *name, char *value, char *env, int *join)
 {
 	int	i;
 	int	x;
@@ -23,12 +39,8 @@ int	init(char *name, char *value, char *env)
 	x = 0;
 	while (env[++i])
 	{
-		if (env[i] == '=' && status == 0)
-		{
-			name[i] = '\0';
-			status = 1;
-			i++;
-		}
+		if ((env[i] == '=' || env[i] == '+') && status == 0)
+			*join = end_name(env, name, &i, &status);
 		if (status == 0)
 			name[i] = env[i];
 		if (status == 1 && value != NULL)
@@ -94,30 +106,12 @@ int	sort_list(void)
 	return (1);
 }
 
-int	set_status(int type)
-{
-	char	**oldpwd;
-
-	if (type == 1)
-	{
-		oldpwd = ft_calloc(sizeof(char *) * 2);
-		oldpwd[0] = ft_strdup("OLDPWD");
-		oldpwd[1] = NULL;
-		built_in_unset(oldpwd);
-		free(oldpwd[0]);
-		free(oldpwd);
-	}
-	create_list("?", "0");
-	if (sort_list() == 0)
-		return (0);
-	return (type);
-}
-
 int	split_equal(char **env, int type)
 {
 	int			i;
 	char		*name;
 	char		*value;
+	int			join;
 
 	i = -1;
 	while (env[++i])
@@ -127,7 +121,10 @@ int	split_equal(char **env, int type)
 			value = NULL;
 		else
 			value = ft_calloc(2 + (ft_strlen(env[i]) - len_key(env[i])));
-		init(name, value, env[i]);
+		join = 0;
+		init(name, value, env[i], &join);
+		if (join == 1)
+			value = join_env_value(value, name);
 		if (create_list(name, value) == 0)
 			return (0);
 		free(name);

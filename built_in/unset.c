@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelmoham <eelmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:21:09 by eelmoham          #+#    #+#             */
-/*   Updated: 2022/09/16 04:31:53 by eelmoham         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:54:52 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,25 @@ void	built_in_unset(char **str)
 	t_list_env	*tmp;
 	t_list_env	*tmp2;
 
-	i = 0;
+	i = -1;
 	tmp = g_info.env_lst;
-	while (str[i])
+	while (str[++i])
 	{
-		tmp = g_info.env_lst;
-		while (tmp)
+		if (check_key_unset(str[i]))
 		{
-			if (ft_strcmp(tmp->key, str[i]) == 0)
+			tmp = g_info.env_lst;
+			while (tmp)
 			{
-				tmp2 = tmp;
-				tmp = tmp->next;
-				del_node(tmp2);
+				if (ft_strcmp(tmp->key, str[i]) == 0)
+				{
+					tmp2 = tmp;
+					tmp = tmp->next;
+					del_node(tmp2);
+				}
+				else
+					tmp = tmp->next;
 			}
-			else
-				tmp = tmp->next;
 		}
-		i++;
 	}
 	sort_list();
 }

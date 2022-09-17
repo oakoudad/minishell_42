@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 00:24:09 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:49:54 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char		**ft_split(char *s, char c);
 void		exec_cmd_sys(char *cmd, char **env, t_list *lst);
 char		**prepare_env(void);
 char		*ft_itoa(int n);
+char		*join_env_value(char *value, char *key);
 int			is_built_in(t_list *lst);
 int			create_list(char *name, char *value);
 void		exec(t_list *lst);
@@ -145,6 +146,7 @@ void		closefd(int a, int b, int c, int d);
 void		saveio(int fd[], int io_fd[]);
 void		restoreio(int io_fd[]);
 void		cmd_not_found(int fd[], t_list *lst, char **env);
+int			set_status(int type);
 void		dup_fd(int intfd, int fd[], t_list *lst, t_list *head);
 int			ft_atoi(const char *str);
 void		prepare_name(char **names);
@@ -167,5 +169,6 @@ void		*ft_calloc(size_t size);
 void		exec_pipe(int intfd, t_list *lst, t_list *head, char **env);
 int			if_no_cmd(t_list *head, char **env, t_var	var);
 int			export_error(char *str);
+int			check_key_unset(char *str);
 
 #endif

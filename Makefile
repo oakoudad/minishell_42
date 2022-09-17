@@ -29,6 +29,8 @@ SRC = 		minishell.c\
 		./src/free_env.c\
 		./src/redirection_error.c\
 		./src/export_error.c\
+		./src/check_key_unset.c\
+		./src/set_status.c\
 		./built_in/echo.c\
 		./built_in/export.c\
 		./built_in/env.c\

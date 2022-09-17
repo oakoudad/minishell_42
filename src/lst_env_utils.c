@@ -6,11 +6,25 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:06:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:44:43 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*join_env_value(char *value, char *key)
+{
+	char	*oldvalue;
+	char	*newvalue;
+
+	oldvalue = get_env_var(key);
+	if (oldvalue == NULL)
+		return (value);
+	oldvalue = ft_strdup(get_env_var(key));
+	newvalue = ft_strjoin(oldvalue, value);
+	myfree(value);
+	return (newvalue);
+}
 
 void	prepare_name(char **names)
 {
@@ -41,7 +55,7 @@ int	len_key(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '=' && str[i])
+	while (str[i] != '=' && str[i] != '+' && str[i])
 		i++;
 	return (i);
 }

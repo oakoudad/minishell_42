@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 21:46:49 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 01:12:44 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:06:48 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_cmd_line(t_list	*head)
 		i = 0;
 		while (head->allargs && head->allargs[i])
 		{
-			myfree(head->allargs[i]);
+			free(head->allargs[i]);
 			head->allargs[i] = NULL;
 			i++;
 		}
