@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 21:46:49 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 02:04:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:12:44 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,22 @@ void	free_cmd_line(t_list	*head)
 
 	while (head)
 	{
-		free(head->index_token);
-		free(head->cmd);
+		myfree(head->index_token);
+		head->index_token = NULL;
+		myfree(head->cmd);
+		head->cmd = NULL;
+		if (head->heredoc_file)
+			myfree(head->heredoc_file);
+		head->heredoc_file = NULL;
 		i = 0;
-		if (head->heredoc_file != NULL)
-			free(head->heredoc_file);
 		while (head->allargs && head->allargs[i])
 		{
-			free(head->allargs[i]);
+			myfree(head->allargs[i]);
 			head->allargs[i] = NULL;
 			i++;
 		}
-		if (head->allargs != NULL)
-		{
-			free(head->allargs);
-			head->allargs = NULL;
-		}
-		if (head->args != NULL)
-			free(head->args);
+		myfree(head->allargs);
+		myfree(head->args);
 		free(head);
 		head = head->next;
 	}

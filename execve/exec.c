@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:50:10 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/16 04:12:21 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:12:51 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	exec_cmd(t_list *lst, t_list *head, t_var var, int intfd)
 		dup_fd(intfd, var.fd, lst, head);
 		if (is_built_in(head) == 0)
 		{
+			close(var.io_fd[0]);
 			closefd(var.fd[0], var.io_fd[1], var.io_fd[0], -1);
 			signal(SIGQUIT, exit);
 			execve(var.cmd, lst->args, var.env);
@@ -88,31 +89,29 @@ void	exec_pipe(int intfd, t_list *lst, t_list *head, char **env)
 	exec_cmd(lst, head, var, intfd);
 	if (!is_built_in(head))
 		free(var.cmd);
+	close(var.io_fd[0]);
 	closefd(var.fd[1], var.io_fd[1], var.io_fd[0], intfd);
 	if (!lst->next && wait_and_error(var.fd[0], head))
 		return ;
 	exec_pipe(var.fd[0], lst->next, lst->next, env);
 }
 
-void	exec(int intfd, t_list *lst)
+void	exec(t_list *lst)
 {
 	char	**env;
 	int		i;
 
-	if (g_info.count_pipes == 1 && is_built_in(lst))
-		env = NULL;
-	else
-		env = prepare_env();
-	exec_pipe(intfd, lst, lst, env);
+	env = prepare_env();
+	exec_pipe(-1, lst, lst, env);
 	i = 0;
 	if (env)
 	{
 		while (env[i])
 		{
-			free(env[i]);
+			myfree(env[i]);
 			i++;
 		}
-		free(env);
+		myfree(env);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 21:15:33 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/16 04:12:08 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 00:24:09 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char		**prepare_env(void);
 char		*ft_itoa(int n);
 int			is_built_in(t_list *lst);
 int			create_list(char *name, char *value);
-void		exec(int intfd, t_list *lst);
+void		exec(t_list *lst);
 void		exc_built_ins(t_list *lst);
 void		check_key_null(char *str);
 char		*generate_name(void);

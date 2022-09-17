@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/14 21:28:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:19:27 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,16 @@ char	**prepare_env(void)
 
 	lst = g_info.env_lst;
 	i = ft_lstsize(lst);
-	newenv = ft_calloc(sizeof(char *) * i + 2);
+	newenv = ft_calloc(sizeof(char *) * i + 1);
 	if (!newenv)
 		return (NULL);
 	lst = g_info.env_lst;
 	i = -1;
 	while (++i >= 0 && lst)
 	{
-		if (lst->value == NULL)
+		if (lst->value == NULL || lst->status == 0)
 		{
+			i--;
 			lst = lst->next;
 			continue ;
 		}
@@ -108,6 +109,5 @@ char	**prepare_env(void)
 		newenv[i] = ft_strjoin(newenv[i], lst->value);
 		lst = lst->next;
 	}
-	newenv[i] = NULL;
-	return (newenv);
+	return (newenv[i] = NULL, newenv);
 }

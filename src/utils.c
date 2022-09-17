@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:31:28 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/16 00:12:48 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:13:09 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	return (a[i] - b[i]);
 }
-
-// > mehdi
 
 char	*ft_strjoin(char *s1, char *s2)
 {
