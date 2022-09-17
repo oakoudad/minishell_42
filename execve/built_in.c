@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 20:49:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 01:08:29 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 04:08:49 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	exc_built_ins(t_list *lst)
 		built_in_env(1);
 	else if (ft_strcmp(lst->cmd, "cd") == 0)
 	{
-		if (lst->args && lst->args[0] && lst->args[1])
+		if (lst->next)
+			return ;
+		else if (lst->args && lst->args[0] && lst->args[1])
 			built_in_cd(lst->args[1]);
 		else
 			built_in_cd(NULL);
