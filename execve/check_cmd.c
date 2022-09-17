@@ -6,7 +6,7 @@
 /*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 01:19:27 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 01:40:01 by oakoudad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	cmd_error(char *cmd)
 		if (access(cmd, F_OK) == 0)
 			printf_error(cmd, ": Permission denied\n", "126");
 		else
-			printf_error(cmd, ": Not a directory\n", "126");
+			printf_error(cmd, ": Not a directory\n", "127");
 		return (0);
 	}
 	if (access(cmd, F_OK) != 0)
