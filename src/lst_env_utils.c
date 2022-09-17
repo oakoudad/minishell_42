@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eelmoham <eelmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 23:06:46 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 22:44:43 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:35:17 by eelmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	prepare_name(char **names)
 		j = i + 1;
 		while (names[j])
 		{
-			if (strcmp(names[i], names[j]) > 0)
+			if (ft_strcmp(names[i], names[j]) > 0)
 			{
 				tmp = names[j];
 				names[j] = names[i];

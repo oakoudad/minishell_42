@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oakoudad <oakoudad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eelmoham <eelmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 18:47:26 by oakoudad          #+#    #+#             */
-/*   Updated: 2022/09/17 01:40:01 by oakoudad         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:35:04 by eelmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_env_var(char *key)
 	lst = g_info.env_lst;
 	while (lst)
 	{
-		if (strcmp(lst->key, key) == 0)
+		if (ft_strcmp(lst->key, key) == 0)
 		{
 			return (lst->value);
 		}
